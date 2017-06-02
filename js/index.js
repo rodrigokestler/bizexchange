@@ -228,43 +228,53 @@ $.fn.getFormData = function(){
 	$(thisForm).find('.inputpz').each(function(){
 		var name = $(this).attr('name');
 		if($(this).is('select')){
-			eval("data."+name+" = $(this).val();");
+			data[name] = $(this).val();
 		}else if($(this).is('input')){
 			var type = $(this).attr('type');
 			switch (type){
+			case 'hidden':
+				data[name] = $(this).val();
+				break;
 			case 'text':
-				eval("data."+name+" = $(this).val();");
+				data[name] = $(this).val();
 				break;
 			case 'radio':
 				var valor = $('input[name='+name+']:checked', thisForm).val();
-				eval("data."+name+" ='"+valor+"';");
+				data[name] = valor;
 				break;
 			case 'checkbox':
-				var valor = $('input[name='+name+']:checked', thisForm).val();
-				eval("data."+name+" ='"+valor+"';");
+				var valor = $('input[name='+name+']:checked', thisForm).map(function(){
+					return this.value;
+				}).get();
+				data[name] = valor;
 				break;
 			case 'date':
-				eval("data."+name+" = $(this).val();");
+				data[name] = $(this).val();
 				break;
 			case 'email':
-				eval("data."+name+" = $(this).val();");
+				data[name] = $(this).val();
 				break;
 			case 'number':
-				eval("data."+name+" = $(this).val();");
+				data[name] = $(this).val();
 				break;
 			case 'password':
-				eval("data."+name+" = $(this).val();");
+				data[name] = $(this).val();
 				break;
-			
 			case 'time':
-				eval("data."+name+" = $(this).val();");
+				data[name] = $(this).val();
+				break;
+			case 'tel':
+				data[name] = $(this).val();
 				break;
 			}
 		}else if($(this).is('textarea')){
-			eval("data."+name+" = $(this).val();");
+			
+			data[name] = $(this).val();
 		}
 		
+		//eval("data."+name+" = $(this).val();");
 	});
+	
 	return data;
 }
 
