@@ -17,9 +17,10 @@
  * under the License.
  */
 var user = {
-	correo: null,
-	password: null,
-	tipo:null
+	pass: null,
+	email: null,
+	role:null,
+	estado:null
 };
 var myModal = {
 		modal : $('#myModal'),
@@ -52,10 +53,21 @@ var login = {
             },
             success: function(a){
             	console.log(JSON.stringify(a));
+            	console.log(a.roles[0]);
             	if(a.msj_error){
             		myModal.open('Oops',a.msj_error);
             	}else{
-            		login.screen.hide();
+            		user.pass = formData.user_pass;
+            		user.email = formData.user_email;
+            		user.estado = a.data.estado;
+            		user.role = a.roles[0];
+            		if(user.estado.toLowerCase()!='pendiente'){
+            			login.screen.hide('slide',{direction:'left'},'fast');
+            		}else{
+            			myModal.open('Bienvenido','Tu cuenta todavía no ha sido aprobada. Un asesor se estará poniendo en contacto contigo pronto.');
+            		}
+            		
+            		
             	}
            	    
             },
@@ -70,8 +82,56 @@ var login = {
 };
 var register = {
 		screen: $('#registerScreen'),
+		form: $('#registerForm'),
+		btnForm: $('#registerBtn'),
 		register: function(formData){
-			
+			formData.action = 'register_user';
+			console.log(JSON.stringify(formData));
+			return true;
+			$.ajax({
+	            url:app.url_ajax,
+	            dataType: 'json',
+	            data: formData,
+	            type: 'post',
+	            timeout: 15000,
+	            beforeSend: function(){
+	            	register.btnForm.loader('disable');
+	            },
+	            error: function(a,b,c){
+	                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+	                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+	            },
+	            success: function(a){
+	            	console.log(JSON.stringify(a));
+	            	if(a.success && a.success=='1'){
+	            		$(':input',register.form)
+	          	    	  .not(':button, :submit, :reset, :hidden')
+	          	    	  .val('')
+	          	    	  .removeAttr('checked')
+	          	    	  .removeAttr('selected');
+	            		register.toggle('hide');
+	            		if(formData.tipo_usario=='cliente'){
+	            			user.pass = formData.user_pass;
+	            			user.email = formData.user_email;
+	            			user.role = 'cliente';
+	            			user.estado = 'aprobado';
+	            			login.screen.hide();
+	            		}else{
+	            			
+	            			myModal.open('Bienvenido','Tu cuenta todavía no ha sido aprobada. Un asesor se estará poniendo en contacto contigo pronto.');
+	                		
+	            		}
+	            		
+	            		
+	            	}else if(a.success && a.success=="0"){
+	            		myModal.open('Oops',a.msj_error);
+	            	}
+	           	    
+	            },
+	            complete: function(){ 
+	            	register.btnForm.loader('enable',"REGISTRARSE");
+	            }
+	       });
 		},
 		toggle: function(tipo){
 			if(tipo=='hide'){
@@ -117,6 +177,14 @@ var app = {
 		  arrows: false
 		});
         //Register
+    	register.form.parsley().on('form:success',function(){
+    		var formData = register.form.getFormData();
+    		register.register(formData);
+    	});
+    	register.form.parsley().on('form:submit',function(){return false;});
+    	register.form.parsley().on('form:error',function(){
+    		
+    	});
     	
     },	
     onDeviceReady: function() {
