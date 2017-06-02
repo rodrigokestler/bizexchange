@@ -134,7 +134,7 @@ var register = {
 		},
 		toggle: function(tipo){
 			if(tipo=='hide'){
-				register.screen.hide('slide',{direction:'left'},'fast');
+				register.screen.hide('slide',{direction:'right'},'fast');
 			}else if(tipo=='show'){
 				register.screen.show('slide',{direction:'right'},'fast');
 			}
