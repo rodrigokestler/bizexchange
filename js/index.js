@@ -87,7 +87,6 @@ var register = {
 		register: function(formData){
 			formData.action = 'register_user';
 			console.log(JSON.stringify(formData));
-			return true;
 			$.ajax({
 	            url:app.url_ajax,
 	            dataType: 'json',
