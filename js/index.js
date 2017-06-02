@@ -68,10 +68,17 @@ var login = {
 		login.screen.hide('slide',{direction:'left'},'fast');
 	}
 };
-var registro = {
+var register = {
 		screen: $('#registerScreen'),
 		register: function(formData){
 			
+		},
+		toggle: function(tipo){
+			if(tipo=='hide'){
+				register.screen.hide('slide',{direction:'left'},'fast');
+			}else if(tipo=='show'){
+				register.screen.show('slide',{direction:'right'},'fast');
+			}
 		}
 };
 var app = {
@@ -109,7 +116,7 @@ var app = {
 		  adaptiveHeight: true,
 		  arrows: false
 		});
-        
+        //Register
     	
     },	
     onDeviceReady: function() {

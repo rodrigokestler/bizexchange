@@ -26,16 +26,16 @@ rosado: #b62271;
     padding:10px 0!important;
 }
 .nivel1{
-	z-index:11;
+	z-index:11!important;
 }
 .nivel2{
-	z-index:12;
+	z-index:12!important;
 }
 .nivel3{
-	z-index:13;
+	z-index:13!important;
 }
 .nivel4{
-	z-index:14;
+	z-index:14!important;
 }
 
 .screen{

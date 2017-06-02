@@ -41,7 +41,7 @@
     </head>
     <body>
         
-        <div class="screen grad" id="loginScreen" style="display:;color:#ffffff;">
+        <div class="screen grad nivel1" id="loginScreen" style="color:#ffffff;">
             <div class="container-fluid">
                 <div class="row">
                     <div id="tutorial-login" style="text-align:center;height:250px;">
@@ -92,18 +92,18 @@
                             <button class="login-text ">Olvide mi contrase&ntilde;a</button>
                         </div>
                         <div>
-                            <button class="login-text " style="text-decoration:underline;" onclick="return false;">Registrarse</button>
+                            <button onclick="register.screen.toggle('show')" class="login-text " style="text-decoration:underline;" onclick="return false;">Registrarse</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="screen grad" id="register" style="display:none;">
+        <div class="screen grad nivel2" id="registerScreen" style="display:none;">
             <div class="container-fluid">
                 <div class="row">
                     <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
                         <span class="text-header2">Registro</span>
-                        <button class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                        <button onclick="register.screen.toggle('hide');" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
                     </div>
                     <div class="body-screen">
                         <div style="overflow-y: scroll;position: relative;height: 100vh;display: block;padding-bottom: 100px;">
@@ -148,7 +148,7 @@
                 </div>
             </div>
         </div>
-        <div class="screen" id="home" style="display:none;">
+        <div class="screen" id="home" style="">
             <div class="container-fluid">
                 <div class="row">
                     <div class="screen-header">
@@ -254,8 +254,9 @@
 		  </div>
 		</div>
        
-  
+  		<!--  <script type="text/javascript" src="cordova.js"></script>-->
         <script type="text/javascript" src="js/jQuery.js"></script>
+        <script type="text/javascript" src="js/jQueryUI.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/parsley.js"></script>
         <script type="text/javascript" src="js/list.js"></script>
