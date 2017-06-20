@@ -10,8 +10,14 @@ rosado: #b62271;
 */
 
 /* Generales */
+html, body{ margin:0; padding:0;  height:100% }
 *{
     font-family:"Calibri", sans-serif;
+    
+}
+*:focus, button:focus {
+    outline: none!important;
+    
 }
 .font-600{
     font-weight:600;
@@ -21,6 +27,15 @@ rosado: #b62271;
 }
 .color-gris{
     color:#848383;
+}
+.color-white{
+	color:white;
+}
+.bg-azul{
+	background-color:#2f5da8!important;
+}
+.bg-gris{
+	background-color:#cccccc!important;
 }
 .nav>li>a{
     padding:10px 0!important;
@@ -49,7 +64,20 @@ rosado: #b62271;
     padding: 0 10px;
 }
 .body-screen{
-    margin-top:75px;
+    margin-top:59px;
+}
+.container{
+    height:100%;
+    overflow-y:scroll;
+    background-color:transparent;
+}
+.container-flex{
+	
+    display:flex;
+    flex-direction:column;
+    justify-content:start-flex;
+    margin: auto 5%;
+	height:auto;
 }
 footer{
     
@@ -75,7 +103,7 @@ footer table tr td button{
     height:30px;
 }
 .screen-header{
-    height:75px;
+    height:60px;
     width:100%;
     background-color:#2f5da8;
     position:fixed;
@@ -118,12 +146,16 @@ input,select{
     position:absolute;
     top:17px;
     right:10px;
+    background-color:transparent;
+    border:none;
 
 }
 .return{
     position:absolute;
     top:17px;
     left:10px;
+    background-color:transparent;
+    border:none;
 }
 .nav-tabs{
     margin-left:-10px;
@@ -176,6 +208,10 @@ input,select{
     border: none;
     color: white;
     font-size:15px;
+    box-shadow:none;
+}
+.input-login:focus{
+	box-shadow:none;
 }
 .input-register{
     width: 220px;
@@ -207,7 +243,7 @@ input,select{
 .tutorial-img{
 
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: 85%;
     height: 130px;
     width: 130px;
     margin: 10px auto 0;
@@ -264,16 +300,202 @@ input,select{
     text-decoration: underline;
 }
 .img-list-propiedades{
-    height:150px;
-    width:150px;
-    background-size:contain;
+    height:100%;
+    width:100%;
+    background-size:100%;
     background-repeat:no-repeat;
     background-position:center;
+    position:absolute;
+    top:0;
+    left:0;
 }
-#propiedades-ul li{
+#propiedades-ul li, #requerimientos-ul li{
     list-style:none;
 }
-#propiedades-ul{
+#propiedades-ul, #requerimientos-ul{
     margin:0;
     padding:0;
+    height:100vh;
+    overflow-y:scroll;
+    width:106%;
+}
+.table-propiedad, .table-requerimiento{
+	margin-left: 10px;
+    width: 90%;
+    table-layout: fixed;
+    white-space: nowrap;
+}
+.icono-m2{
+	width:20px;
+	height:12px;
+	background-size:contain;
+	background-repeat:no-repeat;
+	background-position:center;
+	margin:0!important;
+	padding:0!important;
+	display:inline-block;
+	background-image:url(../img/iconos/mt.png);
+}
+.icono-niveles{
+	width:20px;
+	height:12px;
+	background-size:contain;
+	background-repeat:no-repeat;
+	background-position:center;
+	margin:0!important;
+	padding:0!important;
+	display:inline-block;
+	background-image:url(../img/iconos/niveles.png);
+}
+.icono-habitaciones{
+	width:20px;
+	height:12px;
+	background-size:contain;
+	background-repeat:no-repeat;
+	background-position:center;
+	margin:0!important;
+	padding:0!important;
+	display:inline-block;
+	background-image:url(../img/iconos/habitaciones.png);
+}
+.icono-parqueos{
+	width:20px;
+	height:12px;
+	background-size:contain;
+	background-repeat:no-repeat;
+	background-position:center;
+	margin:0!important;
+	padding:0!important;
+	display:inline-block;
+	background-image:url(../img/iconos/parqueos.png);
+}
+.icono-banos{
+	width:20px;
+	height:12px;
+	background-size:contain;
+	background-repeat:no-repeat;
+	background-position:center;
+	margin:0!important;
+	padding:0!important;
+	display:inline-block;
+	background-image:url(../img/iconos/banos.png);
+}
+.propiedad, .requerimiento{
+	height:110px;
+	width:97%;
+}
+.agregar-propiedad{
+	width: 80px;
+    height: 80px;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0!important;
+    padding: 0!important;
+    position: absolute;
+    bottom: 50px;
+    right: 20px;
+    background-image: url(../img/iconos/Agregar-propiedad.png);
+    border: none;
+}
+.agregar-requerimiento{
+	width: 80px;
+    height: 80px;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0!important;
+    padding: 0!important;
+    position: absolute;
+    bottom: 50px;
+    right: 20px;
+    background-image: url(../img/iconos/Agregar-requerimiento.png);
+    border: none;
+}
+.icono-casa{
+	width: 80px;
+    height: 80px;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0!important;
+    padding: 0!important;
+    background-image: url(../img/iconos/agregar-propiedad-casa-desmarcado.png);
+    border: none;
+}
+.icono-oficina{
+	width: 80px;
+    height: 80px;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0!important;
+    padding: 0!important;
+    background-image: url(../img/iconos/agregar-propiedad-oficinas-desmarcado.png);
+    border: none;
+}
+.icono-terreno{
+	width: 80px;
+    height: 80px;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0!important;
+    padding: 0!important;
+    background-image: url(../img/iconos/agregar-propiedad-terreno-desmarcado.png);
+    border: none;
+}
+.icono-apartamento{
+	width: 80px;
+    height: 80px;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0!important;
+    padding: 0!important;
+    background-image: url(../img/iconos/agregar-propiedad-edificio-desmarcado.png);
+    border: none;
+}
+.scroll {
+   width: 200px;
+   height: 400px;
+   background: transparent;
+   overflow: scroll;
+}
+.scroll::-webkit-scrollbar {
+    width: 12px;
+}
+
+.scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: none; 
+    border-radius: 0px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    border-radius: 0px;
+    -webkit-box-shadow: none; 
+}
+.container-form{
+	background-color:white;
+	padding:20px 10px;
+	margin-bottom:10px;
+}
+.titulo-container-form{
+	color:#cccccc;
+	
+	font-size:12px!important;
+}
+.btn-form-tipo-requerimiento{
+	margin: 0 auto!important;
+    width: 90%;
+    display: block;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
 }
