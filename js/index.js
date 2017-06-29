@@ -160,20 +160,68 @@ var register = {
 			}
 		}
 };
+
 var requerimiento = {
-	requerimientoBtn: $('#agregar_requerimiento'),
 	crearScreen: $('#crear_requerimiento'),
+	btnForm: $('#requerimientoBtn'),
+	form: $('#requerimientoForm'), 
+	requerimiento: function(formData){
+		formData.action = 'crear_requerimiento';
+		formData.user_email = user.email;
+		formData.user_pass = user.pass;
+
+		console.log(JSON.stringify(formData));
+
+		if(formData.tipo_operacion==""){
+			myModal.open('Oops','Debes elegir un tipo de requerimiento');
+			return false;
+		}
+
+		if(formData.tipo_inmueble==""){
+			myModal.open('Oops','Debes elegir un inmueble');
+			return false;
+		}
+
+		$.ajax({
+            url:app.url_ajax,
+            dataType: 'json',
+            data: formData,
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+            	console.log("Entro!!");
+            	cortina.show();
+            },
+            success: function(a){
+            	console.log(JSON.stringify(a));
+            	
+            	if(a.msj_error){
+            		myModal.open('Oops',a.msj_error);
+            	}else{
+            		myModal.open('Se ha creado el requerimiento con exito.');
+            		requerimiento.toggle('hide');
+            	}
+           	    
+            },
+            complete: function(){
+            	cortina.hide();
+        	}
+       	});
+	},		
 	toggle:function(tipo){
 		if(tipo=='hide'){
 			requerimiento.crearScreen.hide('slide',{direction:'right'},'fast');
 		}else if(tipo=='show'){
 			requerimiento.crearScreen.show('slide',{direction:'right'},'fast');
 		}
-	},
-	loadEvents: function(){
-		
 	}
 };
+
+
 var app = {
     
     url : 'http://megethosinmobiliaria.com/',
@@ -185,7 +233,7 @@ var app = {
         
         //if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         //ifmovil
-    	if(false){  
+    	if(true){  
         	console.log('es movil');
         	document.addEventListener("deviceready", this.onDeviceReady, false);
         } else {
@@ -235,6 +283,7 @@ var app = {
 		  adaptiveHeight: true,
 		  arrows: false
 		});
+
         //Register
     	register.form.parsley().on('form:success',function(){
     		var formData = register.form.getFormData();
@@ -243,6 +292,16 @@ var app = {
     	register.form.parsley().on('form:submit',function(){return false;});
     	register.form.parsley().on('form:error',function(){
     		
+    	});
+
+    	//Requerimiento
+    	requerimiento.form.parsley().on('form:success',function(){
+    		var formData = requerimiento.form.getFormData();
+    		requerimiento.requerimiento(formData);
+    	});
+    	requerimiento.form.parsley().on('form:submit',function(){return false;});
+    	requerimiento.form.parsley().on('form:error',function(){
+
     	});
     	
     },	
@@ -337,4 +396,10 @@ $.fn.getFormData = function(){
 	
 	return data;
 }
+
+//REQUERIMIENTO
+
+
+
+
 

@@ -45,7 +45,7 @@
         	<div id="cortina_container" style="width:40px;height:40px;margin:75% auto;color:white;">
         	</div>
         </div>
-        <div class="screen grad nivel1" id="loginScreen" style="color:#ffffff;display:none;">
+        <div class="screen grad nivel1" id="loginScreen" style="color:#ffffff;">
             <div class="container">
                 <div class="container-flex">
                     <div id="tutorial-login" style="text-align:center;height:250px;">
@@ -296,8 +296,8 @@
                     	<form>
                     	
                     		<!-- Tipo operacion -->
-                    		<input type="radio" class="inputpz" name='tipo_operacion' value="vender">vender<br>
-                    		<input type="radio" class="inputpz" name="tipo_operacion" value="comprar">comprar<br>
+                    		<input type="radio" class="inputpz" name='tipo_operacion' value="vender" required>vender<br>
+                    		<input type="radio" class="inputpz" name="tipo_operacion" value="comprar" required>comprar<br>
                     		
                     		<!-- Tipo Inmueble -->
                     		<input type="radio" class="inputpz" name="tipo_inmueble" value="casa">casa<br>
@@ -309,7 +309,7 @@
                     		<input type="number" class="inputpz" name="habitaciones">habitaciones<br>
                     		<input type="number" class="inputpz" name="banos">banos<br>
                     		<input type="number" class="inputpz" name="niveles">niveles<br>
-                    		<input type="number" class="inputpz" name="area">area<br>
+                    		<input type="number" class="inputpz" name="areaCons">area<br>
                     		
                     		
                     		<input type="number" class="inputpz" name="dimensiones1">dimensiones1<br>
@@ -350,6 +350,7 @@
                 </div>
             </div>
 		</div>
+
 		<div class="screen nivel2" id="crear_requerimiento" style="padding:0!important;display:none;">
 			<div class="container" style="margin:0!important;padding:0!important;">
                 <div class="container-flex" style="margin:0!important;">
@@ -358,39 +359,40 @@
                         <button onclick="requerimiento.crearScreen.toggle('hide');" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
                     </div>
                     <div class="body-screen bg-gris">
-                    	<form>
+                    	<form id="requerimientoForm">
                     		<div class="container-form">
                     			<table style="width:100%;">
                     				<tr>
                     					<td colspan="2" class="titulo-container-form">
-                    					TIPO DE OPERACION
+                    					TIPO DE REQUERIMIENTO
                     					</td>
                     				</tr>
                     				<tr>
-                    					<td style="width:50%;">
+                    					<!--<td style="width:50%;">
                     						<button class="btn-form-tipo-requerimiento bg-azul color-white">COMPRAR</button>
                     					</td>
                     					<td style="width:50%;">
                     						<button class="btn-form-tipo-requerimiento bg-gris color-azul">RENTAR</button>
-                    					</td>
+                    					</td>-->
                     				</tr>
                     			</table>
                     		</div>
                     		<!-- Tipo operacion -->
-                    		<input type="radio" class="inputpz" name='tipo_operacion' value="vender">vender<br>
-                    		<input type="radio" class="inputpz" name="tipo_operacion" value="comprar">comprar<br>
+                    		<input type="radio" class="inputpz" name='tipo_operacion' value="vender" >vender<br>
+                    		<input type="radio" class="inputpz" name="tipo_operacion" value="comprar" >comprar<br>
                     		
                     		<!-- Tipo Inmueble -->
-                    		<input type="radio" class="inputpz" name="tipo_inmueble" value="casa">casa<br>
-                    		<input type="radio" class="inputpz" name="tipo_inmueble" value="apartamento">apartamento<br>
-                    		<input type="radio" class="inputpz" name="tipo_inmueble" value="terreno">terreno<br>
-                    		<input type="radio" class="inputpz" name="tipo_inmueble" value="oficina">oficina<br>
+                    		<input type="radio" class="inputpz" name="tipo_inmueble" value="casa" >casa<br>
+                    		<input type="radio" class="inputpz" name="tipo_inmueble" value="apartamento" >apartamento<br>
+                    		<input type="radio" class="inputpz" name="tipo_inmueble" value="terreno" >terreno<br>
+                    		<input type="radio" class="inputpz" name="tipo_inmueble" value="oficina" >oficina<br>
                     		
                     		<!-- Caracteristicas minimas inmueble -->
                     		<input type="number" class="inputpz" name="habitaciones">habitaciones<br>
-                    		<input type="number" class="inputpz" name="banos">banos<br>
+                    		<input type="number" class="inputpz" name="banosC">baños completos<br>
+                            <input type="number" class="inputpz" name="banosM">baños medios<br>
                     		<input type="number" class="inputpz" name="niveles">niveles<br>
-                    		<input type="number" class="inputpz" name="area">area<br>
+                    		<input type="number" class="inputpz" name="areaCons">area<br>
                     		
                     		
                     		<input type="number" class="inputpz" name="dimensiones1">dimensiones1<br>
@@ -410,7 +412,7 @@
 							<select name="forma_de_pago" class="inputpz">
 							  <option value="financiado">financiado</option>
 							  <option value="contado">Contado</option>
-							</select>
+							</select><br>
                     		<input type="text" class="inputpz" name="gastos_escrituracion">Escrituracion(si/no)<br>
                     		<input type="number" class="inputpz" name="antiguedad">Anos de construccion<br>
                     		<input type="number" class="inputpz" name="mantenimiento_mensual">Mantenimiento mensual<br>
@@ -425,6 +427,8 @@
                     		<input type="text" class="inputpz" name="nombre_cliente">Nombre cliente<br>
                     		<input type="tel" class="inputpz" name="telefono_cliente">Telefono<br>
                     		<input type="email" class="inputpz" name="correo_cliente">Email<br>
+
+                            <button type="submit" id="requerimientoBtn" class="btn btn-default btn-block requerimiento-btn">Crear</button>
                     		
                     	</form>
                     </div>
@@ -447,9 +451,9 @@
 		
 		  </div>
 		</div>
-       <!--  
+       
   		<script type="text/javascript" src="cordova.js"></script>
-  		-->
+  		
   		
         <script type="text/javascript" src="js/jQuery.js"></script> 
 

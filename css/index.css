@@ -240,6 +240,17 @@ input,select{
     height: 50px;
     border-radius: 8px;
 }
+
+.requerimiento-btn{
+    background-color: #2174c4!important;
+    margin: 20px auto;
+    width: 270px;
+    border: 1px solid white;
+    color: white!important;
+    height: 50px;
+    border-radius: 8px;
+}
+
 .tutorial-img{
 
     background-repeat: no-repeat;
