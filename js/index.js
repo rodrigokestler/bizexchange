@@ -16,12 +16,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var user = {
-	pass: null,
-	email: null,
-	role:null,
-	estado:null
-};
 var cortina = {
 		cortina: $('#cortina'),
 		container: $('#cortina_container'),
@@ -44,10 +38,36 @@ var myModal = {
 	        myModal.modal.modal();
 		}
 };
+var user = {
+	pass: null,
+	email: null,
+	role:null,
+	estado:null,
+	
+	initialize: function(){
+		user.email = window.localStorage.getItem('correo');
+        console.log(user.email);
+        user.pass = window.localStorage.getItem('password');
+        console.log(user.pass);
+        
+        if(user.email != '' && user.pass != '' && user.email != undefined && user.pass != undefined){
+        	
+        		$('#user_email_login').val(user.email);
+        		$('#user_pass_login').val(user.pass);
+        		//login.loginBtn.trigger('click');
+        		login.loginBtn.click();
+        		//var formData = login.form.getFormData();
+        		//login.login(formData);
+            
+        }
+	}
+};
+
 var login = {
 	screen: $("#loginScreen"),
 	form: $('#loginForm'),
 	btnForm: $('#loginBtn'),
+	loginBtn: $('#loginBtn'),
 	login: function(formData){
 		formData.action = 'login';
 		$.ajax({
@@ -69,11 +89,14 @@ var login = {
             	if(a.msj_error){
             		myModal.open('Oops',a.msj_error);
             	}else{
+            		
             		user.pass = formData.user_pass;
             		user.email = formData.user_email;
             		user.estado = a.data.estado;
             		user.role = a.roles[0];
             		window.localStorage.setItem('user',JSON.stringify(a));
+            		window.localStorage.setItem('correo',user.email);
+            		window.localStorage.setItem('password',user.pass);
             		login.screen.hide('slide',{direction:'left'},'fast');
             		/*
             		if(user.estado.toLowerCase()!='pendiente'){
@@ -233,7 +256,7 @@ var app = {
         
         //if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         //ifmovil
-    	if(true){  
+    	if(movil){  
         	console.log('es movil');
         	document.addEventListener("deviceready", this.onDeviceReady, false);
         } else {
@@ -265,11 +288,12 @@ var app = {
     		console.log(parent);
     		parent.scrollTo(this);
     	});
-    	console.log('load events');
+    	
     	//Login Screen
     	
     	login.form.parsley().on('form:success',function(){
     		var formData = login.form.getFormData();
+    		console.log(formData);
     		login.login(formData);
     	});
     	login.form.parsley().on('form:submit',function(){
@@ -303,7 +327,13 @@ var app = {
     	requerimiento.form.parsley().on('form:error',function(){
 
     	});
-    	
+    	console.log('load events');
+    	login.screen.hide();
+    	/*
+    	setTimeout(function(){
+    		user.initialize();
+    	},2000);
+    	*/
     },	
     onDeviceReady: function() {
         
@@ -339,7 +369,7 @@ $.fn.scrollTo = function( target, options, callback ){
 	      if (typeof callback == 'function') { callback.call(this); }
 	    });
 	  });
-	}
+	};
 
 $.fn.getFormData = function(){
 	var thisForm = this;
@@ -395,7 +425,7 @@ $.fn.getFormData = function(){
 	});
 	
 	return data;
-}
+};
 
 //REQUERIMIENTO
 
