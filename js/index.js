@@ -321,6 +321,8 @@ var app = {
     	//Requerimiento
     	requerimiento.form.parsley().on('form:success',function(){
     		var formData = requerimiento.form.getFormData();
+    		console.log('requerimiento success');
+    		
     		requerimiento.requerimiento(formData);
     	});
     	requerimiento.form.parsley().on('form:submit',function(){return false;});
@@ -328,12 +330,12 @@ var app = {
 
     	});
     	console.log('load events');
-    	login.screen.hide();
-    	/*
+    	//login.screen.hide();
+    	
     	setTimeout(function(){
     		user.initialize();
     	},2000);
-    	*/
+    	
     },	
     onDeviceReady: function() {
         

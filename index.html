@@ -372,12 +372,12 @@
     margin: 0 auto;
     height: 50px;
     font-size: 16px;
-    font-weight: bold;" class="btn btn-default btn-block bg-azul color-white">COMPRAR</button></td>
+    font-weight: bold;" class="btn btn-default btn-block bg-azul color-white" type="button">COMPRAR</button></td>
                     					<td style="width:50%"><button style="    width: 90%;
     margin: 0 auto;
     height: 50px;
     font-size: 16px;
-    font-weight: bold;" class="btn btn-default btn-block bg-gris color-azul">RENTAR</button></td>
+    font-weight: bold;" class="btn btn-default btn-block bg-gris color-azul" type="button">RENTAR</button></td>
                     				</tr>
                     				<!-- Valores comparados en backend:
                     					1. comprar
@@ -402,6 +402,8 @@
                     					<td><input class="inputpz" type="radio" name="tipo_inmueble" value="apartamento">Apartamento</td>
                     					<td><input class="inputpz" type="radio" name="tipo_inmueble" value="terreno">Terreno</td>
                     					<td><input class="inputpz" type="radio" name="tipo_inmueble" value="oficina">Oficina</td>
+                    					<td><input class="inputpz" type="radio" name="tipo_inmueble" value="terreno">Local</td>
+                    					<td><input class="inputpz" type="radio" name="tipo_inmueble" value="oficina">Edificio</td>
                     				</tr>
                     				
                     			</table>
@@ -428,8 +430,8 @@
                     								<td colspan="2"><input type="number" data-init="0" value='0' name="habitaciones" class="width100 inputpz"></td>
                     							</tr>
                     							<tr>
-                    								<td><button>-</button></td>
-                    								<td><button>+</button></td>
+                    								<td><button type="button">-</button></td>
+                    								<td><button type="button">+</button></td>
                     							</tr>
                     						</table>
                     					</td>
@@ -446,8 +448,8 @@
                     								<td colspan="2"><input type="number" data-init="0" value='0' name="banos" class="width100 inputpz"></td>
                     							</tr>
                     							<tr>
-                    								<td><button>-</button></td>
-                    								<td><button>+</button></td>
+                    								<td><button type="button">-</button></td>
+                    								<td><button type="button">+</button></td>
                     							</tr>
                     						</table>
                     					</td>
@@ -464,8 +466,8 @@
                     								<td colspan="2"><input type="number" data-init="0" value='0' name="parqueos" class="width100 inputpz"></td>
                     							</tr>
                     							<tr>
-                    								<td><button>-</button></td>
-                    								<td><button>+</button></td>
+                    								<td><button type="button">-</button></td>
+                    								<td><button type="button">+</button></td>
                     							</tr>
                     						</table>
                     					</td>
@@ -482,8 +484,8 @@
                     								<td colspan="2"><input type="number" data-init="0" value='0' name="niveles" class="width100 inputpz"></td>
                     							</tr>
                     							<tr>
-                    								<td><button>-</button></td>
-                    								<td><button>+</button></td>
+                    								<td><button type="button">-</button></td>
+                    								<td><button type="button">+</button></td>
                     							</tr>
                     						</table>
                     					</td>
@@ -511,10 +513,7 @@
 	                    								<td colspan="3">mxm</td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td colspan="3"><input type="number" data-init="0" value='0' name="dimensiones" class="width100 inputpz"></td>
-	                    							</tr>
-	                    							<tr>
-	                    								<td><input class="width100 inputpz" name="dimensiones2" type="number" placeholder="000"></td>
+	                    								<td><input class="width100 inputpz" name="dimensiones1" type="number" placeholder="000"></td>
 	                    								<td>x</td>
 	                    								<td><input class="width100 inputpz" name="dimensiones2" type="number" placeholder="000"></td>
 	                    							</tr>
@@ -533,8 +532,8 @@
 	                    								<td colspan="2"><input type="number" data-init="0" value='0' name="salas" class="width100 inputpz"></td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td><button>-</button></td>
-	                    								<td><button>+</button></td>
+	                    								<td><button type="button">-</button></td>
+	                    								<td><button type="button">+</button></td>
 	                    							</tr>
 	                    						</table>
 	                    					</td>
@@ -551,8 +550,8 @@
 	                    								<td colspan="2"><input type="number" data-init="0" value='0' name="cocinas" class="width100 inputpz"></td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td><button>-</button></td>
-	                    								<td><button>+</button></td>
+	                    								<td><button type="button">-</button></td>
+	                    								<td><button type="button">+</button></td>
 	                    							</tr>
 	                    						</table>
 	                    					</td>
@@ -571,7 +570,7 @@
                     							<tr>
                     								<td>
                     									<label  class="switch">
-														  <input type="checkbox">
+														  <input type="checkbox" name="cuarto_servicio" class="inputpz">
 														  <span class="slider round"></span>
 														</label>
 													</td>
@@ -590,7 +589,7 @@
                     							<tr>
                     								<td>
 	                    								<label  class="switch">
-														  <input type="checkbox">
+														  <input type="checkbox" name="estudio" class="inputpz">
 														  <span class="slider round"></span>
 														</label>
 													</td>
@@ -609,7 +608,7 @@
                     							<tr>
                     								<td>
 	                    								<label  class="switch">
-														  <input type="checkbox">
+														  <input type="checkbox" name="cisterna" class="inputpz">
 														  <span class="slider round"></span>
 														</label>
 													</td>
@@ -630,11 +629,11 @@
 	                    								<td colspan="3">Jardin</td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td colspan="3"><input type="number" data-init="0" value='0' name="jardin" class="width100 inputpz"></td>
+	                    								<td colspan="3"><input type="number" data-init="0" value='0' name="jardines" class="width100 inputpz"></td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td><button>-</button></td>
-	                    								<td><button>+</button></td>
+	                    								<td><button type="button">-</button></td>
+	                    								<td><button type="button">+</button></td>
 	                    							</tr>
 	                    						</table>
 	                    					</td>
@@ -651,8 +650,8 @@
 	                    								<td colspan="2"><input type="number" data-init="0" value='0' name="patio" class="width100 inputpz"></td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td><button>-</button></td>
-	                    								<td><button>+</button></td>
+	                    								<td><button type="button">-</button></td>
+	                    								<td><button type="button">+</button></td>
 	                    							</tr>
 	                    						</table>
 	                    					</td>
@@ -669,8 +668,8 @@
 	                    								<td colspan="2"><input type="number" data-init="0" value='0' name="lavanderia" class="width100 inputpz"></td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td><button>-</button></td>
-	                    								<td><button>+</button></td>
+	                    								<td><button type="button">-</button></td>
+	                    								<td><button type="button">+</button></td>
 	                    							</tr>
 	                    						</table>
 	                    					</td>
@@ -705,7 +704,7 @@
                     					<td colspan="3" style="text-align:right;">
                     						<select name="forma_de_pago" class="color-gris-claro" style="border:none;">
                     							<option value="financiado">Financiado</option>
-                    							<option value="al_contado">Al contado</option>
+                    							<option value="contado">Al contado</option>
                     						</select>
                     						
                     					</td>
@@ -719,8 +718,8 @@
                     				<tr>
                     					<td class="texto-nuevo-requerimiento">Precalificacion</td>
                     					<td colspan="4">
-                    						<label style="float:right;margin-right:8px!important;" class="switch">
-											  <input name="precalificacion" type="checkbox">
+                    						<label style="float:right;margin-right:20px!important;" class="switch">
+											  <input name="precalificacion" type="checkbox" class="inputpz">
 											  <span class="slider round"></span>
 											</label>
                     					</td>
@@ -742,14 +741,14 @@
                     				<tr>
                     					<td class="texto-nuevo-requerimiento">Ingresos</td>
                     					<td >
-                    						<select name="moneda_ingresos" class="color-gris-claro" style="border:none;">
-                    							<option>Q</option>
-                    							<option>$</option>
+                    						<select name="moneda_ingresos" class="color-gris-claro inputpz" style="border:none;">
+                    							<option value="q">Q</option>
+                    							<option value="$">$</option>
                     						</select>
                     						
                     					</td>
                     					<td colspan="3">
-                    						<input name="ingresos" class="color-gris-claro" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
+                    						<input name="ingresos" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
                     					</td>
                     				</tr>
                     				<tr style="margin:2px 0;">
@@ -760,14 +759,14 @@
                     				<tr>
                     					<td class="texto-nuevo-requerimiento">Egresos</td>
                     					<td >
-                    						<select name="moneda_egresos" class="color-gris-claro" style="border:none;">
-                    							<option>Q</option>
-                    							<option>$</option>
+                    						<select name="moneda_egresos" class="color-gris-claro inputpz" style="border:none;">
+                    							<option value="q">Q</option>
+                    							<option value="$">$</option>
                     						</select>
                     						
                     					</td>
                     					<td colspan="3">
-                    						<input name="egresos" class="color-gris-claro" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
+                    						<input name="egresos" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
                     					</td>
                     				</tr>
                     				<tr style="margin:2px 0;">
@@ -778,14 +777,14 @@
                     				<tr>
                     					<td class="texto-nuevo-requerimiento">Enganche</td>
                     					<td >
-                    						<select name="moneda_enganche" class="color-gris-claro" style="border:none;">
-                    							<option>Q</option>
-                    							<option>$</option>
+                    						<select name="moneda_enganche" class="color-gris-claro inputpz" style="border:none;">
+                    							<option value="q">Q</option>
+                    							<option value="$">$</option>
                     						</select>
                     						
                     					</td>
                     					<td colspan="3">
-                    						<input name="enganche" class="color-gris-claro" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
+                    						<input name="enganche" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
                     					</td>
                     				</tr>
                     				<tr style="margin:2px 0;">
@@ -796,7 +795,7 @@
                     				<tr>
                     					<td colspan="2" class="texto-nuevo-requerimiento">Tasa de interes anual</td>
                     					<td colspan="3">
-                    						<input type="number" name="tasa_interes" class=color-gris-claro style="text-align:center;border:none;width:100px" placeholder="000">%
+                    						<input type="number" name="tasa_interes" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px" placeholder="000">%
                     					</td>
                     				</tr>
                     				<tr style="margin:2px 0;">
@@ -807,7 +806,7 @@
                     				<tr>
                     					<td colspan="2" class="texto-nuevo-requerimiento">Plazo en años</td>
                     					<td colspan="3" style="text-align:right;">
-                    						<input type="number" name="plazo" class=color-gris-claro style="text-align:center;border:none;width:100px" placeholder="0">
+                    						<input type="number" name="plazo" class="color-gris-claroinputpz" style="text-align:center;border:none;width:100px" placeholder="0">
                     					</td>
                     				</tr>
                     				<tr style="margin:2px 0;">
@@ -818,14 +817,14 @@
                     				<tr>
                     					<td class="texto-nuevo-requerimiento">Monto a financiar maximo</td>
                     					<td >
-                    						<select name="moneda_monto_a_financiar_max" class="color-gris-claro" style="border:none;">
-                    							<option>Q</option>
-                    							<option>$</option>
+                    						<select name="moneda_monto_a_financiar_max" class="color-gris-claro inputpz" style="border:none;">
+                    							<option value="q">Q</option>
+                    							<option value="$">$</option>
                     						</select>
                     						
                     					</td>
                     					<td colspan="3">
-                    						<input name="monto_a_financiar_max" class="color-gris-claro" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
+                    						<input name="monto_a_financiar_max" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
                     					</td>
                     				</tr>
                     				<tr style="margin:2px 0;">
@@ -836,20 +835,20 @@
                     				<tr>
                     					<td class="texto-nuevo-requerimiento">Presupuesto</td>
                     					<td >
-                    						<select class="color-gris-claro" style="border:none;">
-                    							<option>Q</option>
-                    							<option>$</option>
+                    						<select name="moneda_presupuesto" class="color-gris-claro inputpz" style="border:none;">
+                    							<option value="q">Q</option>
+                    							<option value="$">$</option>
                     						</select>
                     						
                     					</td>
                     					<td>
-                    						<input class="color-gris-claro" style="text-align:center;border:none;width:100px;" type='number' placeholder="2000">
+                    						<input class="color-gris-claro inputpz" name="presupuesto_min" style="text-align:center;border:none;width:100px;" type='number' placeholder="2000">
                     					</td>
                     					<td class="color-gris-claro">
                     						a
                     					</td>
                     					<td>
-                    						<input class="color-gris-claro" type='number' style="text-align:center;border:none;width:100px;" placeholder="20000">
+                    						<input class="color-gris-claro inputpz" name="presupuesto_max" type='number' style="text-align:center;border:none;width:100px;" placeholder="20000">
                     					</td>
                     				</tr>
                     				<tr style="margin:2px 0;">
@@ -860,14 +859,14 @@
                     				<tr>
                     					<td class="texto-nuevo-requerimiento">Cuota total mensual maxima</td>
                     					<td >
-                    						<select name="cuota_mensual_max" class="color-gris-claro" style="border:none;">
-                    							<option>Q</option>
-                    							<option>$</option>
+                    						<select name="moneda_cuota_mensual_max" class="color-gris-claro inputpz" style="border:none;">
+                    							<option value="q">Q</option>
+                    							<option value="$">$</option>
                     						</select>
                     						
                     					</td>
                     					<td colspan="3">
-                    						<input name="cuota_mensual_max" class="color-gris-claro" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
+                    						<input name="cuota_mensual_max" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
                     					</td>
                     				</tr>
                     				<tr style="margin:2px 0;">
@@ -904,9 +903,9 @@
 		<script>
 		var movil=false;
 		</script>
-        <!--  
+         
   		<script type="text/javascript" src="cordova.js"></script>
-  		-->
+  		
   		
         <script type="text/javascript" src="js/jQuery.js"></script> 
 
