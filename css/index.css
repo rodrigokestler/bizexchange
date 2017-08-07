@@ -586,3 +586,139 @@ input:checked + .slider:before {
 	width:100%;
 	text-align:center;
 }
+
+input[type=radio].tipo_operacion{
+    -webkit-appearance: none;
+    background-color: transparent;
+}
+input[type=radio].tipo_operacion{
+    width: 90%;
+    margin: 0 auto;
+    height: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color:#cccccc;
+    border-radius: 5px;
+}
+input[type=radio].tipo_operacion + label{
+    display: block;
+    width: 80px;
+    margin: -53px auto 0;
+    color:#2f5da8;;
+}
+input[type=radio]:checked.tipo_operacion{
+    background-color:#2f5da8!important;
+    
+}
+input[type=radio]:checked.tipo_operacion + label{
+    color:white!important;
+}
+ input[type=radio].tipo_inmueble{
+    -webkit-appearance: none;
+    background-color: transparent;
+}
+ input[type=radio].tipo_inmueble.tipo_casa
+{
+    background-image: url(../img/iconos/agregar-propiedad-casa-desmarcado.png);
+    height:70px;
+    width:70px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+ input[type=radio]:checked.tipo_inmueble.tipo_casa
+{
+    background-image: url(../img/iconos/agregar-propiedad-apartamento-marcado.png);
+}
+ input[type=radio].tipo_inmueble.tipo_apartamento
+{
+    background-image: url(../img/iconos/agregar-propiedad-apartamento-desmarcado.png);
+    height:70px;
+    width:70px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+ input[type=radio]:checked.tipo_inmueble.tipo_apartamento
+{
+    background-image: url(../img/iconos/agregar-propiedad-apartamento-marcado.png);
+}
+ input[type=radio].tipo_inmueble.tipo_terreno
+{
+    background-image: url(../img/iconos/agregar-propiedad-terreno-desmarcado.png);
+    height:70px;
+    width:70px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+ input[type=radio]:checked.tipo_inmueble.tipo_terreno
+{
+    background-image: url(../img/iconos/agregar-propiedad-terreno-marcado.png);
+}
+ input[type=radio].tipo_inmueble.tipo_oficina
+{
+    background-image: url(../img/iconos/agregar-propiedad-oficinas-desmarcado.png);
+    height:70px;
+    width:70px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+ input[type=radio]:checked.tipo_inmueble.tipo_oficina
+{
+    background-image: url(../img/iconos/agregar-propiedad-oficinas-marcado.png);
+}
+ input[type=radio].tipo_inmueble.tipo_local
+{
+    background-image: url(../img/iconos/agregar-propiedad-locales-desmarcado.png);
+    height:70px;
+    width:70px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+ input[type=radio]:checked.tipo_inmueble.tipo_local
+{
+    background-image: url(../img/iconos/agregar-propiedad-locales-marcado.png);
+}
+ input[type=radio].tipo_inmueble.tipo_edificio
+{
+    background-image: url(../img/iconos/agregar-propiedad-edificio-desmarcado.png);
+    height:70px;
+    width:70px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+ input[type=radio]:checked.tipo_inmueble.tipo_edificio
+{
+    background-image: url(../img/iconos/agregar-propiedad-edificio-marcado.png);
+}
+.input_caract_min_inmueble{
+    border: none;
+    text-align: center;
+    margin: 0!important;
+    max-width:60px;
+}
+.titulo_caract_min_inmueble{
+    font-size: 10px;
+    text-align: center;
+}
+.btn_mas_menos{
+    background-color: lightgray;
+    border-radius: 20px;
+    height: 20px;
+    width: 20px;
+    border: none;
+    line-height: 16px;
+    font-size: 16px;
+}
+.icono_caract_min_inmueble{
+    width: 50px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin:0 auto;
+}

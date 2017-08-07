@@ -367,25 +367,17 @@
                     					TIPO DE REQUERIMIENTO
                     					</td>
                     				</tr>
-                    				<tr>
-                    					<td style="width:50%;"><button style="    width: 90%;
-    margin: 0 auto;
-    height: 50px;
-    font-size: 16px;
-    font-weight: bold;" class="btn btn-default btn-block bg-azul color-white" type="button">COMPRAR</button></td>
-                    					<td style="width:50%"><button style="    width: 90%;
-    margin: 0 auto;
-    height: 50px;
-    font-size: 16px;
-    font-weight: bold;" class="btn btn-default btn-block bg-gris color-azul" type="button">RENTAR</button></td>
-                    				</tr>
                     				<!-- Valores comparados en backend:
                     					1. comprar
                     					2. rentar
                     				 -->
                     				<tr>
-                    					<td><input class="inputpz" type="radio" name="tipo_operacion" value="comprar">comprar</td>
-                    					<td><input class="inputpz" type="radio" name="tipo_operacion" value="rentar">rentar</td>
+                    					<td><input class="inputpz tipo_operacion tipo_comprar" type="radio" name="tipo_operacion" value="comprar">
+                                        <label>COMPRAR</label>
+                                        </td>
+                    					<td><input class="inputpz tipo_operacion tipo_rentar" type="radio" name="tipo_operacion" value="rentar">
+                                            <label>RENTAR</label>
+                                        </td>
                     				</tr>
                     			</table>
                     		</div>
@@ -397,13 +389,26 @@
                     					TIPO DE INMUEBLE
                     					</td>
                     				</tr>
-                    				<tr>
-                    					<td><input class="inputpz" type="radio" name="tipo_inmueble" value="casa">Casa</td>
-                    					<td><input class="inputpz" type="radio" name="tipo_inmueble" value="apartamento">Apartamento</td>
-                    					<td><input class="inputpz" type="radio" name="tipo_inmueble" value="terreno">Terreno</td>
-                    					<td><input class="inputpz" type="radio" name="tipo_inmueble" value="oficina">Oficina</td>
-                    					<td><input class="inputpz" type="radio" name="tipo_inmueble" value="terreno">Local</td>
-                    					<td><input class="inputpz" type="radio" name="tipo_inmueble" value="oficina">Edificio</td>
+                    				<tr style="width: 97vw;height: 100px;overflow-x: scroll;display: block;">
+                                        
+                        					<td>
+                                                <input class="inputpz tipo_casa tipo_inmueble" type="radio" name="tipo_inmueble" value="casa">
+                                            </td>
+                        					<td>
+                                                <input class="inputpz tipo_apartamento tipo_inmueble" type="radio" name="tipo_inmueble" value="apartamento">
+                                            </td>
+                        					<td>
+                                                <input class="inputpz tipo_terreno tipo_inmueble" type="radio" name="tipo_inmueble" value="terreno">
+                                            </td>
+                        					<td>
+                                                <input class="inputpz tipo_oficina tipo_inmueble" type="radio" name="tipo_inmueble" value="oficina">
+                                            </td>
+                        					<td>
+                                                <input class="inputpz tipo_local tipo_inmueble" type="radio" name="tipo_inmueble" value="terreno">
+                                            </td>
+                        					<td><input class="inputpz tipo_edificio tipo_inmueble" type="radio" name="tipo_inmueble" value="oficina">
+                                            </td>
+                                        
                     				</tr>
                     				
                     			</table>
@@ -418,81 +423,91 @@
                     				</tr>
                     				<tr>
                     					<td style="width:25%;">
-                    						<table>
+                    						<table style="text-align:center">
                     							<tr>
                     								<td colspan="2">
+                                                        <div class="icono_caract_min_inmueble" style="background-image:url(../www/img/iconos/habitaciones.png)">
+                                                        </div>
                     								</td>
                     							</tr>
-                    							<tr>
-                    								<td colspan="2">Habitaciones</td>
+                    							<tr style="text-align:center;">
+                    								<td class="titulo_caract_min_inmueble" colspan="2">Habitaciones</td>
                     								</tr>
                     							<tr>
-                    								<td colspan="2"><input type="number" data-init="0" value='0' name="habitaciones" class="width100 inputpz"></td>
+                    								<td colspan="2"><input readonly class="input_caract_min_inmueble" type="number" data-init="0" value='0' name="habitaciones" class="width100 inputpz"></td>
                     							</tr>
                     							<tr>
-                    								<td><button type="button">-</button></td>
-                    								<td><button type="button">+</button></td>
+                    								<td style="text-align:right;">
+                                                        <button style="margin-right:5px;"class="btn_mas_menos" type="button">-</button></td>
+                    								<td style="text-align:left;">
+                                                        <button style="margin-left:5px;" class="btn_mas_menos" type="button">+</button></td>
                     							</tr>
                     						</table>
                     					</td>
                     					<td style="width:25%;">
-                    						<table>
+                    						<table style="text-align:center;">
                     							<tr>
                     								<td colspan="2">
+                                                        <div class="icono_caract_min_inmueble" style="background-image:url(../www/img/iconos/banos.png)">
+                                                        </div>
                     								</td>
                     							</tr>
-                    							<tr>
-                    								<td colspan="2">Baños</td>
+                    							<tr style="text-align:center;">
+                    								<td colspan="2" class="titulo_caract_min_inmueble">Baños</td>
                     								</tr>
                     							<tr>
-                    								<td colspan="2"><input type="number" data-init="0" value='0' name="banos" class="width100 inputpz"></td>
+                    								<td colspan="2"><input readonly class="input_caract_min_inmueble" type="number" data-init="0" value='0' name="banos" class="width100 inputpz"></td>
                     							</tr>
                     							<tr>
-                    								<td><button type="button">-</button></td>
-                    								<td><button type="button">+</button></td>
+                    								<td style="text-align:right;"><button style="margin-right:5px;"class="btn_mas_menos" type="button">-</button></td>
+                    								<td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos"  type="button">+</button></td>
                     							</tr>
                     						</table>
                     					</td>
                     					<td style="width:25%;">
-                    						<table>
+                    						<table style="text-align:center;">
                     							<tr>
                     								<td colspan="2">
+                                                        <div style="background-image:url(../www/img/iconos/parqueos.png)" class="icono_caract_min_inmueble" >
+                                                        </div>
                     								</td>
                     							</tr>
                     							<tr>
-                    								<td colspan="2">Parqueos</td>
+                    								<td class="titulo_caract_min_inmueble" colspan="2">Parqueos</td>
                     								</tr>
                     							<tr>
-                    								<td colspan="2"><input type="number" data-init="0" value='0' name="parqueos" class="width100 inputpz"></td>
+                    								<td colspan="2"><input readonly class="input_caract_min_inmueble" type="number" data-init="0" value='0' name="parqueos" class="width100 inputpz"></td>
                     							</tr>
                     							<tr>
-                    								<td><button type="button">-</button></td>
-                    								<td><button type="button">+</button></td>
+                    								<td style="text-align:right;"><button style="margin-right:5px;"class="btn_mas_menos" type="button">-</button></td>
+                    								<td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos" type="button">+</button></td>
                     							</tr>
                     						</table>
                     					</td>
                     					<td style="width:25%;">
-                    						<table>
+                    						<table style="text-align:center;">
                     							<tr>
                     								<td colspan="2">
+                                                        <div style="background-image:url(../www/img/iconos/niveles.png)" class="icono_caract_min_inmueble" >
+                                                        </div>
                     								</td>
                     							</tr>
                     							<tr>
-                    								<td colspan="2">Niveles</td>
+                    								<td class="titulo_caract_min_inmueble" colspan="2">Niveles</td>
                     								</tr>
                     							<tr>
-                    								<td colspan="2"><input type="number" data-init="0" value='0' name="niveles" class="width100 inputpz"></td>
+                    								<td colspan="2"><input readonly class="input_caract_min_inmueble" type="number" data-init="0" value='0' name="niveles" class="width100 inputpz"></td>
                     							</tr>
                     							<tr>
-                    								<td><button type="button">-</button></td>
-                    								<td><button type="button">+</button></td>
+                    								<td style="text-align:right;"><button style="margin-right:5px;"class="btn_mas_menos" type="button">-</button></td>
+                    								<td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos" type="button">+</button></td>
                     							</tr>
                     						</table>
                     					</td>
                     				</tr>
                     				<tr style="margin:2px 0;">
                     					<td colspan="4">
-                    						<hr style="margin:0!important;">
+                    						<hr style="margin:8px 0!important;">
                     					</td>
                     				</tr>
                     				</table>
@@ -501,71 +516,83 @@
                     				<table>
 	                    				<tr>
 	                    					<td style="width:33%;">
-	                    						<table class="table-nuevo">
+	                    						<table style="text-align:center;" class="table-nuevo">
 	                    							<tr>
 	                    								<td colspan="3">
+                                                            <div style="background-size: 107%;
+    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-dimensiones.png)" class="icono_caract_min_inmueble" >
+                                                            </div>
 	                    								</td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td colspan="3">Dimensiones</td>
+	                    								<td class="titulo_caract_min_inmueble"  colspan="3">Dimensiones</td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td colspan="3">mxm</td>
+	                    								<td class="titulo_caract_min_inmueble"  colspan="3">mxm</td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td><input class="width100 inputpz" name="dimensiones1" type="number" placeholder="000"></td>
+	                    								<td><input class="input_caract_min_inmueble width100 inputpz" name="dimensiones1" type="number" placeholder="000"></td>
 	                    								<td>x</td>
-	                    								<td><input class="width100 inputpz" name="dimensiones2" type="number" placeholder="000"></td>
+	                    								<td><input class="input_caract_min_inmueble width100 inputpz" name="dimensiones2" type="number" placeholder="000"></td>
 	                    							</tr>
 	                    						</table>
 	                    					</td>
 	                    					<td style="width:33%;">
-	                    						<table class="table-nuevo">
+	                    						<table style="text-align:center" class="table-nuevo">
 	                    							<tr>
 	                    								<td colspan="2">
+                                                            <div style="background-size:100%;
+    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-salas.png)" class="icono_caract_min_inmueble" >
+                                                            </div>
 	                    								</td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td colspan="2">Salas</td>
+	                    								<td class="titulo_caract_min_inmueble" colspan="2">Salas</td>
 	                    								</tr>
 	                    							<tr>
-	                    								<td colspan="2"><input type="number" data-init="0" value='0' name="salas" class="width100 inputpz"></td>
+	                    								<td colspan="2"><input readonly type="number" data-init="0" value='0' name="salas" class="input_caract_min_inmueble width100 inputpz"></td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td><button type="button">-</button></td>
-	                    								<td><button type="button">+</button></td>
+	                    								<td style="text-align:right;"><button style="margin-right:5px;" class="btn_mas_menos" type="button">-</button></td>
+	                    								<td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos" type="button">+</button></td>
 	                    							</tr>
 	                    						</table>
 	                    					</td>
 	                    					<td style="width:33%;">
-	                    						<table class='table-nuevo'>
+	                    						<table style="text-align:center" class='table-nuevo'>
 	                    							<tr>
 	                    								<td colspan="2">
+                                                            <div style="background-size:100%;
+    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-cocinas.png)" class="icono_caract_min_inmueble" >
+                                                            </div>
 	                    								</td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td colspan="2">Cocinas</td>
+	                    								<td class="titulo_caract_min_inmueble" colspan="2">Cocinas</td>
 	                    								</tr>
 	                    							<tr>
-	                    								<td colspan="2"><input type="number" data-init="0" value='0' name="cocinas" class="width100 inputpz"></td>
+	                    								<td colspan="2"><input readyonly type="number" data-init="0" value='0' name="cocinas" class=" input_caract_min_inmueble width100 inputpz"></td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td><button type="button">-</button></td>
-	                    								<td><button type="button">+</button></td>
+	                    								<td style="text-align:right;"><button style="margin-right:5px;" class="btn_mas_menos" type="button">-</button></td>
+	                    								<td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos" type="button">+</button></td>
 	                    							</tr>
 	                    						</table>
 	                    					</td>
 	                    				</tr>
 	                    				<!-- 2da fila -->
 	                    				<tr>
-                    					<td style="width:33%;">
-                    						<table class="table-nuevo">
+                    					<td style="width:33%;padding-top:10px;">
+                    						<table style="text-align:center" class="table-nuevo">
                     							<tr>
                     								<td colspan="">
+                                                        <div style="background-size:200%;
+    background-position: -27px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-dormitorio-servicio.png)" class="icono_caract_min_inmueble" >
+                                                            </div>
                     								</td>
                     							</tr>
                     							<tr>
-                    								<td colspan="">Dormitorio de servicio</td>
+                    								<td class="titulo_caract_min_inmueble" colspan="">Dormitorio de servicio</td>
                     							</tr>
                     							<tr>
                     								<td>
@@ -577,14 +604,17 @@
                     							</tr>
                     						</table>
                     					</td>
-                    					<td style="width:33%;">
-                    						<table class="table-nuevo">
+                    					<td style="width:33%;padding-top:10px;">
+                    						<table style="text-align:center" class="table-nuevo">
                     							<tr>
                     								<td colspan="">
+                                                        <div style="background-size:100%;
+    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-estudio.png)" class="icono_caract_min_inmueble" >
+                                                            </div>
                     								</td>
                     							</tr>
                     							<tr>
-                    								<td colspan="">Estudio</td>
+                    								<td class="titulo_caract_min_inmueble" colspan="">Estudio</td>
                     							</tr>
                     							<tr>
                     								<td>
@@ -596,14 +626,17 @@
                     							</tr>
                     						</table>
                     					</td>
-                    					<td style="width:33%;">
+                    					<td style="width:33%;padding-top:10px;">
                     						<table class="table-nuevo">
                     							<tr>
                     								<td colspan="">
+                                                        <div style="background-size:100%;
+    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-cisterna.png)" class="icono_caract_min_inmueble" >
+                                                            </div>
                     								</td>
                     							</tr>
                     							<tr>
-                    								<td colspan="">Cisterna</td>
+                    								<td class="titulo_caract_min_inmueble" colspan="">Cisterna</td>
                     							</tr>
                     							<tr>
                     								<td>
@@ -620,20 +653,23 @@
                     				<!-- 3era fila -->
                     				<tr>
 	                    					<td style="width:33%;">
-	                    						<table class="table-nuevo">
+	                    						<table style="text-align:center;" class="table-nuevo">
 	                    							<tr>
 	                    								<td colspan="3">
+                                                            <div style="background-size:100%;
+    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-cisterna.png)" class="icono_caract_min_inmueble" >
+                                                            </div>
 	                    								</td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td colspan="3">Jardin</td>
+	                    								<td class="titulo_caract_min_inmueble" colspan="3">Jardin</td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td colspan="3"><input type="number" data-init="0" value='0' name="jardines" class="width100 inputpz"></td>
+	                    								<td colspan="3"><input readonly type="number" data-init="0" value='0' name="jardines" class="input_caract_min_inmueble width100 inputpz"></td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td><button type="button">-</button></td>
-	                    								<td><button type="button">+</button></td>
+	                    								<td style="text-align:right;"><button style="margin-right:5px;" class="btn_mas_menos" type="button">-</button></td>
+                                                        <td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos" type="button">+</button></td>
 	                    							</tr>
 	                    						</table>
 	                    					</td>
@@ -641,17 +677,20 @@
 	                    						<table class="table-nuevo">
 	                    							<tr>
 	                    								<td colspan="2">
+                                                            <div style="background-size:100%;
+    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-patio.png)" class="icono_caract_min_inmueble" >
+                                                            </div>
 	                    								</td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td colspan="2">Patio</td>
+	                    								<td class="titulo_caract_min_inmueble" colspan="2">Patio</td>
 	                    								</tr>
 	                    							<tr>
-	                    								<td colspan="2"><input type="number" data-init="0" value='0' name="patio" class="width100 inputpz"></td>
+	                    								<td colspan="2"><input type="number" data-init="0" value='0' name="patio" class="input_caract_min_inmueble width100 inputpz"></td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td><button type="button">-</button></td>
-	                    								<td><button type="button">+</button></td>
+	                    								<td style="text-align:right;"><button style="margin-right:5px;" class="btn_mas_menos" type="button">-</button></td>
+                                                        <td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos" type="button">+</button></td>
 	                    							</tr>
 	                    						</table>
 	                    					</td>
@@ -659,17 +698,20 @@
 	                    						<table class='table-nuevo'>
 	                    							<tr>
 	                    								<td colspan="2">
+                                                            <div style="background-size:100%;
+    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-lavanderia.png)" class="icono_caract_min_inmueble" >
+                                                            </div>
 	                    								</td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td colspan="2">Lavanderia</td>
+	                    								<td class="titulo_caract_min_inmueble" colspan="2">Lavanderia</td>
 	                    								</tr>
 	                    							<tr>
-	                    								<td colspan="2"><input type="number" data-init="0" value='0' name="lavanderia" class="width100 inputpz"></td>
+	                    								<td colspan="2"><input readonly type="number" data-init="0" value='0' name="lavanderia" class="input_caract_min_inmueble width100 inputpz"></td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td><button type="button">-</button></td>
-	                    								<td><button type="button">+</button></td>
+	                    								<td style="text-align:right;"><button style="margin-right:5px;" class="btn_mas_menos" type="button">-</button></td>
+                                                        <td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos" type="button">+</button></td>
 	                    							</tr>
 	                    						</table>
 	                    					</td>
@@ -677,10 +719,10 @@
                     				<!-- Termina 3era fila -->
                     				<!-- 4ta fila -->
                     				<tr>
-                    					<td>Amenidades/extras
+                    					<td style="font-size:12px;">Amenidades/extras
                     					</td>
                     					<td colspan="2">
-                    						<input type="text" class="inputpz width100" name="extras" placeholder="teatro en casa, piscina, etc">
+                    						<input type="text" style="border:none;text-align:right;" class="inputpz width100" name="extras" placeholder="teatro en casa, piscina, etc">
                     					</td>
                     				</tr>
                     				<!-- Termina 4ta fila -->
@@ -903,9 +945,9 @@
 		<script>
 		var movil=false;
 		</script>
-         
+         <!--
   		<script type="text/javascript" src="cordova.js"></script>
-  		
+  		-->
   		
         <script type="text/javascript" src="js/jQuery.js"></script> 
 

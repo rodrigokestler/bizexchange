@@ -330,12 +330,12 @@ var app = {
 
     	});
     	console.log('load events');
-    	//login.screen.hide();
-    	
+    	login.screen.hide();
+    	/*
     	setTimeout(function(){
     		user.initialize();
     	},2000);
-    	
+    	*/
     },	
     onDeviceReady: function() {
         
