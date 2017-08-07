@@ -181,7 +181,7 @@
 
                         <div class="tab-content">
                           <div id="propiedades" class="tab-pane fade in active">
-                          	<button id="agregar_propiedad" class="agregar-propiedad"></button>
+                          	<button onclick="propiedad.crearScreen.toggle('show')" id="agregar_propiedad" class="agregar-propiedad" ></button>
                             <ul id="propiedades-ul" style="height:100vh;overflow-y:scroll;">
                             	
                                 <li class="propiedad">
@@ -285,71 +285,353 @@
                 </div>
             </div>
         </div>
-		<div class="screen nivel2" id="crear_propiedad" style="display:none;">
-			<div class="container-fluid">
-                <div class="row">
+
+
+		<div class="screen nivel2" id="crear_propiedad" style="padding:0!important;display:none;">
+            <div class="container" style="margin:0!important;padding:0!important;">
+                <div class="container-flex" style="margin:0!important;">
                     <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
                         <span class="text-header2">NUEVA PROPIEDAD</span>
-                        <button onclick="register.toggle('hide');" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                        <button onclick="propiedad.crearScreen.toggle('hide');" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
                     </div>
-                    <div class="body-screen">
-                    	<form>
-                    	
-                    		<!-- Tipo operacion -->
-                    		<input type="radio" class="inputpz" name='tipo_operacion' value="vender" required>vender<br>
-                    		<input type="radio" class="inputpz" name="tipo_operacion" value="comprar" required>comprar<br>
-                    		
-                    		<!-- Tipo Inmueble -->
-                    		<input type="radio" class="inputpz" name="tipo_inmueble" value="casa">casa<br>
-                    		<input type="radio" class="inputpz" name="tipo_inmueble" value="apartamento">apartamento<br>
-                    		<input type="radio" class="inputpz" name="tipo_inmueble" value="terreno">terreno<br>
-                    		<input type="radio" class="inputpz" name="tipo_inmueble" value="oficina">oficina<br>
-                    		
-                    		<!-- Caracteristicas minimas inmueble -->
-                    		<input type="number" class="inputpz" name="habitaciones">habitaciones<br>
-                    		<input type="number" class="inputpz" name="banos">banos<br>
-                    		<input type="number" class="inputpz" name="niveles">niveles<br>
-                    		<input type="number" class="inputpz" name="areaCons">area<br>
-                    		
-                    		
-                    		<input type="number" class="inputpz" name="dimensiones1">dimensiones1<br>
-                    		<input type="number" class="inputpz" name="dimensiones2">dimensiones2<br>
-                    		<input type="number" class="inputpz" name="salas">salas</br>
-                    		<input type="number" class="inputpz" name="cocinas">cocinas</br>
-                    		<input type="text" class="inputpz" name="dormitorio_servicio">dormitorio servicio(si/no)<br>
-                    		<input type="text" class="inputpz" name="cisterna">cisterna(si/no)<br>
-                    		<input type="number" class="inputpz" name="jardin">jardin<br>
-                    		<input type="number" class="inputpz" name="patio">patio<br>
-                    		<input type="number" class="inputpz" name="lavanderia">lavanderia<br>
-                    		<input type="text" class="inputpz" name="amenidades_extra">amenidades extra<br>
-                    		
-                    		<!-- Informacion Financiera -->
-                    		<input type="number" class="inputpz" name="precio">precio<br>
-                    		<input type="text" class="inputpz" name="negociable">negociable(si/no)<br>
-							<select name="forma_de_pago" class="inputpz">
-							  <option value="financiado">financiado</option>
-							  <option value="contado">Contado</option>
-							</select>
-                    		<input type="text" class="inputpz" name="gastos_escrituracion">Escrituracion(si/no)<br>
-                    		<input type="number" class="inputpz" name="antiguedad">Anos de construccion<br>
-                    		<input type="number" class="inputpz" name="mantenimiento_mensual">Mantenimiento mensual<br>
-                    		<input type="number" class="inputpz" name="iusi">Iusi trimestrial<br>
-                    		<input type="number" class="inputpz" name="valor_avaluo">Valor avaluo<br>
-                    		
-                    		<!-- Terminos de Negociacion -->
-                    		<input type="number" class="inputpz" name="mi_comision">mi comision<br>	
-                    		<input type="number" class="inputpz" name="comision_compartida">comision compartida<br>	
-                    		
-                    		<!-- Informacion del cliente -->
-                    		<input type="text" class="inputpz" name="nombre_cliente">Nombre cliente<br>
-                    		<input type="tel" class="inputpz" name="telefono_cliente">Telefono<br>
-                    		<input type="email" class="inputpz" name="correo_cliente">Email<br>
-                    		
-                    	</form>
-                    </div>
+                    <div class="body-screen bg-gris">
+                        <form id="propiedadForm">
+                            <div class="container-form">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td colspan="2" class="titulo-container-form">
+                                        TIPO DE REQUERIMIENTO
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;"><button style="    width: 90%;
+    margin: 0 auto;
+    height: 50px;
+    font-size: 16px;
+    font-weight: bold;" class="btn btn-default btn-block bg-azul color-white" type="button">VENDER</button></td>
+                                        <td style="width:50%"><button style="    width: 90%;
+    margin: 0 auto;
+    height: 50px;
+    font-size: 16px;
+    font-weight: bold;" class="btn btn-default btn-block bg-gris color-azul" type="button">RENTAR</button></td>
+                                    </tr>
+                                    <!-- Valores comparados en backend:
+                                        1. comprar
+                                        2. rentar
+                                     -->
+                                    <tr>
+                                        <td><input class="inputpz" type="radio" name="tipo_operacion" value="vender">vender</td>
+                                        <td><input class="inputpz" type="radio" name="tipo_operacion" value="rentar">rentar</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <div class="container-form">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td colspan="2" class="titulo-container-form">
+                                        TIPO DE INMUEBLE
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="inputpz" type="radio" name="tipo_inmueble" value="casa">Casa</td>
+                                        <td><input class="inputpz" type="radio" name="tipo_inmueble" value="apartamento">Apartamento</td>
+                                        <td><input class="inputpz" type="radio" name="tipo_inmueble" value="terreno">Terreno</td>
+                                        <td><input class="inputpz" type="radio" name="tipo_inmueble" value="oficina">Oficina</td>
+                                        <td><input class="inputpz" type="radio" name="tipo_inmueble" value="terreno">Local</td>
+                                        <td><input class="inputpz" type="radio" name="tipo_inmueble" value="oficina">Edificio</td>
+                                    </tr>
+                                    
+                                </table>
+                            </div>
+                            <div class="container-form">
+                                <!-- 1era tabla -->
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td colspan="4" class="titulo-container-form">
+                                        CARACTERISTICAS MINIMAS DEL INMUEBLE
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:25%;">
+                                            <table>
+                                                <tr>
+                                                    <td colspan="2">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">Habitaciones</td>
+                                                    </tr>
+                                                <tr>
+                                                    <td colspan="2"><input type="number" data-init="0" value='0' name="habitaciones" class="width100 inputpz"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><button type="button">-</button></td>
+                                                    <td><button type="button">+</button></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="width:25%;">
+                                            <table>
+                                                <tr>
+                                                    <td colspan="2">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">Baños</td>
+                                                    </tr>
+                                                <tr>
+                                                    <td colspan="2"><input type="number" data-init="0" value='0' name="banos" class="width100 inputpz"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><button type="button">-</button></td>
+                                                    <td><button type="button">+</button></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="width:25%;">
+                                            <table>
+                                                <tr>
+                                                    <td colspan="2">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">Parqueos</td>
+                                                    </tr>
+                                                <tr>
+                                                    <td colspan="2"><input type="number" data-init="0" value='0' name="parqueos" class="width100 inputpz"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><button type="button">-</button></td>
+                                                    <td><button type="button">+</button></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="width:25%;">
+                                            <table>
+                                                <tr>
+                                                    <td colspan="2">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">Niveles</td>
+                                                    </tr>
+                                                <tr>
+                                                    <td colspan="2"><input type="number" data-init="0" value='0' name="niveles" class="width100 inputpz"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><button type="button">-</button></td>
+                                                    <td><button type="button">+</button></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="4">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    </table>
+                                    <!-- Termina 1era tabla -->
+                                    <!-- 2da tabla -->
+                                    <table>
+                                        <tr>
+                                            <td style="width:33%;">
+                                                <table class="table-nuevo">
+                                                    <tr>
+                                                        <td colspan="3">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">Dimensiones</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">mxm</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input class="width100 inputpz" name="dimensiones1" type="number" placeholder="000"></td>
+                                                        <td>x</td>
+                                                        <td><input class="width100 inputpz" name="dimensiones2" type="number" placeholder="000"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="width:33%;">
+                                                <table class="table-nuevo">
+                                                    <tr>
+                                                        <td colspan="2">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">Salas</td>
+                                                        </tr>
+                                                    <tr>
+                                                        <td colspan="2"><input type="number" data-init="0" value='0' name="salas" class="width100 inputpz"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><button type="button">-</button></td>
+                                                        <td><button type="button">+</button></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="width:33%;">
+                                                <table class='table-nuevo'>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">Cocinas</td>
+                                                        </tr>
+                                                    <tr>
+                                                        <td colspan="2"><input type="number" data-init="0" value='0' name="cocinas" class="width100 inputpz"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><button type="button">-</button></td>
+                                                        <td><button type="button">+</button></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!-- 2da fila -->
+                                        <tr>
+                                        <td style="width:33%;">
+                                            <table class="table-nuevo">
+                                                <tr>
+                                                    <td colspan="">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="">Dormitorio de servicio</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label  class="switch">
+                                                          <input type="checkbox" name="cuarto_servicio" class="inputpz">
+                                                          <span class="slider round"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="width:33%;">
+                                            <table class="table-nuevo">
+                                                <tr>
+                                                    <td colspan="">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="">Estudio</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label  class="switch">
+                                                          <input type="checkbox" name="estudio" class="inputpz">
+                                                          <span class="slider round"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="width:33%;">
+                                            <table class="table-nuevo">
+                                                <tr>
+                                                    <td colspan="">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="">Cisterna</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label  class="switch">
+                                                          <input type="checkbox" name="cisterna" class="inputpz">
+                                                          <span class="slider round"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <!-- Termina 2da fila -->
+                                    <!-- 3era fila -->
+                                    <tr>
+                                            <td style="width:33%;">
+                                                <table class="table-nuevo">
+                                                    <tr>
+                                                        <td colspan="3">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">Jardin</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3"><input type="number" data-init="0" value='0' name="jardines" class="width100 inputpz"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><button type="button">-</button></td>
+                                                        <td><button type="button">+</button></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="width:33%;">
+                                                <table class="table-nuevo">
+                                                    <tr>
+                                                        <td colspan="2">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">Patio</td>
+                                                        </tr>
+                                                    <tr>
+                                                        <td colspan="2"><input type="number" data-init="0" value='0' name="patio" class="width100 inputpz"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><button type="button">-</button></td>
+                                                        <td><button type="button">+</button></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="width:33%;">
+                                                <table class='table-nuevo'>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">Lavanderia</td>
+                                                        </tr>
+                                                    <tr>
+                                                        <td colspan="2"><input type="number" data-init="0" value='0' name="lavanderia" class="width100 inputpz"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><button type="button">-</button></td>
+                                                        <td><button type="button">+</button></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    <!-- Termina 3era fila -->
+                                    <!-- 4ta fila -->
+                                    <tr>
+                                        <td>Amenidades/extras
+                                        </td>
+                                        <td colspan="2">
+                                            <input type="text" class="inputpz width100" name="extras" placeholder="teatro en casa, piscina, etc">
+                                        </td>
+                                    </tr>
+                                    <!-- Termina 4ta fila -->
+                                </table>
+                            </div>
+                            <div class="container-form">
+                                <button type="submit" id="propiedadBtn" class="btn btn-default btn-block propiedad-btn">Crear</button>
+                            </div>
+                        </form>
+                </div>
                 </div>
             </div>
-		</div>
+        </div>
+
+
 
 		<div class="screen nivel2" id="crear_requerimiento" style="padding:0!important;display:none;">
 			<div class="container" style="margin:0!important;padding:0!important;">
@@ -880,10 +1162,15 @@
                             	<button type="submit" id="requerimientoBtn" class="btn btn-default btn-block requerimiento-btn">Crear</button>
                     		</div>
                     	</form>
-                    </div>
+                </div>
                 </div>
             </div>
 		</div>
+
+
+
+        
+
 		<div id="myModal" class="modal fade" role="dialog">
 		  <div class="modal-dialog">
 		
