@@ -245,6 +245,71 @@ var requerimiento = {
 };
 
 
+
+
+
+var propiedad = {
+	crearScreen: $('#crear_propiedad'),
+	btnForm: $('#propiedadBtn'),
+	form: $('#propiedadForm'), 
+	propiedad: function(formData){
+		formData.action = 'crear_propiedad';
+		formData.user_email = user.email;
+		formData.user_pass = user.pass;
+
+		console.log(JSON.stringify(formData));
+
+		if(formData.tipo_operacion==""){
+			myModal.open('Oops','Debes elegir un tipo de requerimiento');
+			return false;
+		}
+
+		if(formData.tipo_inmueble==""){
+			myModal.open('Oops','Debes elegir un inmueble');
+			return false;
+		}
+
+		$.ajax({
+            url:app.url_ajax,
+            dataType: 'json',
+            data: formData,
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+            	console.log("Entro!!");
+            	cortina.show();
+            },
+            success: function(a){
+            	console.log(JSON.stringify(a));
+            	
+            	if(a.msj_error){
+            		myModal.open('Oops',a.msj_error);
+            	}else{
+            		myModal.open('Se ha creado la propiedad con exito.');
+            		requerimiento.toggle('hide');
+            	}
+           	    
+            },
+            complete: function(){
+            	cortina.hide();
+        	}
+       	});
+	},		
+	toggle:function(tipo){
+		if(tipo=='hide'){
+			propiedad.crearScreen.hide('slide',{direction:'right'},'fast');
+		}else if(tipo=='show'){
+			propiedad.crearScreen.show('slide',{direction:'right'},'fast');
+		}
+	}
+};
+
+
+
 var app = {
     
     url : 'http://megethosinmobiliaria.com/',
@@ -318,6 +383,9 @@ var app = {
     		
     	});
 
+
+
+
     	//Requerimiento
     	requerimiento.form.parsley().on('form:success',function(){
     		var formData = requerimiento.form.getFormData();
@@ -328,6 +396,18 @@ var app = {
     	requerimiento.form.parsley().on('form:submit',function(){return false;});
     	requerimiento.form.parsley().on('form:error',function(){
 
+    	});
+
+
+
+    	//Propiedad
+    	propiedad.form.parsley().on('form:success',function(){
+    		var formData = propiedad.form.getFormData();
+    		propiedad.propiedad(formData);
+    	});
+    	propiedad.form.parsley().on('form:submit',function(){return false;});
+    	propiedad.form.parsley().on('form:error',function(){
+    		
     	});
     	console.log('load events');
     	login.screen.hide();
