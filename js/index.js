@@ -296,10 +296,6 @@ var requerimiento = {
 	}
 };
 
-
-
-
-
 var propiedad = {
 	crearScreen: $('#crear_propiedad'),
 	btnForm: $('#propiedadBtn'),
@@ -407,7 +403,7 @@ var app = {
         
         //if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         //ifmovil
-    	if(!movil){  
+    	if(movil){  
         	console.log('es movil');
         	document.addEventListener("deviceready", this.onDeviceReady, false);
         } else {
@@ -597,6 +593,118 @@ $.fn.getFormData = function(){
 };
 
 jQuery(document).ready(function($){
+
+	$.ajax({
+	    url:app.url_ajax,
+	    dataType: 'text',
+	    data: {
+            action: "get_departamentos"
+        },
+	    type: 'post',
+	    timeout: 15000,
+	    error: function(a,b,c){
+	        console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+	        myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+	    },
+	    beforeSend: function(){
+	    	console.log("Jalando get_departamentos!!");
+	    },
+	    success: function(a){
+	    	console.log(a);
+	    	if(a.msj_error){
+	    		myModal.open('Oops',a.msj_error);
+	    	}else{
+	    		
+	    		//jQuery("#propiedades-ul").innerHTML = a;            		
+	    		jQuery("#departamento").html(a);            		
+	    		//var table = document.getElementById("tablePropiedades");
+	    		//table.innerHTML = a;
+	    		//alert(table.outerHTML);         
+	    		//table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';  		
+
+	    	}
+	   	    
+	    },
+	    complete: function(){
+
+		}
+	});
+
+	$("#departamento").change(function(){
+		var depa = $(this).val();
+		$.ajax({
+		    url:app.url_ajax,
+		    dataType: 'text',
+		    data: {
+	            action: "get_municipios",
+	            departamento: depa,
+
+	        },
+		    type: 'post',
+		    timeout: 15000,
+		    error: function(a,b,c){
+		        console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+		        myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+		    },
+		    beforeSend: function(){
+		    	console.log("Jalando get_departamentos!!");
+		    	cortina.show();
+		    },
+		    success: function(a){
+		    	console.log(a);
+		    	if(a.msj_error){
+		    		myModal.open('Oops',a.msj_error);
+		    	}else{
+		    		
+		    		//jQuery("#propiedades-ul").innerHTML = a;            		
+		    		jQuery("#municipio").html(a);            		
+		    		//var table = document.getElementById("tablePropiedades");
+		    		//table.innerHTML = a;
+		    		//alert(table.outerHTML);         
+		    		//table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';  		
+
+		    	}
+		   	    
+		    },
+		    complete: function(){
+		    	if(depa == 'GUA'){
+	    			$.ajax({
+					    url:app.url_ajax,
+					    dataType: 'text',
+					    data: {
+				            action: "get_zonas",
+				            departamento: depa,
+
+				        },
+					    type: 'post',
+					    timeout: 15000,
+					    error: function(a,b,c){
+					        console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+					        myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+					    },
+					    beforeSend: function(){
+					    	console.log("Jalando get_departamentos!!");
+					    },
+					    success: function(a){
+					   	    $("#zona").html(a);
+					    },
+					    complete: function(){
+					    	cortina.hide();
+						}
+					});
+		    	}else{
+		    		cortina.hide();
+		    		$("#zona").attr("disabled", "disabled");
+		    	}
+		    	
+			}
+		});
+	
+	});
+
+
+
+
 	$(".mas").click(function(){
 		var tr = $(this).closest('tr').prev();
 		var valor = tr.find("input").val();
@@ -628,11 +736,25 @@ jQuery(document).ready(function($){
 	$(".expandirInfo").click(function(){
 		var div = $(this).closest('tr');
 		var masInfo = div.closest('table').next();
-		//alert(div.text());
-		//console.log(masInfo.html());
 		masInfo.toggle('slow');
-		//div.toggle('slow');
+		$(".arrowD").css("display", "none");
 	});
+
+	$(".contraerInfo").click(function(){
+		$(".expandirInfo").click();
+		$(".arrowD").css("display", "block");
+	});
+
+
+
+	$("#plazoA").change(function(){
+		var anos = $(this).val();
+		var result = parseInt(anos) * 12;
+		$("#plazoM").val(result);
+	});
+
+
+
 
 });
 	
