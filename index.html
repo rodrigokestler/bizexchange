@@ -216,7 +216,7 @@
                                 <table style="width:100%;">
                                     <tr>
                                         <td colspan="2" class="titulo-container-form">
-                                        TIPO DE REQUERIMIENTO
+                                        TIPO DE OPERACION
                                         </td>
                                     </tr>
                                     <tr>
@@ -339,6 +339,8 @@
                                                     <td><button type="button">-</button></td>
                                                     <td><button type="button">+</button></td>
                                                 </tr>
+                                            <td style="width:25%;">
+                                        </td>
                                             </table>
                                         </td>
                                     </tr>
@@ -562,7 +564,7 @@
                     			<table style="width:100%;">
                     				<tr>
                     					<td colspan="2" class="titulo-container-form">
-                    					TIPO DE REQUERIMIENTO
+                    					TIPO DE OPERACION
                     					</td>
                     				</tr>
                     				<!-- Valores comparados en backend:
@@ -587,24 +589,25 @@
                     					TIPO DE INMUEBLE
                     					</td>
                     				</tr>
-                    				<tr style="width: 97vw;height: 100px;overflow-x: scroll;display: block;">
+                    				<tr style="width: 100%; height: 100px; display: block;">
                                         
-                        					<td>
+                        					<td class="icon_ti">
                                                 <input class="inputpz tipo_casa tipo_inmueble" type="radio" name="tipo_inmueble" value="casa" checked>
                                             </td>
-                        					<td>
+                        					<td class="icon_ti">
                                                 <input class="inputpz tipo_apartamento tipo_inmueble" type="radio" name="tipo_inmueble" value="apartamento">
                                             </td>
-                        					<td>
+                        					<td class="icon_ti">
                                                 <input class="inputpz tipo_terreno tipo_inmueble" type="radio" name="tipo_inmueble" value="terreno">
                                             </td>
-                        					<td>
+                        					<td class="icon_ti">
                                                 <input class="inputpz tipo_oficina tipo_inmueble" type="radio" name="tipo_inmueble" value="oficina">
                                             </td>
-                        					<td>
+                        					<td class="icon_ti">
                                                 <input class="inputpz tipo_local tipo_inmueble" type="radio" name="tipo_inmueble" value="terreno">
                                             </td>
-                        					<td><input class="inputpz tipo_edificio tipo_inmueble" type="radio" name="tipo_inmueble" value="edificio">
+                        					<td class="icon_ti">
+                                                <input class="inputpz tipo_edificio tipo_inmueble" type="radio" name="tipo_inmueble" value="edificio">
                                             </td>
                                         
                     				</tr>
@@ -613,15 +616,15 @@
                     		</div>
                     		<div class="container-form">
                     			<!-- 1era tabla -->
-                    			<table style="width:100%;">
+                    			<table style="width:100%; overflow-x: scroll !important;" >
                     				<tr>
                     					<td colspan="4" class="titulo-container-form">
                     					CARACTERISTICAS MINIMAS DEL INMUEBLE
                     					</td>
                     				</tr>
                     				<tr>
-                    					<td style="width:25%;">
-                    						<table style="text-align:center">
+                    					<td >
+                    						<table style="text-align:center; width:25% !important; float:left;">
                     							<tr>
                     								<td colspan="2">
                                                         <div class="icono_caract_min_inmueble" style="background-image:url(../www/img/iconos/habitaciones.png)">
@@ -632,7 +635,7 @@
                     								<td class="titulo_caract_min_inmueble" colspan="2">Habitaciones</td>
                     								</tr>
                     							<tr>
-                    								<td colspan="2"><input readonly class="inputpz input_caract_min_inmueble" type="number" data-init="0" value="0" name="habitaciones" class="width100 "></td>
+                    								<td colspan="2"><input  class="inputpz input_caract_min_inmueble" type="number" data-init="0" value="0" name="habitaciones" class="width100 "></td>
                     							</tr>
                     							<tr>
                     								<td style="text-align:right;">
@@ -642,8 +645,8 @@
                     							</tr>
                     						</table>
                     					</td>
-                    					<td style="width:25%;">
-                    						<table style="text-align:center;">
+                    					<td>
+                    						<table style="text-align:center; width:25% !important; float:left;">
                     							<tr>
                     								<td colspan="2">
                                                         <div class="icono_caract_min_inmueble" style="background-image:url(../www/img/iconos/banos.png)">
@@ -654,7 +657,7 @@
                     								<td colspan="2" class="titulo_caract_min_inmueble">Baños</td>
                     								</tr>
                     							<tr>
-                    								<td colspan="2"><input readonly class="inputpz input_caract_min_inmueble" type="number" data-init="0" value='0' name="banos" class="width100"></td>
+                    								<td colspan="2"><input  class="inputpz input_caract_min_inmueble" type="number" data-init="0" value='0' name="banos" class="width100"></td>
                     							</tr>
                     							<tr>
                     								<td style="text-align:right;"><button style="margin-right:5px;"class="btn_mas_menos menos" type="button">-</button></td>
@@ -662,8 +665,8 @@
                     							</tr>
                     						</table>
                     					</td>
-                    					<td style="width:25%;">
-                    						<table style="text-align:center;">
+                    					<td >
+                    						<table style="text-align:center; width:25% !important; float:left;">
                     							<tr>
                     								<td colspan="2">
                                                         <div style="background-image:url(../www/img/iconos/parqueos.png)" class="icono_caract_min_inmueble" >
@@ -674,7 +677,7 @@
                     								<td class="titulo_caract_min_inmueble" colspan="2">Parqueos</td>
                     								</tr>
                     							<tr>
-                    								<td colspan="2"><input readonly class="inputpz input_caract_min_inmueble" type="number" data-init="0" value='0' name="parqueos" class="width100 "></td>
+                    								<td colspan="2"><input  class="inputpz input_caract_min_inmueble" type="number" data-init="0" value='0' name="parqueos" class="width100 "></td>
                     							</tr>
                     							<tr>
                     								<td style="text-align:right;"><button style="margin-right:5px;"class="btn_mas_menos menos" type="button">-</button></td>
@@ -682,8 +685,8 @@
                     							</tr>
                     						</table>
                     					</td>
-                    					<td style="width:25%;">
-                    						<table style="text-align:center;">
+                    					<td >
+                    						<table style="text-align:center; width:25% !important; float:left;">
                     							<tr>
                     								<td colspan="2">
                                                         <div style="background-image:url(../www/img/iconos/niveles.png)" class="icono_caract_min_inmueble" >
@@ -694,7 +697,7 @@
                     								<td class="titulo_caract_min_inmueble" colspan="2">Niveles</td>
                     								</tr>
                     							<tr>
-                    								<td colspan="2"><input readonly class="inputpz input_caract_min_inmueble" type="number" data-init="0" value='0' name="niveles" class="width100"></td>
+                    								<td colspan="2"><input  class="inputpz input_caract_min_inmueble" type="number" data-init="0" value='0' name="niveles" class="width100"></td>
                     							</tr>
                     							<tr>
                     								<td style="text-align:right;"><button style="margin-right:5px;"class="btn_mas_menos menos" type="button">-</button></td>
@@ -702,6 +705,26 @@
                     							</tr>
                     						</table>
                     					</td>
+                                        <td >
+                                            <table style="text-align:center; width:25% !important; float:left;">
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <div style="background-image:url(../www/img/iconos/mt.png)" class="icono_caract_min_inmueble" >
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="titulo_caract_min_inmueble" colspan="2">Área</td>
+                                                    </tr>
+                                                <tr>
+                                                    <td colspan="2"><input  class="inputpz input_caract_min_inmueble" type="number" data-init="0" value='0' name="areaCons" class="width100"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:right;"><button style="margin-right:5px;"class="btn_mas_menos menos" type="button">-</button></td>
+                                                    <td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos mas" type="button">+</button></td>
+                                                </tr>
+                                            </table>
+                                        </td>
                     				</tr>
                     				<tr style="margin:2px 0;">
                     					<td colspan="4">
@@ -722,7 +745,7 @@
 	                    						<table style="text-align:center;" class="table-nuevo">
 	                    							<tr>
 	                    								<td colspan="3">
-                                                            <div style="background-size: 107%;
+                                                            <div style="background-size: 123%;
     background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-dimensiones.png)" class="icono_caract_min_inmueble" >
                                                             </div>
 	                    								</td>
@@ -753,7 +776,7 @@
 	                    								<td class="titulo_caract_min_inmueble" colspan="2">Salas</td>
 	                    								</tr>
 	                    							<tr>
-	                    								<td colspan="2"><input readonly type="number" data-init="0" value='0' name="salas" class="inputpz input_caract_min_inmueble width100"></td>
+	                    								<td colspan="2"><input  type="number" data-init="0" value='0' name="salas" class="inputpz input_caract_min_inmueble width100"></td>
 	                    							</tr>
 	                    							<tr>
 	                    								<td style="text-align:right;"><button style="margin-right:5px;" class="btn_mas_menos menos" type="button">-</button></td>
@@ -774,7 +797,7 @@
 	                    								<td class="titulo_caract_min_inmueble" colspan="2">Cocinas</td>
 	                    								</tr>
 	                    							<tr>
-	                    								<td colspan="2"><input readyonly type="number" data-init="0" value='0' name="cocinas" class=" input_caract_min_inmueble width100 inputpz"></td>
+	                    								<td colspan="2"><input  type="number" data-init="0" value='0' name="cocinas" class=" input_caract_min_inmueble width100 inputpz"></td>
 	                    							</tr>
 	                    							<tr>
 	                    								<td style="text-align:right;"><button style="margin-right:5px;" class="btn_mas_menos menos" type="button">-</button></td>
@@ -789,7 +812,7 @@
                     						<table style="text-align:center" class="table-nuevo">
                     							<tr>
                     								<td colspan="">
-                                                        <div style="background-size:200%;
+                                                        <div style="background-size:270%;
     background-position: -27px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-dormitorio-servicio.png)" class="icono_caract_min_inmueble" >
                                                             </div>
                     								</td>
@@ -843,7 +866,7 @@
                     							</tr>
                     							<tr>
                     								<td>
-	                    								<label  class="switch">
+	                    								<label class="switch">
 														  <input type="checkbox" name="cisterna" class="inputpz">
 														  <span class="slider round"></span>
 														</label>
@@ -868,7 +891,7 @@
 	                    								<td class="titulo_caract_min_inmueble" colspan="3">Jardin</td>
 	                    							</tr>
 	                    							<tr>
-	                    								<td colspan="3"><input readonly type="number" data-init="0" value='0' name="jardines" class="input_caract_min_inmueble width100 inputpz"></td>
+	                    								<td colspan="3"><input  type="number" data-init="0" value='0' name="jardines" class="input_caract_min_inmueble width100 inputpz"></td>
 	                    							</tr>
 	                    							<tr>
 	                    								<td style="text-align:right;"><button style="margin-right:5px;" class="btn_mas_menos menos" type="button">-</button></td>
@@ -901,8 +924,8 @@
 	                    						<table class='table-nuevo'>
 	                    							<tr>
 	                    								<td colspan="2">
-                                                            <div style="background-size:100%;
-    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-lavanderia.png)" class="icono_caract_min_inmueble" >
+                                                            <div style="background-size:145%;
+    background-position: -6px -3px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-lavanderia.png)" class="icono_caract_min_inmueble" >
                                                             </div>
 	                    								</td>
 	                    							</tr>
@@ -910,7 +933,7 @@
 	                    								<td class="titulo_caract_min_inmueble" colspan="2">Lavanderia</td>
 	                    								</tr>
 	                    							<tr>
-	                    								<td colspan="2"><input readonly type="number" data-init="0" value='0' name="lavanderia" class="input_caract_min_inmueble width100 inputpz"></td>
+	                    								<td colspan="2"><input type="number" data-init="0" value='0' name="lavanderia" class="input_caract_min_inmueble width100 inputpz"></td>
 	                    							</tr>
 	                    							<tr>
 	                    								<td style="text-align:right;"><button style="margin-right:5px;" class="btn_mas_menos menos" type="button">-</button></td>
@@ -929,6 +952,11 @@
                     					</td>
                     				</tr>
                     				<!-- Termina 4ta fila -->
+                                    <tr>
+                                        <td class="contraerInfo" colspan="4">
+                                            <div class="arrowU" style="background-image:url(../www/img/iconos/arrowU.png)" ></div>
+                                        </td>
+                                    </tr>
                     			</table>
                             </div>
                     		</div>
@@ -948,8 +976,7 @@
                     				<tr>
                     					<td colspan="2" class="texto-nuevo-requerimiento">Forma de pago</td>
                     					<td colspan="3" style="text-align:right;">
-                    						<select name="forma_de_pago" id="formaPago" class="color-gris-claro" style="border:none;" required>
-                                                <option value="">--Elegir--</option>
+                    						<select name="forma_de_pago" id="formaPago" class="color-gris-oscuro select_formR" style="border:none;" required>
                     							<option value="financiado">Financiado</option>
                     							<option value="contado">Al contado</option>
                     						</select>
@@ -977,8 +1004,13 @@
                         				<tr>
                         					<td colspan="2" class="texto-nuevo-requerimiento">Nucleo familiar</td>
                         					<td colspan="3" style="text-align:right;">
-                        						<select name="nucleo_familiar" class="color-gris-claro" style="border:none;">
+                        						<select name="nucleo_familiar" class="color-gris-oscuro select_formR" style="border:none;">
                         							<option value="individual">Individual</option>
+                                                    <option value="individual">Padres e hijos</option>
+                                                    <option value="individual">Hermanos</option>
+                                                    <option value="individual">Conyuges</option>
+                                                    <option value="individual">Futuros conyuges</option>
+
                         						</select>
                         						
                         					</td>
@@ -991,7 +1023,7 @@
                         				<tr>
                         					<td class="texto-nuevo-requerimiento">Ingresos</td>
                         					<td >
-                        						<select name="moneda_ingresos" class="color-gris-claro inputpz" style="border:none;">
+                        						<select name="moneda_ingresos" class="color-gris-oscuro inputpz select_formR" style="border:none;">
                         							<option value="q">Q</option>
                         							<option value="$">$</option>
                         						</select>
@@ -1013,7 +1045,7 @@
                         						
                         					</td>
                         					<td colspan="3">
-                        						<input name="egresos" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
+                        						<input name="egresos" class="color-gris-oscuro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
                         					</td>
                         				</tr>
                         				<tr style="margin:2px 0;">
@@ -1028,7 +1060,7 @@
                         						
                         					</td>
                         					<td colspan="3">
-                        						<input name="enganche" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
+                        						<input name="enganche" class="color-gris-oscuro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
                         					</td>
                         				</tr>
                         				<tr style="margin:2px 0;">
@@ -1039,7 +1071,7 @@
                         				<tr>
                         					<td colspan="2" class="texto-nuevo-requerimiento">Tasa de interes anual</td>
                         					<td colspan="3">
-                        						<input type="number" name="tasa_interes" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px" placeholder="000">%
+                        						<input type="number" name="tasa_interes" class="color-gris-oscuro inputpz" style="text-align:center;border:none;width:100px" placeholder="000">%
                         					</td>
                         				</tr>
                         				<tr style="margin:2px 0;">
@@ -1048,10 +1080,22 @@
                         					</td>
                         				</tr>
                         				<tr>
-                        					<td colspan="2" class="texto-nuevo-requerimiento">Plazo en años</td>
-                        					<td colspan="3" style="text-align:right;">
-                        						<input type="number" name="plazo" class="color-gris-claroinputpz" style="text-align:center;border:none;width:100px" placeholder="0">
+                        					
+                                            <td class="texto-nuevo-requerimiento">Plazo en años</td>
+
+                        					<td style="text-align:right;">
+                        						<input id="plazoA" type="number" name="plazo" class="color-gris-oscuro inputpz" style="text-align:center;border:none;width:50px" placeholder="0">
                         					</td>
+                                            <td >
+                                            
+                                            
+                                            </td>
+                                            <td class="texto-nuevo-requerimiento">Plazo en meses</td>
+
+                                            <td >
+                                                <input type="number" id="plazoM" class="color-gris-oscuro inputpz" style="text-align:center;border:none;width:50px" placeholder="0">
+                                            </td>
+                                            
                         				</tr>
                         				<tr style="margin:2px 0;">
                         					<td colspan="5">
@@ -1065,7 +1109,7 @@
                         						
                         					</td>
                         					<td colspan="3">
-                        						<input name="monto_a_financiar_max" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
+                        						<input name="monto_a_financiar_max" class="color-gris-oscuro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
                         					</td>
                         				</tr>
                         				<tr style="margin:2px 0;">
@@ -1083,9 +1127,9 @@
                     						
                     					</td>
                     					<td>
-                    						<input class="color-gris-claro inputpz" name="presupuesto_min" style="text-align:center;border:none;width:100px;" type='number' placeholder="2000">
+                    						<input class="color-gris-oscuro inputpz" name="presupuesto_min" style="text-align:center;border:none;width:100px;" type='number' placeholder="2000">
                     					</td>
-                    					<td class="color-gris-claro">
+                    					<td class="color-gris-oscuro">
                     						a
                     					</td>
                     					<td>
@@ -1104,7 +1148,7 @@
                     						
                     					</td>
                     					<td colspan="3">
-                    						<input name="cuota_mensual_max" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
+                    						<input name="cuota_mensual_max" class="color-gris-oscuro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
                     					</td>
                     				</tr>
                     				<tr style="margin:2px 0;">
@@ -1130,18 +1174,92 @@
                                     
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Nombre de contacto</td>
-                                        <td colspan="3"><input name="nombre_cliente" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px;" type='text'>
+                                        <td colspan="3"><input name="nombre_cliente" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text'>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Correo de contacto</td>
-                                        <td colspan="3"><input name="correo_cliente" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px;" type='text'>
+                                        <td colspan="3"><input name="correo_cliente" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text'>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Telefono de contacto</td>
-                                        <td colspan="3"><input name="telefono_cliente" id="telRegisterRequerimiento" class="color-gris-claro inputpz" style="text-align:center;border:none;width:100px;" type='number'>
+                                        <td colspan="3"><input name="telefono_cliente" id="telRegisterRequerimiento " class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='number'>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+
+                             <div class="container-form">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td colspan="5" class="titulo-container-form">
+                                        UBICACION
+                                        </td>
+                                        <td colspan="1"><button style="margin-left:5px;" class="btn_mas_menos" type="button">+</button></td>
+                                    </tr>
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="5">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Departamento</td>
+                                        <td colspan="3">
+                                            <select name="departamento" id="departamento" class="color-gris-oscuro select_formR" style="border:none;">
+                                                
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="5">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Municipio</td>
+                                        <td colspan="3">
+                                            <select name="municipio" id="municipio" class="color-gris-oscuro select_formR" style="border:none;">
+                                                
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="5">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Zona</td>
+                                        <td colspan="3">
+                                            <select name="zona" id="zona" class="color-gris-oscuro select_formR" style="border:none;">
+                                            </select>
+                                    </tr>
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="5">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Km</td>
+                                        <td colspan="3"><input name="km" id="telRegisterRequerimiento " class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='number'>
+                                        </td>
+                                    </tr>
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="5">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+
+                                     <tr>
+                                        <td colspan="3" class="texto-nuevo-requerimiento">Otras especificaciones</td>
+                                        <td colspan="2"><input name="otras_espec" id="telRegisterRequerimiento " class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" placeholder="Ej: El naranjo..." type='text'>
                                         </td>
                                     </tr>
                                 </table>
@@ -1179,9 +1297,9 @@
 		<script>
 		var movil=false;
 		</script>
+         
          <!--
-  		<script type="text/javascript" src="cordova.js"></script>
-  		-->
+  		<script type="text/javascript" src="cordova.js"></script> -->
   		
         <script type="text/javascript" src="js/jQuery.js"></script> 
 
