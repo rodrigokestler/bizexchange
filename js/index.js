@@ -94,9 +94,24 @@ var login = {
             		user.email = formData.user_email;
             		user.estado = a.data.estado;
             		user.role = a.roles[0];
+
+            		//console.log(user.estado);
+		    		if(user.estado != 'aprobado'){
+		    			$(".btnCrear").css('display', 'none !important');
+		    		}else{
+		    			$(".btnCrear").css('display', 'block !important');
+		    		}
+
             		window.localStorage.setItem('user',JSON.stringify(a));
             		window.localStorage.setItem('correo',user.email);
             		window.localStorage.setItem('password',user.pass);
+
+            		requerimiento.getRequerimientos(user.email, user.pass);
+            		propiedad.getPropiedades(user.email, user.pass);
+            		
+            		
+
+
             		login.screen.hide('slide',{direction:'left'},'fast');
             		/*
             		if(user.estado.toLowerCase()!='pendiente'){
@@ -118,6 +133,7 @@ var login = {
 		login.screen.hide('slide',{direction:'left'},'fast');
 	}
 };
+
 var register = {
 		screen: $('#registerScreen'),
 		form: $('#registerForm'),
@@ -193,17 +209,10 @@ var requerimiento = {
 		formData.user_email = user.email;
 		formData.user_pass = user.pass;
 
+		
 		console.log(JSON.stringify(formData));
+		//console.log(formData.tipo_operacion);
 
-		if(formData.tipo_operacion==""){
-			myModal.open('Oops','Debes elegir un tipo de requerimiento');
-			return false;
-		}
-
-		if(formData.tipo_inmueble==""){
-			myModal.open('Oops','Debes elegir un inmueble');
-			return false;
-		}
 
 		$.ajax({
             url:app.url_ajax,
@@ -226,6 +235,7 @@ var requerimiento = {
             		myModal.open('Oops',a.msj_error);
             	}else{
             		myModal.open('Se ha creado el requerimiento con exito.');
+            		requerimiento.getRequerimientos(user.email, user.pass);
             		requerimiento.toggle('hide');
             	}
            	    
@@ -234,7 +244,49 @@ var requerimiento = {
             	cortina.hide();
         	}
        	});
-	},		
+	},	
+	getRequerimientos:function(user_email, user_pass){
+		var formData = requerimiento.form.getFormData();
+		formData.action = 'get_requerimientos';
+		formData.user_email = user.email;
+		formData.user_pass = user.pass;
+
+		console.log(JSON.stringify(formData));
+
+		$.ajax({
+            url:app.url_ajax,
+            dataType: 'text',
+            data: formData,
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+            	console.log("Jalando requerimientos!!");
+            	//cortina.show();
+            },
+            success: function(a){
+            	console.log(a);
+            	if(a.msj_error){
+            		myModal.open('Oops',a.msj_error);
+            	}else{
+            		
+            		jQuery("#requerimientos-ul").html(a);            		
+            		//var table = document.getElementById("tablePropiedades");
+            		//table.innerHTML = a;
+            		//alert(table.outerHTML);         
+            		//table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';  		
+
+            	}
+           	    
+            },
+            complete: function(){
+            	//cortina.hide();
+        	}
+       	});
+	},	
 	toggle:function(tipo){
 		if(tipo=='hide'){
 			requerimiento.crearScreen.hide('slide',{direction:'right'},'fast');
@@ -259,16 +311,6 @@ var propiedad = {
 
 		console.log(JSON.stringify(formData));
 
-		if(formData.tipo_operacion==""){
-			myModal.open('Oops','Debes elegir un tipo de requerimiento');
-			return false;
-		}
-
-		if(formData.tipo_inmueble==""){
-			myModal.open('Oops','Debes elegir un inmueble');
-			return false;
-		}
-
 		$.ajax({
             url:app.url_ajax,
             dataType: 'json',
@@ -290,7 +332,8 @@ var propiedad = {
             		myModal.open('Oops',a.msj_error);
             	}else{
             		myModal.open('Se ha creado la propiedad con exito.');
-            		requerimiento.toggle('hide');
+            		propiedad.getPropiedades(user.email, user.pass);
+            		propiedad.toggle('hide');
             	}
            	    
             },
@@ -299,6 +342,49 @@ var propiedad = {
         	}
        	});
 	},		
+	getPropiedades: function(user_email, user_pass){
+		var formData = propiedad.form.getFormData();
+		formData.action = 'get_propiedades';
+		formData.user_email = user.email;
+		formData.user_pass = user.pass;
+
+		console.log(JSON.stringify(formData));
+
+		$.ajax({
+            url:app.url_ajax,
+            dataType: 'text',
+            data: formData,
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+            	console.log("Jalando propiedades!!");
+            	cortina.show();
+            },
+            success: function(a){
+            	console.log(a);
+            	if(a.msj_error){
+            		myModal.open('Oops',a.msj_error);
+            	}else{
+            		
+            		//jQuery("#propiedades-ul").innerHTML = a;            		
+            		jQuery("#propiedades-ul").html(a);            		
+            		//var table = document.getElementById("tablePropiedades");
+            		//table.innerHTML = a;
+            		//alert(table.outerHTML);         
+            		//table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';  		
+
+            	}
+           	    
+            },
+            complete: function(){
+            	cortina.hide();
+        	}
+       	});
+	},
 	toggle:function(tipo){
 		if(tipo=='hide'){
 			propiedad.crearScreen.hide('slide',{direction:'right'},'fast');
@@ -321,7 +407,7 @@ var app = {
         
         //if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         //ifmovil
-    	if(movil){  
+    	if(!movil){  
         	console.log('es movil');
         	document.addEventListener("deviceready", this.onDeviceReady, false);
         } else {
@@ -360,6 +446,7 @@ var app = {
     		var formData = login.form.getFormData();
     		console.log(formData);
     		login.login(formData);
+    		
     	});
     	login.form.parsley().on('form:submit',function(){
     		return false;
@@ -389,8 +476,6 @@ var app = {
     	//Requerimiento
     	requerimiento.form.parsley().on('form:success',function(){
     		var formData = requerimiento.form.getFormData();
-    		console.log('requerimiento success');
-    		
     		requerimiento.requerimiento(formData);
     	});
     	requerimiento.form.parsley().on('form:submit',function(){return false;});
@@ -426,6 +511,8 @@ var app = {
 };
 
 app.initialize();
+
+
 $.fn.loader = function(tipo, texto){
 	if(tipo==='disable'){
 		$(this).attr('disabled',true);
@@ -509,6 +596,47 @@ $.fn.getFormData = function(){
 	return data;
 };
 
+jQuery(document).ready(function($){
+	$(".mas").click(function(){
+		var tr = $(this).closest('tr').prev();
+		var valor = tr.find("input").val();
+		var suma = parseInt(valor) + 1;
+		tr.find("input").val(suma);
+		
+	});
+
+	$(".menos").click(function(){
+		var tr = $(this).closest('tr').prev();
+		var valor = tr.find("input").val();
+		if(valor > 0){
+			var resta = parseInt(valor) -1;
+			tr.find("input").val(resta);	
+		}		
+	});
+
+	/*$("#formaPago").change(function(){
+		var forma = $(this).val();
+		console.log(forma);
+		if(forma == "financiado"){
+			$(this).closest('div').css("display", "block");
+		}else if(forma == "contado"){
+			console.log($(this).parent().find('.masInfo').html());
+			//$(this).closest('div').css("display", "none");
+		}
+	});*/
+
+	$(".expandirInfo").click(function(){
+		var div = $(this).closest('tr');
+		var masInfo = div.closest('table').next();
+		//alert(div.text());
+		//console.log(masInfo.html());
+		masInfo.toggle('slow');
+		//div.toggle('slow');
+	});
+
+});
+	
+	
 //REQUERIMIENTO
 
 
