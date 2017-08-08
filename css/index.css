@@ -29,7 +29,11 @@ html, body{ margin:0; padding:0;  height:100% }
     color:#848383!important;
 }
 .color-gris-claro{
-	color:#cccccc!important;
+	color:rgb(238,240,239) !important;
+}
+
+.color-gris-oscuro{
+    color:rgb(91,91,91) !important;
 }
 .color-white{
 	color:white!important;
@@ -38,7 +42,7 @@ html, body{ margin:0; padding:0;  height:100% }
 	background-color:#2f5da8!important;
 }
 .bg-gris{
-	background-color:#cccccc!important;
+	background-color:rgb(238,240,239) !important;
 }
 .width100{
 	width:100%!important;
@@ -141,7 +145,16 @@ input,select{
     background-color:inherit;
     margin: 15px 0!important;
     position:inherit!important;
+
 }
+
+select.select_formR{
+    background-image:url(../img/iconos/arrowDB.png);
+    background-position: center right;
+    background-repeat: no-repeat;
+    background-size: 18px 100%;
+}
+
 .grad {
   background: #00a7ff; /* For browsers that do not support gradients */
   background: -webkit-radial-gradient(circle, #00a7ff, #305da6); /* Safari */
@@ -353,6 +366,7 @@ input,select{
     table-layout: fixed;
     white-space: nowrap;
 }
+
 .icono-m2{
 	width:20px;
 	height:12px;
@@ -513,10 +527,10 @@ input,select{
 	background-color:white;
 	padding:20px 10px;
 	margin-bottom:10px;
+    overflow-x: scroll !important;
 }
 .titulo-container-form{
-	color:#cccccc;
-	
+	color:rgb(151,151,151) ;
 	font-size:12px!important;
 }
 .btn-form-tipo-requerimiento{
@@ -588,7 +602,7 @@ input:checked + .slider:before {
 }
 /*termina switch*/
 .texto-nuevo-requerimiento{
-	color: #cccccc;
+	color: rgb(58,58,58) ;
     font-size: 12px!important;
 	
 }
@@ -607,7 +621,7 @@ input[type=radio].tipo_operacion{
     height: 50px;
     font-size: 16px;
     font-weight: bold;
-    background-color:#cccccc;
+    background-color:rgb(238,240,239) ;
     border-radius: 5px;
 }
 input[type=radio].tipo_operacion + label{
@@ -716,7 +730,7 @@ input[type=radio]:checked.tipo_operacion + label{
     text-align: center;
 }
 .btn_mas_menos{
-    background-color: lightgray;
+    background-color: rgb(238,240,239);
     border-radius: 20px;
     height: 20px;
     width: 20px;
@@ -725,12 +739,22 @@ input[type=radio]:checked.tipo_operacion + label{
     font-size: 16px;
 }
 .icono_caract_min_inmueble{
-    width: 50px;
+    width: 35px;
     height: 30px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
     margin:0 auto;
+}
+
+
+td.icon_ti{
+    padding-left: 3.5px;
+    padding-right: 3.5px;
+}
+
+.inputText{
+    border-bottom: 1px solid #D7D7D7 !important;
 }
 
 
@@ -741,4 +765,13 @@ input[type=radio]:checked.tipo_operacion + label{
     background-position: center;
     background-size: contain;
     margin: 0 auto;
+}
+.arrowU{
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin: 0 auto;
+    float: right;
 }
