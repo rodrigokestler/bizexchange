@@ -787,3 +787,119 @@ td.icon_ti{
     margin: 0 auto;
     float: right;
 }
+
+
+.slider_text{
+    position: absolute;
+    top: 22px;
+    font-size: 8px;
+    left: 5px;
+}
+
+
+/* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO */
+/* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO */
+/* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO */
+
+
+#nueva_propiedad_{
+    background-color: white;
+}
+
+.screen-header table tr td{
+    vertical-align: middle;
+}
+
+.text-header2{
+    margin-top: 18px !important;
+}
+
+#mapa_{
+    width: 100%;
+    height: 200px;
+    background-color: green;
+}
+
+#nueva_propiedad_ .container-flex{
+    margin: 0 auto;
+}
+
+.estrellitas table tr{
+    border-bottom: 1px solid #eaeaea;
+}
+
+.estrellitas table tr td{
+    height: 40px;
+    vertical-align: middle;
+}
+
+.estrellitas .texto-nuevo-requerimiento{
+    color: #999;
+}
+
+.rating {
+    overflow: hidden;
+    display: inline-block;
+    float: right;
+}
+
+.rating-input {
+    float: right;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: 0 0 0 -16px;
+    opacity: 0;
+    margin: 0 !important;
+    display: none;
+}
+
+.rating-star {
+    cursor: pointer;
+    position: relative;
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('../img/star.png') 0 -16px;
+    margin: 1px !important;
+}
+
+.rating-star:hover {
+    background-position: 0 0;
+}
+
+.rating-star {
+    position: relative;
+    float: right;
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('../img/star.png') 0 -16px;
+}
+
+.rating-star:hover,
+.rating-star:hover ~ .rating-star {
+    background-position: 0 0;
+}
+
+.rating-star:hover,
+.rating-star:hover ~ .rating-star,
+.rating-input:checked ~ .rating-star {
+    background-position: 0 0;
+}
+
+.rating:hover .rating-star:hover,
+.rating:hover .rating-star:hover ~ .rating-star,
+.rating-input:checked ~ .rating-star {
+    background-position: 0 0;
+}
+
+.rating-star,
+.rating:hover .rating-star {
+    position: relative;
+    float: right;
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('../img/star.png') 0 -16px;
+}
