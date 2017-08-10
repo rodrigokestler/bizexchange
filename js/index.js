@@ -722,16 +722,20 @@ jQuery(document).ready(function($){
 		}		
 	});
 
-	/*$("#formaPago").change(function(){
+	$("#formaPago").change(function(){
 		var forma = $(this).val();
 		console.log(forma);
 		if(forma == "financiado"){
-			$(this).closest('div').css("display", "block");
+			$(".masInfoFinanciera").toggle('slow');
 		}else if(forma == "contado"){
-			console.log($(this).parent().find('.masInfo').html());
-			//$(this).closest('div').css("display", "none");
+            $(".masInfoFinanciera").toggle('slow');
 		}
-	});*/
+	});
+
+
+    $("#spanPre").click(function(){
+          $(".masInfoPrecalificacion").toggle('slow');  
+    });
 
 	$(".expandirInfo").click(function(){
 		var div = $(this).closest('tr');
@@ -752,6 +756,9 @@ jQuery(document).ready(function($){
 		var result = parseInt(anos) * 12;
 		$("#plazoM").val(result);
 	});
+
+
+
 
 
 
