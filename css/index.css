@@ -350,6 +350,18 @@ select.select_formR{
     top:0;
     left:0;
 }
+
+.img-list-requerimientos{
+    height: 100%;
+    width: 80%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* position: absolute; */
+    top: 0;
+    left: 5px;
+}
+
 #propiedades-ul li, #requerimientos-ul li{
     list-style:none;
 }
