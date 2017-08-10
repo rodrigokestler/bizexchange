@@ -757,13 +757,119 @@ jQuery(document).ready(function($){
 		$("#plazoM").val(result);
 	});
 
+    $("#micomi").change(function(){
+        var precio = $("#precioP").val();
+        var to = parseInt($(this).val())*parseInt(precio);
+        var total = to / 100;
+        $("#micomitotal").val(total);
+    });
 
+    $("#comicompar").change(function(){
+        var totalcomi = $("#micomitotal").val();
+        var to = parseInt($(this).val())*parseInt(totalcomi);;
+        var total = to / 100;
+        $("#comicompartotal").val(total);
+    });
 
+    api_mapa.init();
 
 
 
 
 });
+
+
+//AGREGADO POR DIEGO
+
+
+var api_mapa = {
+
+    data: null, 
+        
+    map: null,  
+    
+    markers: [],
+    
+    success: function(position){                
+        //si queres centrar el mapa en la marca.
+        api_mapa.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));        
+        api_mapa.set_marker(position.coords.latitude,position.coords.longitude);
+    },
+    
+    error: function(gps_error){
+        console.log(JSON.stringify(gps_error));
+        api_mapa.clean_markers();
+    },
+    
+    init: function(){
+        
+        navigator.geolocation.getCurrentPosition(api_mapa.success,api_mapa.error,{ timeout: 30000 });
+        
+        api_mapa.appendMapScript();
+    },
+    
+    appendMapScript: function() {
+        if (typeof google === 'object' && typeof google.maps === 'object') {
+            api_mapa.handleApiReady();
+        } else {
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.google.com/maps/api/js?sensor=false&libraries=geometry&callback=api_mapa.handleApiReady";
+            document.body.appendChild(script);
+        }
+    },
+    
+    clean_markers: function(){
+        for (var i = 0; i < api_mapa.markers.length; i++) {
+            api_mapa.markers[i].setMap(null);
+        }
+        api_mapa.markers = [];  
+    },
+    
+    set_marker: function(lat,lon){
+        //aqui limpiamos las marcas actuales.
+        for (var i = 0; i < api_mapa.markers.length; i++) {
+            api_mapa.markers[i].setMap(null);
+        }
+        api_mapa.markers = [];  
+        
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat, lon),
+            map: api_mapa.map,
+            info: {
+                1: 'aqui va un JSON con data adicional que querras sacar'
+            }
+        });
+            marker.addListener('click', function() {
+                api_mapa.show_details(this);
+        });
+
+        api_mapa.markers.push(marker);
+    },
+    
+    handleApiReady: function() {
+                
+        var center = new google.maps.LatLng(14.598497, -90.507067); //centro en zona 10
+        var myOptions = {
+            zoom: 14,
+            center: center,       
+        }
+        api_mapa.map = new google.maps.Map(document.getElementById("mapa_"), myOptions);
+        
+       
+    },
+    
+    ir: function(lat,lng){
+        window.open("geo:"+lat+","+lng,'_system');
+    },
+    
+    finish: function(){
+        api_mapa.markers = null;  
+        api_mapa.map = null;  
+    }
+
+};
+
 	
 	
 //REQUERIMIENTO
