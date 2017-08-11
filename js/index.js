@@ -210,9 +210,35 @@ var requerimiento = {
         var cant_ubicaciones = $('.ubicacion-requerimiento').length;
         console.log(cant_ubicaciones);
         var id = cant_ubicaciones + 1;
-        requerimiento.containerUbicaciones.append('<br><br><div class="ubicacion-requerimiento">'
+        requerimiento.containerUbicaciones.append('<div class="ubicacion-requerimiento">'
                                        +' <table style="width:100%;">'
-
+                                           +' <tr style="margin:2px 0;">'
+                                             +'   <td colspan="6">'
+                                               +'     <hr style="margin:0!important;">'
+                                                +' </td>' 
+                                            +' </tr>' 
+                                            
+                                            +' <tr>' 
+                                               +'  <td colspan="2" class="texto-nuevo-requerimiento">Departamento</td>' 
+                                                +' <td colspan="3">' 
+                                                +'     <select name="departamento-'+id+'" class="color-gris-oscuro select_formR departamento inputpz" style="border:none;">' 
+                                                        
+                                                 +'    </select>' 
+                                               +'  </td>' 
+                                           +'  </tr>' 
+                                           +'  <tr style="margin:2px 0;">' 
+                                             +'    <td colspan="5">' 
+                                             +'        <hr style="margin:0!important;">' 
+                                               +'  </td>' 
+                                           +'  </tr>' 
+                                           +'  <tr>' 
+                                               +'  <td colspan="2" class="texto-nuevo-requerimiento">Municipio</td>' 
+                                               +'  <td colspan="3">' 
+                                               +'      <select name="municipio-'+id+'"  class="color-gris-oscuro select_formR municipio inputpz" style="border:none;">' 
+                                                        
+                                                  +'   </select>' 
+                                               +'  </td>' 
+                                           +'  </tr>' 
                                             +' <tr style="margin:2px 0;">' 
                                                +'  <td colspan="5">' 
                                                  +'   <hr style="margin:0!important;">' 
