@@ -285,8 +285,8 @@
                                                 <tr style="text-align:center;">
                                                     <td class="titulo_caract_min_inmueble" colspan="2">Habitaciones</td>
                                                     </tr>
-                                                <tr>
-                                                    <td colspan="2"><input  class="inputpz input_caract_min_inmueble" type="number" data-init="0" value="0" name="habitaciones" class="width100 "></td>
+                                                <tr> 
+                                                    <td colspan="2"><input  class="input_caract_min_inmueble width100 inputpz " type="number" data-init="0" value="0" name="habitaciones" ></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align:right;">
@@ -308,7 +308,7 @@
                                                     <td colspan="2" class="titulo_caract_min_inmueble">Baños</td>
                                                     </tr>
                                                 <tr>
-                                                    <td colspan="2"><input  class="inputpz input_caract_min_inmueble" type="number" data-init="0" value='0' name="banos" class="width100"></td>
+                                                    <td colspan="2"><input  class="input_caract_min_inmueble inputpz width100" type="number" data-init="0" value='0' name="banos"></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align:right;"><button style="margin-right:5px;"class="btn_mas_menos menos" type="button">-</button></td>
@@ -328,7 +328,7 @@
                                                     <td class="titulo_caract_min_inmueble" colspan="2">Parqueos</td>
                                                     </tr>
                                                 <tr>
-                                                    <td colspan="2"><input  class="inputpz input_caract_min_inmueble" type="number" data-init="0" value='0' name="parqueos" class="width100 "></td>
+                                                    <td colspan="2"><input  class="input_caract_min_inmueble inputpz width100" type="number" data-init="0" value='0' name="parqueos"></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align:right;"><button style="margin-right:5px;"class="btn_mas_menos menos" type="button">-</button></td>
@@ -348,7 +348,7 @@
                                                     <td class="titulo_caract_min_inmueble" colspan="2">Niveles</td>
                                                     </tr>
                                                 <tr>
-                                                    <td colspan="2"><input  class="inputpz input_caract_min_inmueble" type="number" data-init="0" value='0' name="niveles" class="width100"></td>
+                                                    <td colspan="2"><input  class="input_caract_min_inmueble inputpz width100" type="number" data-init="0" value='0' name="niveles" ></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align:right;"><button style="margin-right:5px;"class="btn_mas_menos menos" type="button">-</button></td>
@@ -368,7 +368,7 @@
                                                     <td class="titulo_caract_min_inmueble" colspan="2">Área</td>
                                                     </tr>
                                                 <tr>
-                                                    <td colspan="2"><input  class="inputpz input_caract_min_inmueble" type="number" data-init="0" value='0' name="areaCons" class="width100"></td>
+                                                    <td colspan="2"><input  class="input_caract_min_inmueble inputpz width100" type="number" data-init="0" value='0' name="areaCons"></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align:right;"><button style="margin-right:5px;"class="btn_mas_menos menos" type="button">-</button></td>
@@ -448,7 +448,7 @@
                                                         <td class="titulo_caract_min_inmueble" colspan="2">Cocinas</td>
                                                         </tr>
                                                     <tr>
-                                                        <td colspan="2"><input  type="number" data-init="0" value='0' name="cocinas" class=" input_caract_min_inmueble width100 inputpz"></td>
+                                                        <td colspan="2"><input  type="number" data-init="0" value='0' name="cocinas" class="input_caract_min_inmueble width100 inputpz"></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="text-align:right;"><button style="margin-right:5px;" class="btn_mas_menos menos" type="button">-</button></td>
@@ -596,10 +596,10 @@
                                     <!-- Termina 3era fila -->
                                     <!-- 4ta fila -->
                                     <tr>
-                                        <td style="font-size:12px;">Direccion
+                                        <td style="font-size:12px;">Amenidades/extras
                                         </td>
                                         <td colspan="2">
-                                            <input type="text" style="border:none;text-align:right; width: 150px !important;" class="inputpz width100" name="direccion_exacta" placeholder="teatro en casa, piscina, etc">
+                                            <input type="text" style="border:none;text-align:right; width: 150px !important;" class="inputpz width100" name="extras" placeholder="teatro en casa, piscina, etc">
                                         </td>
                                     </tr>
                                     <!-- Termina 4ta fila -->
@@ -654,7 +654,7 @@
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Forma de pago</td>
                                         <td colspan="3" style="text-align:right;">
-                                            <select name="forma_de_pago"  class="color-gris-oscuro select_formR" style="border:none;" required>
+                                            <select name="forma_de_pago"  class="color-gris-oscuro select_formR inputpz" style="border:none;" required>
                                                 <option value="contado">Al contado</option>
                                                 <option value="financiado">Financiado</option>
                                             </select>
@@ -697,7 +697,6 @@
                                         <tr>
                                             <td colspan="" class="texto-nuevo-requerimiento">Mantenimiento mensual</td>
                                             <td colspan="3">
-                                                Q
                                                 <input name="mantenimiento" class="color-gris-oscuro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
                                             </td>
                                         </tr>
@@ -710,7 +709,6 @@
                                         <tr>
                                             <td colspan="2" class="texto-nuevo-requerimiento">IUSI trimestral</td>
                                             <td colspan="3">
-                                                Q
                                                 <input name="iusi" class="color-gris-oscuro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
                                             </td>
                                         </tr>
@@ -723,7 +721,6 @@
                                         <tr>
                                             <td colspan="2" class="texto-nuevo-requerimiento">Valor avaluo</td>
                                             <td colspan="3">
-                                                Q
                                                 <input name="avaluo" class="color-gris-oscuro inputpz" style="text-align:center;border:none;width:100px;" type='number' placeholder="000">
                                             </td>
                                         </tr>
@@ -834,7 +831,7 @@
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Departamento</td>
                                         <td colspan="3">
-                                            <select name="departamento"  class="color-gris-oscuro select_formR departamento" style="border:none;">
+                                            <select name="departamento"  class="color-gris-oscuro select_formR departamento inputpz" style="border:none;">
                                                 
                                             </select>
                                         </td>
@@ -847,7 +844,7 @@
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Municipio</td>
                                         <td colspan="3">
-                                            <select name="municipio" class="color-gris-oscuro select_formR municipio" style="border:none;">
+                                            <select name="municipio" class="color-gris-oscuro select_formR municipio inputpz" style="border:none;">
                                                 
                                             </select>
                                         </td>
@@ -861,7 +858,7 @@
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Zona</td>
                                         <td colspan="3">
-                                            <select name="zona" class="color-gris-oscuro select_formR zona" style="border:none;">
+                                            <select name="zona" class="color-gris-oscuro select_formR zona inputpz" style="border:none;">
                                             </select>
                                     </tr>
                                     <tr style="margin:2px 0;">
@@ -882,8 +879,8 @@
                                     </tr>
 
                                      <tr>
-                                        <td colspan="3" class="texto-nuevo-requerimiento">Otras especificaciones</td>
-                                        <td colspan="2" style="text-align: rigth;"><input name="otras_espec" id="telRegisterRequerimiento " class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" placeholder="Ej: El naranjo..." type='text'>
+                                        <td colspan="3" class="texto-nuevo-requerimiento">Direccion</td>
+                                        <td colspan="2" style="text-align: rigth;"><input name="direccion_exacta" id="telRegisterRequerimiento " class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" placeholder="Ej: El naranjo..." type='text'>
                                         </td>
                                     </tr>
                                 </table>
@@ -929,15 +926,15 @@
                                                         <td class="titulo-container-form">COMUNIDAD</td>
                                                         <td style="width: 15%;">
                                                             <span class="rating">
-                                                                <input type="radio" class="rating-input inputpz" name="comunidad" id="rating-comunidad-1-5" >
+                                                                <input type="radio" class="rating-input inputpz" name="comunidad" id="rating-comunidad-1-5" value="5" >
                                                                 <label for="rating-comunidad-1-5" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="comunidad" id="rating-comunidad-1-4" >
+                                                                <input type="radio" class="rating-input inputpz" name="comunidad" id="rating-comunidad-1-4" value="4" >
                                                                 <label for="rating-comunidad-1-4" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="comunidad" id="rating-comunidad-1-3" >
+                                                                <input type="radio" class="rating-input inputpz" name="comunidad" id="rating-comunidad-1-3" value="3" >
                                                                 <label for="rating-comunidad-1-3" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="comunidad" id="rating-comunidad-1-2">
+                                                                <input type="radio" class="rating-input inputpz" name="comunidad" id="rating-comunidad-1-2" value="2" >
                                                                 <label for="rating-comunidad-1-2" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="comunidad" id="rating-comunidad-1-1">
+                                                                <input type="radio" class="rating-input inputpz" name="comunidad" id="rating-comunidad-1-1" value="1" >
                                                                 <label for="rating-comunidad-1-1" class="rating-star"></label>
                                                             </span>
                                                         </td>
@@ -946,15 +943,15 @@
                                                         <td class="texto-nuevo-requerimiento">Seguridad</td>
                                                         <td style="width: 30%">                                                                                                                                                    
                                                             <span class="rating">
-                                                                <input type="radio" class="rating-input inputpz" name="seguridad" id="rating-seguridad-1-5" >
+                                                                <input type="radio" class="rating-input inputpz" name="seguridad" id="rating-seguridad-1-5" value="5" >
                                                                 <label for="rating-seguridad-1-5" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="seguridad" id="rating-seguridad-1-4" >
+                                                                <input type="radio" class="rating-input inputpz" name="seguridad" id="rating-seguridad-1-4" value="4" >
                                                                 <label for="rating-seguridad-1-4" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="seguridad" id="rating-seguridad-1-3" >
+                                                                <input type="radio" class="rating-input inputpz" name="seguridad" id="rating-seguridad-1-3" value="3" >
                                                                 <label for="rating-seguridad-1-3" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="seguridad" id="rating-seguridad-1-2" >
+                                                                <input type="radio" class="rating-input inputpz" name="seguridad" id="rating-seguridad-1-2" value="2" >
                                                                 <label for="rating-seguridad-1-2" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="seguridad" id="rating-seguridad-1-1" >
+                                                                <input type="radio" class="rating-input inputpz" name="seguridad" id="rating-seguridad-1-1" value="1" >
                                                                 <label for="rating-seguridad-1-1" class="rating-star"></label>
                                                             </span>
                                                         </td>
@@ -963,15 +960,15 @@
                                                         <td class="texto-nuevo-requerimiento">Accesos</td>
                                                         <td style="width: 30%">                                                    
                                                             <span class="rating">
-                                                                <input type="radio" class="rating-input inputpz" name="accesos" id="rating-accesos-1-5" >
+                                                                <input type="radio" class="rating-input inputpz" name="accesos" id="rating-accesos-1-5" value="5" >
                                                                 <label for="rating-accesos-1-5" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="accesos" id="rating-accesos-1-4" >
+                                                                <input type="radio" class="rating-input inputpz" name="accesos" id="rating-accesos-1-4" value="4" >
                                                                 <label for="rating-accesos-1-4" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="accesos" id="rating-accesos-1-3" >
+                                                                <input type="radio" class="rating-input inputpz" name="accesos" id="rating-accesos-1-3" value="3" >
                                                                 <label for="rating-accesos-1-3" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="accesos" id="rating-accesos-1-2" >
+                                                                <input type="radio" class="rating-input inputpz" name="accesos" id="rating-accesos-1-2" value="2" >
                                                                 <label for="rating-accesos-1-2" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="accesos" id="rating-accesos-1-1" >
+                                                                <input type="radio" class="rating-input inputpz" name="accesos" id="rating-accesos-1-1" value="1" >
                                                                 <label for="rating-accesos-1-1" class="rating-star"></label>
                                                             </span>
                                                         </td>
@@ -980,15 +977,15 @@
                                                         <td class="texto-nuevo-requerimiento">Agua</td>
                                                         <td style="width: 30%">                                                    
                                                             <span class="rating">
-                                                                <input type="radio" class="rating-input inputpz" name="agua" id="rating-agua-1-5" >
+                                                                <input type="radio" class="rating-input inputpz" name="agua" id="rating-agua-1-5" value="5" >
                                                                 <label for="rating-agua-1-5" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="agua" id="rating-agua-1-4" >
+                                                                <input type="radio" class="rating-input inputpz" name="agua" id="rating-agua-1-4" value="4" >
                                                                 <label for="rating-agua-1-4" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="agua" id="rating-agua-1-3" >
+                                                                <input type="radio" class="rating-input inputpz" name="agua" id="rating-agua-1-3" value="3" >
                                                                 <label for="rating-agua-1-3" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="agua" id="rating-agua-1-2" >
+                                                                <input type="radio" class="rating-input inputpz" name="agua" id="rating-agua-1-2" value="2" >
                                                                 <label for="rating-agua-1-2" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="agua" id="rating-agua-1-1">
+                                                                <input type="radio" class="rating-input inputpz" name="agua" id="rating-agua-1-1" value="1" >
                                                                 <label for="rating-agua-1-1" class="rating-star"></label>
                                                             </span>
                                                         </td>
@@ -997,15 +994,15 @@
                                                         <td class="texto-nuevo-requerimiento">Transporte público</td>
                                                         <td style="width: 30%">                                                    
                                                             <span class="rating">
-                                                                <input type="radio" class="rating-input inputpz" name="transpublico" id="rating-transpublico-1-5" >
+                                                                <input type="radio" class="rating-input inputpz" name="transpublico" id="rating-transpublico-1-5" value="5" >
                                                                 <label for="rating-transpublico-1-5" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="transpublico" id="rating-transpublico-1-4" >
+                                                                <input type="radio" class="rating-input inputpz" name="transpublico" id="rating-transpublico-1-4" value="4" >
                                                                 <label for="rating-transpublico-1-4" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="transpublico" id="rating-transpublico-1-3" >
+                                                                <input type="radio" class="rating-input inputpz" name="transpublico" id="rating-transpublico-1-3" value="3" >
                                                                 <label for="rating-transpublico-1-3" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="transpublico" id="rating-transpublico-1-2" >
+                                                                <input type="radio" class="rating-input inputpz" name="transpublico" id="rating-transpublico-1-2" value="2" >
                                                                 <label for="rating-transpublico-1-2" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="transpublico" id="rating-transpublico-1-1" >
+                                                                <input type="radio" class="rating-input inputpz" name="transpublico" id="rating-transpublico-1-1" value="1" >
                                                                 <label for="rating-transpublico-1-1" class="rating-star"></label>
                                                             </span>
                                                         </td>
@@ -1014,15 +1011,15 @@
                                                         <td class="texto-nuevo-requerimiento">Tránsito vehícular</td>
                                                         <td style="width: 30%">                                                    
                                                             <span class="rating">
-                                                                <input type="radio" class="rating-input inputpz" name="tranvehi" id="rating-tranvehi-1-5" >
+                                                                <input type="radio" class="rating-input inputpz" name="tranvehi" id="rating-tranvehi-1-5" value="5" >
                                                                 <label for="rating-tranvehi-1-5" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="tranvehi" id="rating-tranvehi-1-4" >
+                                                                <input type="radio" class="rating-input inputpz" name="tranvehi" id="rating-tranvehi-1-4" value="4" >
                                                                 <label for="rating-tranvehi-1-4" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="tranvehi" id="rating-tranvehi-1-3" >
+                                                                <input type="radio" class="rating-input inputpz" name="tranvehi" id="rating-tranvehi-1-3" value="3" >
                                                                 <label for="rating-tranvehi-1-3" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="tranvehi" id="rating-tranvehi-1-2" >
+                                                                <input type="radio" class="rating-input inputpz" name="tranvehi" id="rating-tranvehi-1-2" value="2" >
                                                                 <label for="rating-tranvehi-1-2" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="tranvehi" id="rating-tranvehi-1-1" >
+                                                                <input type="radio" class="rating-input inputpz" name="tranvehi" id="rating-tranvehi-1-1" value="1" >
                                                                 <label for="rating-tranvehi-1-1" class="rating-star"></label>
                                                             </span>
                                                         </td>
@@ -1031,15 +1028,15 @@
                                                         <td class="texto-nuevo-requerimiento">Comunidades Colindantes</td>
                                                         <td style="width: 30%">                                                    
                                                             <span class="rating">
-                                                                <input type="radio" class="rating-input inputpz" name="colindantes" id="rating-colindantes-1-5" >
+                                                                <input type="radio" class="rating-input inputpz" name="colindantes" id="rating-colindantes-1-5" value="5" >
                                                                 <label for="rating-colindantes-1-5" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="colindantes" id="rating-colindantes-1-4" >
+                                                                <input type="radio" class="rating-input inputpz" name="colindantes" id="rating-colindantes-1-4" value="4" >
                                                                 <label for="rating-colindantes-1-4" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="colindantes" id="rating-colindantes-1-3" >
+                                                                <input type="radio" class="rating-input inputpz" name="colindantes" id="rating-colindantes-1-3" value="3" >
                                                                 <label for="rating-colindantes-1-3" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="colindantes" id="rating-colindantes-1-2" >
+                                                                <input type="radio" class="rating-input inputpz" name="colindantes" id="rating-colindantes-1-2" value="2" >
                                                                 <label for="rating-colindantes-1-2" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="colindantes" id="rating-colindantes-1-1" >
+                                                                <input type="radio" class="rating-input inputpz" name="colindantes" id="rating-colindantes-1-1" value="1" >
                                                                 <label for="rating-colindantes-1-1" class="rating-star"></label>
                                                             </span>
                                                         </td>
@@ -1048,15 +1045,15 @@
                                                         <td class="texto-nuevo-requerimiento">Áreas de recreacion</td>
                                                         <td style="width: 30%">                                                    
                                                             <span class="rating">
-                                                                <input type="radio" class="rating-input inputpz" name="recreacion" id="rating-recreacion-1-5" >
+                                                                <input type="radio" class="rating-input inputpz" name="recreacion" id="rating-recreacion-1-5" value="5" >
                                                                 <label for="rating-recreacion-1-5" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="recreacion" id="rating-recreacion-1-4" >
+                                                                <input type="radio" class="rating-input inputpz" name="recreacion" id="rating-recreacion-1-4" value="4" >
                                                                 <label for="rating-recreacion-1-4" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="recreacion" id="rating-recreacion-1-3" >
+                                                                <input type="radio" class="rating-input inputpz" name="recreacion" id="rating-recreacion-1-3" value="3" >
                                                                 <label for="rating-recreacion-1-3" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="recreacion" id="rating-recreacion-1-2" >
+                                                                <input type="radio" class="rating-input inputpz" name="recreacion" id="rating-recreacion-1-2" value="2" >
                                                                 <label for="rating-recreacion-1-2" class="rating-star"></label>
-                                                                <input type="radio" class="rating-input inputpz" name="recreacion" id="rating-recreacion-1-1" >
+                                                                <input type="radio" class="rating-input inputpz" name="recreacion" id="rating-recreacion-1-1" value="1" >
                                                                 <label for="rating-recreacion-1-1" class="rating-star"></label>
                                                             </span>
                                                         </td>
@@ -1181,7 +1178,6 @@
                     								<td colspan="2" class="titulo_caract_min_inmueble">Baños</td>
                     								</tr>
                     							<tr>
-
                     								<td colspan="2"><input  class="inputpz input_caract_min_inmueble" type="number" data-init="0" value='0' name="banos" class="width100"></td>
                     							</tr>
                     							<tr>
