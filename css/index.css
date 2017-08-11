@@ -29,7 +29,11 @@ html, body{ margin:0; padding:0;  height:100% }
     color:#848383!important;
 }
 .color-gris-claro{
-	color:#cccccc!important;
+	color:rgb(238,240,239) !important;
+}
+
+.color-gris-oscuro{
+    color:rgb(91,91,91) !important;
 }
 .color-white{
 	color:white!important;
@@ -38,7 +42,7 @@ html, body{ margin:0; padding:0;  height:100% }
 	background-color:#2f5da8!important;
 }
 .bg-gris{
-	background-color:#cccccc!important;
+	background-color:rgb(238,240,239) !important;
 }
 .width100{
 	width:100%!important;
@@ -141,7 +145,16 @@ input,select{
     background-color:inherit;
     margin: 15px 0!important;
     position:inherit!important;
+
 }
+
+select.select_formR{
+    background-image:url(../img/iconos/arrowDB.png);
+    background-position: center right;
+    background-repeat: no-repeat;
+    background-size: 18px 100%;
+}
+
 .grad {
   background: #00a7ff; /* For browsers that do not support gradients */
   background: -webkit-radial-gradient(circle, #00a7ff, #305da6); /* Safari */
@@ -337,6 +350,18 @@ input,select{
     top:0;
     left:0;
 }
+
+.img-list-requerimientos{
+    height: 100%;
+    width: 80%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* position: absolute; */
+    top: 0;
+    left: 5px;
+}
+
 #propiedades-ul li, #requerimientos-ul li{
     list-style:none;
 }
@@ -353,6 +378,7 @@ input,select{
     table-layout: fixed;
     white-space: nowrap;
 }
+
 .icono-m2{
 	width:20px;
 	height:12px;
@@ -513,10 +539,10 @@ input,select{
 	background-color:white;
 	padding:20px 10px;
 	margin-bottom:10px;
+    overflow-x: scroll !important;
 }
 .titulo-container-form{
-	color:#cccccc;
-	
+	color:rgb(151,151,151) ;
 	font-size:12px!important;
 }
 .btn-form-tipo-requerimiento{
@@ -588,7 +614,7 @@ input:checked + .slider:before {
 }
 /*termina switch*/
 .texto-nuevo-requerimiento{
-	color: #cccccc;
+	color: rgb(58,58,58) ;
     font-size: 12px!important;
 	
 }
@@ -607,7 +633,7 @@ input[type=radio].tipo_operacion{
     height: 50px;
     font-size: 16px;
     font-weight: bold;
-    background-color:#cccccc;
+    background-color:rgb(238,240,239) ;
     border-radius: 5px;
 }
 input[type=radio].tipo_operacion + label{
@@ -638,7 +664,8 @@ input[type=radio]:checked.tipo_operacion + label{
 }
  input[type=radio]:checked.tipo_inmueble.tipo_casa
 {
-    background-image: url(../img/iconos/agregar-propiedad-apartamento-marcado.png);
+    background-image: url(../img/iconos/agregar-propiedad-casa-marcado.png);
+
 }
  input[type=radio].tipo_inmueble.tipo_apartamento
 {
@@ -716,7 +743,7 @@ input[type=radio]:checked.tipo_operacion + label{
     text-align: center;
 }
 .btn_mas_menos{
-    background-color: lightgray;
+    background-color: rgb(238,240,239);
     border-radius: 20px;
     height: 20px;
     width: 20px;
@@ -725,10 +752,157 @@ input[type=radio]:checked.tipo_operacion + label{
     font-size: 16px;
 }
 .icono_caract_min_inmueble{
-    width: 50px;
+    width: 35px;
     height: 30px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
     margin:0 auto;
+
+}
+
+
+td.icon_ti{
+    padding-left: 3.5px;
+    padding-right: 3.5px;
+}
+
+.inputText{
+    border-bottom: 1px solid #D7D7D7 !important;
+}
+
+
+.arrowD{
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin: 0 auto;
+}
+.arrowU{
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin: 0 auto;
+    float: right;
+}
+
+
+.slider_text{
+    position: absolute;
+    top: 22px;
+    font-size: 8px;
+    left: 5px;
+}
+
+
+/* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO */
+/* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO */
+/* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO *//* DIEGO */
+
+
+#nueva_propiedad_{
+    background-color: white;
+}
+
+.screen-header table tr td{
+    vertical-align: middle;
+}
+
+.text-header2{
+    margin-top: 18px !important;
+}
+
+#mapa_{
+    width: 100%;
+    height: 200px;
+    background-color: green;
+}
+
+#nueva_propiedad_ .container-flex{
+    margin: 0 auto;
+}
+
+.estrellitas table tr{
+    border-bottom: 1px solid #eaeaea;
+}
+
+.estrellitas table tr td{
+    height: 40px;
+    vertical-align: middle;
+}
+
+.estrellitas .texto-nuevo-requerimiento{
+    color: #999;
+}
+
+.rating {
+    overflow: hidden;
+    display: inline-block;
+    float: right;
+    width: 100px;
+}
+
+.rating-input {
+    float: right;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: 0 0 0 -16px;
+    opacity: 0;
+    margin: 0 !important;
+    display: none;
+}
+
+.rating-star {
+    cursor: pointer;
+    position: relative;
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('../img/star.png') 0 -16px;
+    margin: 1px !important;
+}
+
+.rating-star:hover {
+    background-position: 0 0;
+}
+
+.rating-star {
+    position: relative;
+    float: right;
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('../img/star.png') 0 -16px;
+}
+
+.rating-star:hover,
+.rating-star:hover ~ .rating-star {
+    background-position: 0 0;
+}
+
+.rating-star:hover,
+.rating-star:hover ~ .rating-star,
+.rating-input:checked ~ .rating-star {
+    background-position: 0 0;
+}
+
+.rating:hover .rating-star:hover,
+.rating:hover .rating-star:hover ~ .rating-star,
+.rating-input:checked ~ .rating-star {
+    background-position: 0 0;
+}
+
+.rating-star,
+.rating:hover .rating-star {
+    position: relative;
+    float: right;
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('../img/star.png') 0 -16px;
 }

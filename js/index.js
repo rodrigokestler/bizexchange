@@ -94,9 +94,24 @@ var login = {
             		user.email = formData.user_email;
             		user.estado = a.data.estado;
             		user.role = a.roles[0];
+
+            		//console.log(user.estado);
+		    		if(user.estado != 'aprobado'){
+		    			$(".btnCrear").css('display', 'none !important');
+		    		}else{
+		    			$(".btnCrear").css('display', 'block !important');
+		    		}
+
             		window.localStorage.setItem('user',JSON.stringify(a));
             		window.localStorage.setItem('correo',user.email);
             		window.localStorage.setItem('password',user.pass);
+
+            		requerimiento.getRequerimientos(user.email, user.pass);
+            		propiedad.getPropiedades(user.email, user.pass);
+            		
+            		
+
+
             		login.screen.hide('slide',{direction:'left'},'fast');
             		/*
             		if(user.estado.toLowerCase()!='pendiente'){
@@ -118,6 +133,7 @@ var login = {
 		login.screen.hide('slide',{direction:'left'},'fast');
 	}
 };
+
 var register = {
 		screen: $('#registerScreen'),
 		form: $('#registerForm'),
@@ -193,17 +209,10 @@ var requerimiento = {
 		formData.user_email = user.email;
 		formData.user_pass = user.pass;
 
+		
 		console.log(JSON.stringify(formData));
+		//console.log(formData.tipo_operacion);
 
-		if(formData.tipo_operacion==""){
-			myModal.open('Oops','Debes elegir un tipo de requerimiento');
-			return false;
-		}
-
-		if(formData.tipo_inmueble==""){
-			myModal.open('Oops','Debes elegir un inmueble');
-			return false;
-		}
 
 		$.ajax({
             url:app.url_ajax,
@@ -226,6 +235,7 @@ var requerimiento = {
             		myModal.open('Oops',a.msj_error);
             	}else{
             		myModal.open('Se ha creado el requerimiento con exito.');
+            		requerimiento.getRequerimientos(user.email, user.pass);
             		requerimiento.toggle('hide');
             	}
            	    
@@ -234,7 +244,49 @@ var requerimiento = {
             	cortina.hide();
         	}
        	});
-	},		
+	},	
+	getRequerimientos:function(user_email, user_pass){
+		var formData = requerimiento.form.getFormData();
+		formData.action = 'get_requerimientos';
+		formData.user_email = user.email;
+		formData.user_pass = user.pass;
+
+		console.log(JSON.stringify(formData));
+
+		$.ajax({
+            url:app.url_ajax,
+            dataType: 'text',
+            data: formData,
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+            	console.log("Jalando requerimientos!!");
+            	//cortina.show();
+            },
+            success: function(a){
+            	console.log(a);
+            	if(a.msj_error){
+            		myModal.open('Oops',a.msj_error);
+            	}else{
+            		
+            		jQuery("#requerimientos-ul").html(a);            		
+            		//var table = document.getElementById("tablePropiedades");
+            		//table.innerHTML = a;
+            		//alert(table.outerHTML);         
+            		//table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';  		
+
+            	}
+           	    
+            },
+            complete: function(){
+            	//cortina.hide();
+        	}
+       	});
+	},	
 	toggle:function(tipo){
 		if(tipo=='hide'){
 			requerimiento.crearScreen.hide('slide',{direction:'right'},'fast');
@@ -243,10 +295,6 @@ var requerimiento = {
 		}
 	}
 };
-
-
-
-
 
 var propiedad = {
 	crearScreen: $('#crear_propiedad'),
@@ -258,16 +306,6 @@ var propiedad = {
 		formData.user_pass = user.pass;
 
 		console.log(JSON.stringify(formData));
-
-		if(formData.tipo_operacion==""){
-			myModal.open('Oops','Debes elegir un tipo de requerimiento');
-			return false;
-		}
-
-		if(formData.tipo_inmueble==""){
-			myModal.open('Oops','Debes elegir un inmueble');
-			return false;
-		}
 
 		$.ajax({
             url:app.url_ajax,
@@ -290,7 +328,8 @@ var propiedad = {
             		myModal.open('Oops',a.msj_error);
             	}else{
             		myModal.open('Se ha creado la propiedad con exito.');
-            		requerimiento.toggle('hide');
+            		propiedad.getPropiedades(user.email, user.pass);
+            		propiedad.toggle('hide');
             	}
            	    
             },
@@ -299,6 +338,49 @@ var propiedad = {
         	}
        	});
 	},		
+	getPropiedades: function(user_email, user_pass){
+		var formData = propiedad.form.getFormData();
+		formData.action = 'get_propiedades';
+		formData.user_email = user.email;
+		formData.user_pass = user.pass;
+
+		console.log(JSON.stringify(formData));
+
+		$.ajax({
+            url:app.url_ajax,
+            dataType: 'text',
+            data: formData,
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+            	console.log("Jalando propiedades!!");
+            	cortina.show();
+            },
+            success: function(a){
+            	console.log(a);
+            	if(a.msj_error){
+            		myModal.open('Oops',a.msj_error);
+            	}else{
+            		
+            		//jQuery("#propiedades-ul").innerHTML = a;            		
+            		jQuery("#propiedades-ul").html(a);            		
+            		//var table = document.getElementById("tablePropiedades");
+            		//table.innerHTML = a;
+            		//alert(table.outerHTML);         
+            		//table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';  		
+
+            	}
+           	    
+            },
+            complete: function(){
+            	cortina.hide();
+        	}
+       	});
+	},
 	toggle:function(tipo){
 		if(tipo=='hide'){
 			propiedad.crearScreen.hide('slide',{direction:'right'},'fast');
@@ -360,6 +442,7 @@ var app = {
     		var formData = login.form.getFormData();
     		console.log(formData);
     		login.login(formData);
+    		
     	});
     	login.form.parsley().on('form:submit',function(){
     		return false;
@@ -389,8 +472,6 @@ var app = {
     	//Requerimiento
     	requerimiento.form.parsley().on('form:success',function(){
     		var formData = requerimiento.form.getFormData();
-    		console.log('requerimiento success');
-    		
     		requerimiento.requerimiento(formData);
     	});
     	requerimiento.form.parsley().on('form:submit',function(){return false;});
@@ -426,6 +507,8 @@ var app = {
 };
 
 app.initialize();
+
+
 $.fn.loader = function(tipo, texto){
 	if(tipo==='disable'){
 		$(this).attr('disabled',true);
@@ -509,6 +592,340 @@ $.fn.getFormData = function(){
 	return data;
 };
 
+jQuery(document).ready(function($){
+
+	$.ajax({
+	    url:app.url_ajax,
+	    dataType: 'text',
+	    data: {
+            action: "get_departamentos"
+        },
+	    type: 'post',
+	    timeout: 15000,
+	    error: function(a,b,c){
+	        console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+	        myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+	    },
+	    beforeSend: function(){
+	    	console.log("Jalando get_departamentos!!");
+	    },
+	    success: function(a){
+	    	console.log(a);
+	    	if(a.msj_error){
+	    		myModal.open('Oops',a.msj_error);
+	    	}else{
+	    		
+	    		//jQuery("#propiedades-ul").innerHTML = a;            		
+	    		jQuery(".departamento").html(a);            		
+	    		//var table = document.getElementById("tablePropiedades");
+	    		//table.innerHTML = a;
+	    		//alert(table.outerHTML);         
+	    		//table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';  		
+
+	    	}
+	   	    
+	    },
+	    complete: function(){
+
+		}
+	});
+
+	$(".departamento").change(function(){
+		var depa = $(this).val();
+		$.ajax({
+		    url:app.url_ajax,
+		    dataType: 'text',
+		    data: {
+	            action: "get_municipios",
+	            departamento: depa,
+
+	        },
+		    type: 'post',
+		    timeout: 15000,
+		    error: function(a,b,c){
+		        console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+		        myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+		    },
+		    beforeSend: function(){
+		    	console.log("Jalando get_departamentos!!");
+		    	cortina.show();
+		    },
+		    success: function(a){
+		    	console.log(a);
+		    	if(a.msj_error){
+		    		myModal.open('Oops',a.msj_error);
+		    	}else{
+		    		
+		    		//jQuery("#propiedades-ul").innerHTML = a;            		
+		    		jQuery(".municipio").html(a);            		
+		    		//var table = document.getElementById("tablePropiedades");
+		    		//table.innerHTML = a;
+		    		//alert(table.outerHTML);         
+		    		//table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';  		
+
+		    	}
+		   	    
+		    },
+		    complete: function(){
+		    	if(depa == 'GUA'){
+	    			$.ajax({
+					    url:app.url_ajax,
+					    dataType: 'text',
+					    data: {
+				            action: "get_zonas",
+				            departamento: depa,
+
+				        },
+					    type: 'post',
+					    timeout: 15000,
+					    error: function(a,b,c){
+					        console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+					        myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+					    },
+					    beforeSend: function(){
+					    	console.log("Jalando municipiops!!");
+					    },
+					    success: function(a){
+					   	    $(".zona").html(a);
+					    },
+					    complete: function(){
+					    	cortina.hide();
+						}
+					});
+		    	}else{
+		    		cortina.hide();
+		    		$("#zona").attr("disabled", "disabled");
+		    	}
+		    	
+			}
+		});
+	
+	});
+
+
+
+
+	$(".mas").click(function(){
+		var tr = $(this).closest('tr').prev();
+		var valor = tr.find("input").val();
+		var suma = parseInt(valor) + 1;
+		tr.find("input").val(suma);
+		
+	});
+
+	$(".menos").click(function(){
+		var tr = $(this).closest('tr').prev();
+		var valor = tr.find("input").val();
+		if(valor > 0){
+			var resta = parseInt(valor) -1;
+			tr.find("input").val(resta);	
+		}		
+	});
+
+	$("#formaPago").change(function(){
+		var forma = $(this).val();
+		console.log(forma);
+		if(forma == "financiado"){
+			$(".masInfoFinanciera").toggle('slow');
+		}else if(forma == "contado"){
+            $(".masInfoFinanciera").toggle('slow');
+		}
+
+
+        
+
+	});
+
+
+    $("#spanPre").click(function(){
+          $(".masInfoPrecalificacion").toggle('slow');
+          $("#presupuesto_max").removeAttr("readonly", "readonly");
+
+
+    });
+
+	$(".expandirInfo").click(function(){
+		var div = $(this).closest('tr');
+		var masInfo = div.closest('table').next();
+		masInfo.toggle('slow');
+		$(".arrowD").css("display", "none");
+	});
+
+	$(".contraerInfo").click(function(){
+		$(".expandirInfo").click();
+		$(".arrowD").css("display", "block");
+	});
+
+
+
+	$("#plazoA").change(function(){
+		var anos = $(this).val();
+		var result = parseInt(anos) * 12;
+		$("#plazoM").val(result);
+        calcular_presupuesto();
+	});
+
+
+    
+    function calcular_presupuesto(){
+        var tasa = $("#tasa_reque").val();
+        var ingresos = $("#ingresos_reque").val();
+        var egresos = $("#egresos_reque").val();
+        var enganche = $("#enganche_reque").val();
+        var plazo = $("#plazoA").val();
+
+        $.ajax({
+            url:app.url_ajax,
+            dataType: 'text',
+            data: {
+                action: "calcular_presupuesto",
+                tasa: tasa,
+                ingresos: ingresos,
+                egresos: egresos,
+                enganche: enganche,
+                plazo: plazo,
+
+            },
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+                console.log("Calculando presupuesto");
+                cortina.show();
+            },
+            success: function(a){
+                $("#presupuesto_max").val(a);
+                $("#presupuesto_max").attr("readonly", "readonly");
+            },
+            complete: function(){
+                cortina.hide();
+            }
+        });
+        
+        
+    }
+
+    
+
+
+    $("#micomi").change(function(){
+        var precio = $("#precioP").val();
+        var to = parseInt($(this).val())*parseInt(precio);
+        var total = to / 100;
+        $("#micomitotal").val(total);
+    });
+
+    $("#comicompar").change(function(){
+        var totalcomi = $("#micomitotal").val();
+        var to = parseInt($(this).val())*parseInt(totalcomi);;
+        var total = to / 100;
+        $("#comicompartotal").val(total);
+    });
+
+    api_mapa.init();
+
+
+
+
+});
+
+
+//AGREGADO POR DIEGO
+
+
+var api_mapa = {
+
+    data: null, 
+        
+    map: null,  
+    
+    markers: [],
+    
+    success: function(position){                
+        //si queres centrar el mapa en la marca.
+        api_mapa.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));        
+        api_mapa.set_marker(position.coords.latitude,position.coords.longitude);
+    },
+    
+    error: function(gps_error){
+        console.log(JSON.stringify(gps_error));
+        api_mapa.clean_markers();
+    },
+    
+    init: function(){
+        
+        navigator.geolocation.getCurrentPosition(api_mapa.success,api_mapa.error,{ timeout: 30000 });
+        
+        api_mapa.appendMapScript();
+    },
+    
+    appendMapScript: function() {
+        if (typeof google === 'object' && typeof google.maps === 'object') {
+            api_mapa.handleApiReady();
+        } else {
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://maps.google.com/maps/api/js?sensor=false&libraries=geometry&callback=api_mapa.handleApiReady";
+            document.body.appendChild(script);
+        }
+    },
+    
+    clean_markers: function(){
+        for (var i = 0; i < api_mapa.markers.length; i++) {
+            api_mapa.markers[i].setMap(null);
+        }
+        api_mapa.markers = [];  
+    },
+    
+    set_marker: function(lat,lon){
+        //aqui limpiamos las marcas actuales.
+        for (var i = 0; i < api_mapa.markers.length; i++) {
+            api_mapa.markers[i].setMap(null);
+        }
+        api_mapa.markers = [];  
+        
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat, lon),
+            map: api_mapa.map,
+            info: {
+                1: 'aqui va un JSON con data adicional que querras sacar'
+            }
+        });
+            marker.addListener('click', function() {
+                api_mapa.show_details(this);
+        });
+
+        api_mapa.markers.push(marker);
+    },
+    
+    handleApiReady: function() {
+                
+        var center = new google.maps.LatLng(14.598497, -90.507067); //centro en zona 10
+        var myOptions = {
+            zoom: 14,
+            center: center,       
+        }
+        api_mapa.map = new google.maps.Map(document.getElementById("mapa_"), myOptions);
+        
+       
+    },
+    
+    ir: function(lat,lng){
+        window.open("geo:"+lat+","+lng,'_system');
+    },
+    
+    finish: function(){
+        api_mapa.markers = null;  
+        api_mapa.map = null;  
+    }
+
+};
+
+	
+	
 //REQUERIMIENTO
 
 
