@@ -17,204 +17,270 @@
  * under the License.
  */
 var cortina = {
-		cortina: $('#cortina'),
-		container: $('#cortina_container'),
-		show: function(){
-			cortina.container.html(app.loader);
-			cortina.cortina.show();
-		},
-		hide: function(){
-			cortina.container.html('');
-			cortina.cortina.hide();
-		}
+        cortina: $('#cortina'),
+        container: $('#cortina_container'),
+        show: function(){
+            cortina.container.html(app.loader);
+            cortina.cortina.show();
+        },
+        hide: function(){
+            cortina.container.html('');
+            cortina.cortina.hide();
+        }
 };
 var myModal = {
-		modal : $('#myModal'),
-		modalHeader : $('#myModalHeader'),
-		modalBody : $('#myModalBody'),
-		open : function(header, body){
-			myModal.modalHeader.html(header);
-	        myModal.modalBody.html(body);
-	        myModal.modal.modal();
-		}
+        modal : $('#myModal'),
+        modalHeader : $('#myModalHeader'),
+        modalBody : $('#myModalBody'),
+        open : function(header, body){
+            myModal.modalHeader.html(header);
+            myModal.modalBody.html(body);
+            myModal.modal.modal();
+        }
 };
 var user = {
-	pass: null,
-	email: null,
-	role:null,
-	estado:null,
-	
-	initialize: function(){
-		user.email = window.localStorage.getItem('correo');
+    pass: null,
+    email: null,
+    role:null,
+    estado:null,
+    
+    initialize: function(){
+        user.email = window.localStorage.getItem('correo');
         console.log(user.email);
         user.pass = window.localStorage.getItem('password');
         console.log(user.pass);
         
         if(user.email != '' && user.pass != '' && user.email != undefined && user.pass != undefined){
-        	
-        		$('#user_email_login').val(user.email);
-        		$('#user_pass_login').val(user.pass);
-        		//login.loginBtn.trigger('click');
-        		login.loginBtn.click();
-        		//var formData = login.form.getFormData();
-        		//login.login(formData);
+            
+                $('#user_email_login').val(user.email);
+                $('#user_pass_login').val(user.pass);
+                //login.loginBtn.trigger('click');
+                login.loginBtn.click();
+                //var formData = login.form.getFormData();
+                //login.login(formData);
             
         }
-	}
+    }
 };
 
 var login = {
-	screen: $("#loginScreen"),
-	form: $('#loginForm'),
-	btnForm: $('#loginBtn'),
-	loginBtn: $('#loginBtn'),
-	login: function(formData){
-		formData.action = 'login';
-		$.ajax({
+    screen: $("#loginScreen"),
+    form: $('#loginForm'),
+    btnForm: $('#loginBtn'),
+    loginBtn: $('#loginBtn'),
+    login: function(formData){
+        formData.action = 'login';
+        $.ajax({
             url:app.url_ajax,
             dataType: 'json',
             data: formData,
             type: 'post',
             timeout: 15000,
             beforeSend: function(){
-            	cortina.show();
+                cortina.show();
             },
             error: function(a,b,c){
                 console.log('error '+JSON.stringify(a)+JSON.stringify(b));
                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
             },
             success: function(a){
-            	console.log(JSON.stringify(a));
-            	
-            	if(a.msj_error){
-            		myModal.open('Oops',a.msj_error);
-            	}else{
-            		
-            		user.pass = formData.user_pass;
-            		user.email = formData.user_email;
-            		user.estado = a.data.estado;
-            		user.role = a.roles[0];
+                console.log(JSON.stringify(a));
+                
+                if(a.msj_error){
+                    myModal.open('Oops',a.msj_error);
+                }else{
+                    
+                    user.pass = formData.user_pass;
+                    user.email = formData.user_email;
+                    user.estado = a.data.estado;
+                    user.role = a.roles[0];
 
-            		//console.log(user.estado);
-		    		if(user.estado != 'aprobado'){
-		    			$(".btnCrear").css('display', 'none !important');
-		    		}else{
-		    			$(".btnCrear").css('display', 'block !important');
-		    		}
+                    //console.log(user.estado);
+                    if(user.estado != 'aprobado'){
+                        $(".btnCrear").css('display', 'none !important');
+                    }else{
+                        $(".btnCrear").css('display', 'block !important');
+                    }
 
-            		window.localStorage.setItem('user',JSON.stringify(a));
-            		window.localStorage.setItem('correo',user.email);
-            		window.localStorage.setItem('password',user.pass);
+                    window.localStorage.setItem('user',JSON.stringify(a));
+                    window.localStorage.setItem('correo',user.email);
+                    window.localStorage.setItem('password',user.pass);
 
-            		requerimiento.getRequerimientos(user.email, user.pass);
-            		propiedad.getPropiedades(user.email, user.pass);
-            		
-            		
+                    requerimiento.getRequerimientos(user.email, user.pass);
+                    propiedad.getPropiedades(user.email, user.pass);
+                    
+                    
 
 
-            		login.screen.hide('slide',{direction:'left'},'fast');
-            		/*
-            		if(user.estado.toLowerCase()!='pendiente'){
-            			login.screen.hide('slide',{direction:'left'},'fast');
-            		}else{
-            			myModal.open('Bienvenido','Tu cuenta todav�a no ha sido aprobada. Un asesor se estar� poniendo en contacto contigo pronto.');
-            		}
-            		*/
-            		
-            	}
-           	    
+                    login.screen.hide('slide',{direction:'left'},'fast');
+                    /*
+                    if(user.estado.toLowerCase()!='pendiente'){
+                        login.screen.hide('slide',{direction:'left'},'fast');
+                    }else{
+                        myModal.open('Bienvenido','Tu cuenta todav�a no ha sido aprobada. Un asesor se estar� poniendo en contacto contigo pronto.');
+                    }
+                    */
+                    
+                }
+                
             },
             complete: function(){ 
-            	cortina.hide();
+                cortina.hide();
             }
        });
-	},
-	hide: function(){
-		login.screen.hide('slide',{direction:'left'},'fast');
-	}
+    },
+    hide: function(){
+        login.screen.hide('slide',{direction:'left'},'fast');
+    }
 };
 
 var register = {
-		screen: $('#registerScreen'),
-		form: $('#registerForm'),
-		btnForm: $('#registerBtn'),
-		register: function(formData){
-			formData.action = 'register_user';
-			console.log(JSON.stringify(formData));
-			if(formData.tipo_usuario=='asesor' && $("#telRegister",register.form).val().length!=8){
-				myModal.open('Oops','Debes ingresar un número de teléfono de 8 digitos para poder contactarte. Todos los asesores serán aprobados previamente a utilizar la aplicación')
-				return true;
-			}
-			
-			$.ajax({
-	            url:app.url_ajax,
-	            dataType: 'json',
-	            data: formData,
-	            type: 'post',
-	            timeout: 15000,
-	            beforeSend: function(){
-	            	register.btnForm.loader('disable');
-	            },
-	            error: function(a,b,c){
-	                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
-	                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
-	            },
-	            success: function(a){
-	            	console.log(JSON.stringify(a));
-	            	if(a.success && a.success=='1'){
-	            		$(':input',register.form)
-	          	    	  .not(':button, :submit, :reset, :hidden')
-	          	    	  .val('')
-	          	    	  .removeAttr('checked')
-	          	    	  .removeAttr('selected');
-	            		register.toggle('hide');
-	            		if(formData.tipo_usuario=='cliente'){
-	            			user.pass = formData.user_pass;
-	            			user.email = formData.user_email;
-	            			user.role = 'cliente';
-	            			user.estado = 'aprobado';
-	            			login.screen.hide();
-	            		}else{
-	            			
-	            			myModal.open('Bienvenido','Tu cuenta todavía no ha sido aprobada. Un asesor se estará poniendo en contacto contigo pronto.');
-	                		
-	            		}
-	            		
-	            		
-	            	}else if(a.success && a.success=="0"){
-	            		myModal.open('Oops',a.msj_error);
-	            	}
-	           	    
-	            },
-	            complete: function(){ 
-	            	register.btnForm.loader('enable',"REGISTRARSE");
-	            }
-	       });
-		},
-		toggle: function(tipo){
-			if(tipo=='hide'){
-				register.screen.hide('slide',{direction:'right'},'fast');
-			}else if(tipo=='show'){
-				register.screen.show('slide',{direction:'right'},'fast');
-			}
-		}
+        screen: $('#registerScreen'),
+        form: $('#registerForm'),
+        btnForm: $('#registerBtn'),
+        register: function(formData){
+            formData.action = 'register_user';
+            console.log(JSON.stringify(formData));
+            if(formData.tipo_usuario=='asesor' && $("#telRegister",register.form).val().length!=8){
+                myModal.open('Oops','Debes ingresar un número de teléfono de 8 digitos para poder contactarte. Todos los asesores serán aprobados previamente a utilizar la aplicación')
+                return true;
+            }
+            
+            $.ajax({
+                url:app.url_ajax,
+                dataType: 'json',
+                data: formData,
+                type: 'post',
+                timeout: 15000,
+                beforeSend: function(){
+                    register.btnForm.loader('disable');
+                },
+                error: function(a,b,c){
+                    console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                    myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+                },
+                success: function(a){
+                    console.log(JSON.stringify(a));
+                    if(a.success && a.success=='1'){
+                        $(':input',register.form)
+                          .not(':button, :submit, :reset, :hidden')
+                          .val('')
+                          .removeAttr('checked')
+                          .removeAttr('selected');
+                        register.toggle('hide');
+                        if(formData.tipo_usuario=='cliente'){
+                            user.pass = formData.user_pass;
+                            user.email = formData.user_email;
+                            user.role = 'cliente';
+                            user.estado = 'aprobado';
+                            login.screen.hide();
+                        }else{
+                            
+                            myModal.open('Bienvenido','Tu cuenta todavía no ha sido aprobada. Un asesor se estará poniendo en contacto contigo pronto.');
+                            
+                        }
+                        
+                        
+                    }else if(a.success && a.success=="0"){
+                        myModal.open('Oops',a.msj_error);
+                    }
+                    
+                },
+                complete: function(){ 
+                    register.btnForm.loader('enable',"REGISTRARSE");
+                }
+           });
+        },
+        toggle: function(tipo){
+            if(tipo=='hide'){
+                register.screen.hide('slide',{direction:'right'},'fast');
+            }else if(tipo=='show'){
+                register.screen.show('slide',{direction:'right'},'fast');
+            }
+        }
 };
 
 var requerimiento = {
-	crearScreen: $('#crear_requerimiento'),
-	btnForm: $('#requerimientoBtn'),
-	form: $('#requerimientoForm'), 
-	requerimiento: function(formData){
-		formData.action = 'crear_requerimiento';
-		formData.user_email = user.email;
-		formData.user_pass = user.pass;
+    crearScreen: $('#crear_requerimiento'),
+    btnForm: $('#requerimientoBtn'),
+    form: $('#requerimientoForm'), 
+    btnUbicacionExtra: $('#ubicacion_extra'),
+    containerUbicaciones: $('#contenedor_ubicaciones'),
+    agregarUbicacion: function(){
+        var cant_ubicaciones = $('.ubicacion-requerimiento').length;
+        console.log(cant_ubicaciones);
+        var id = cant_ubicaciones + 1;
+        requerimiento.containerUbicaciones.append('<br><br><div class="ubicacion-requerimiento">'
+                                       +' <table style="width:100%;">'
 
-		
-		console.log(JSON.stringify(formData));
-		//console.log(formData.tipo_operacion);
+                                            +' <tr style="margin:2px 0;">' 
+                                               +'  <td colspan="5">' 
+                                                 +'   <hr style="margin:0!important;">' 
+                                                +' </td>' 
+                                            +' </tr>' 
+                                            +' <tr>'                                             
+                                               +'  <td colspan="2" class="texto-nuevo-requerimiento">Zona</td>' 
+                                               +'  <td colspan="3">' 
+                                                  +'   <select name="zona-'+id+'" class="color-gris-oscuro select_formR zona inputpz" style="border:none;">'
+                                                     +'       <option value="1">1</option>'
+                                                      +'      <option value="2">2</option>'
+                                                       +'     <option value="3">3</option>'
+                                                        +'    <option value="4">4</option>'
+                                                         +'   <option value="5">5</option>'
+                                                          +'  <option value="6">6</option>'
+                                                           +' <option value="7">7</option>'
+                                                            +'<option value="8">8</option>'
+                                                            +'<option value="9">9</option>'
+                                                            +'<option value="10">10</option>'
+                                                            +'<option value="11">11</option>'
+                                                            +'<option value="12">12</option>'
+                                                            +'<option value="13">13</option>'
+                                                            +'<option value="14">14</option>'
+                                                            +'<option value="15">15</option>'
+                                                            +'<option value="16">16</option>'
+                                                            +'<option value="17">17</option>'
+                                                            +'<option value="18">18</option>'
+                                                            +'<option value="19">19</option>'
+                                                            +'<option value="21">21</option> '
+                                                   +'  </select>' 
+                                                    +'<input type="hidden" name="cant_ubicaciones" value="'+cant_ubicaciones+'">'
+                                            +' </tr>' 
+                                           +'  <tr style="margin:2px 0;">' 
+                                               +'  <td colspan="5">' 
+                                                   +'  <hr style="margin:0!important;">' 
+                                               +'  </td>' 
+                                           +'  </tr>' 
+
+                                           +'  <tr>' 
+                                               +'  <td colspan="2" class="texto-nuevo-requerimiento">Km</td>' 
+                                                +' <td colspan="3"><input name="km-'+id+'"  class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type="number">' 
+                                               +'  </td>'
+                                           +'  </tr>'
+                                           +'  <tr style="margin:2px 0;">'
+                                               +'  <td colspan="5">'
+                                                +'     <hr style="margin:0!important;">'
+                                                +' </td>'
+                                           +'  </tr>'
+
+                                             +' <tr>'
+                                              +'   <td colspan="3" class="texto-nuevo-requerimiento">Otras especificaciones</td>'
+                                              +'   <td colspan="2" style="text-align: rigth;"><input name="otras_espec-'+id+'"  class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" placeholder="Ej: El naranjo..." type="text">'
+                                              +'   </td>'
+                                          +'   </tr>'
+                                       +'  </table>'
+                                   +'  </div>');
+    },
+    requerimiento: function(formData){
+        formData.action = 'crear_requerimiento';
+        formData.user_email = user.email;
+        formData.user_pass = user.pass;
+
+        
+        console.log(JSON.stringify(formData));
+        //console.log(formData.tipo_operacion);
 
 
-		$.ajax({
+        $.ajax({
             url:app.url_ajax,
             dataType: 'json',
             data: formData,
@@ -225,35 +291,35 @@ var requerimiento = {
                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
             },
             beforeSend: function(){
-            	console.log("Entro!!");
-            	cortina.show();
+                console.log("Entro!!");
+                cortina.show();
             },
             success: function(a){
-            	console.log(JSON.stringify(a));
-            	
-            	if(a.msj_error){
-            		myModal.open('Oops',a.msj_error);
-            	}else{
-            		myModal.open('Se ha creado el requerimiento con exito.');
-            		requerimiento.getRequerimientos(user.email, user.pass);
-            		requerimiento.toggle('hide');
-            	}
-           	    
+                console.log(JSON.stringify(a));
+                
+                if(a.msj_error){
+                    myModal.open('Oops',a.msj_error);
+                }else{
+                    myModal.open('Se ha creado el requerimiento con exito.');
+                    requerimiento.getRequerimientos(user.email, user.pass);
+                    requerimiento.toggle('hide');
+                }
+                
             },
             complete: function(){
-            	cortina.hide();
-        	}
-       	});
-	},	
-	getRequerimientos:function(user_email, user_pass){
-		var formData = requerimiento.form.getFormData();
-		formData.action = 'get_requerimientos';
-		formData.user_email = user.email;
-		formData.user_pass = user.pass;
+                cortina.hide();
+            }
+        });
+    },  
+    getRequerimientos:function(user_email, user_pass){
+        var formData = requerimiento.form.getFormData();
+        formData.action = 'get_requerimientos';
+        formData.user_email = user.email;
+        formData.user_pass = user.pass;
 
-		console.log(JSON.stringify(formData));
+        console.log(JSON.stringify(formData));
 
-		$.ajax({
+        $.ajax({
             url:app.url_ajax,
             dataType: 'text',
             data: formData,
@@ -264,50 +330,43 @@ var requerimiento = {
                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
             },
             beforeSend: function(){
-            	console.log("Jalando requerimientos!!");
-            	//cortina.show();
+                console.log("Jalando requerimientos!!");
+                //cortina.show();
             },
             success: function(a){
-            	console.log(a);
-            	if(a.msj_error){
-            		myModal.open('Oops',a.msj_error);
-            	}else{
-            		
-            		jQuery("#requerimientos-ul").html(a);            		
-            		//var table = document.getElementById("tablePropiedades");
-            		//table.innerHTML = a;
-            		//alert(table.outerHTML);         
-            		//table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';  		
-
-            	}
-           	    
+                console.log(a);
+                if(a.msj_error){
+                    myModal.open('Oops',a.msj_error);
+                }else{
+                    jQuery("#requerimientos-ul").html(a);                   
+                }
+                
             },
             complete: function(){
-            	//cortina.hide();
-        	}
-       	});
-	},	
-	toggle:function(tipo){
-		if(tipo=='hide'){
-			requerimiento.crearScreen.hide('slide',{direction:'right'},'fast');
-		}else if(tipo=='show'){
-			requerimiento.crearScreen.show('slide',{direction:'right'},'fast');
-		}
-	}
+            }
+        });
+    },  
+    toggle:function(tipo){
+        if(tipo=='hide'){
+            requerimiento.crearScreen.hide('slide',{direction:'right'},'fast');
+        }else if(tipo=='show'){
+            requerimiento.crearScreen.show('slide',{direction:'right'},'fast');
+        }
+    }
 };
 
 var propiedad = {
-	crearScreen: $('#crear_propiedad'),
-	btnForm: $('#propiedadBtn'),
-	form: $('#propiedadForm'), 
-	propiedad: function(formData){
-		formData.action = 'crear_propiedad';
-		formData.user_email = user.email;
-		formData.user_pass = user.pass;
+    crearScreen: $('#crear_propiedad'),
+    btnForm: $('#propiedadBtn'),
+    form: $('#propiedadForm'), 
+    propiedad: function(formData){
+        formData.action = 'crear_propiedad';
+        formData.user_email = user.email;
+        formData.user_pass = user.pass;
 
-		console.log(JSON.stringify(formData));
+        console.log(JSON.stringify(formData));
 
-		$.ajax({
+        $.ajax({
             url:app.url_ajax,
             dataType: 'json',
             data: formData,
@@ -318,35 +377,35 @@ var propiedad = {
                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
             },
             beforeSend: function(){
-            	console.log("Entro!!");
-            	cortina.show();
+                console.log("Entro!!");
+                cortina.show();
             },
             success: function(a){
-            	console.log(JSON.stringify(a));
-            	
-            	if(a.msj_error){
-            		myModal.open('Oops',a.msj_error);
-            	}else{
-            		myModal.open('Se ha creado la propiedad con exito.');
-            		propiedad.getPropiedades(user.email, user.pass);
-            		propiedad.toggle('hide');
-            	}
-           	    
+                console.log(JSON.stringify(a));
+                
+                if(a.msj_error){
+                    myModal.open('Oops',a.msj_error);
+                }else{
+                    myModal.open('Se ha creado la propiedad con exito.');
+                    propiedad.getPropiedades(user.email, user.pass);
+                    propiedad.toggle('hide');
+                }
+                
             },
             complete: function(){
-            	cortina.hide();
-        	}
-       	});
-	},		
-	getPropiedades: function(user_email, user_pass){
-		var formData = propiedad.form.getFormData();
-		formData.action = 'get_propiedades';
-		formData.user_email = user.email;
-		formData.user_pass = user.pass;
+                cortina.hide();
+            }
+        });
+    },      
+    getPropiedades: function(user_email, user_pass){
+        var formData = propiedad.form.getFormData();
+        formData.action = 'get_propiedades';
+        formData.user_email = user.email;
+        formData.user_pass = user.pass;
 
-		console.log(JSON.stringify(formData));
+        console.log(JSON.stringify(formData));
 
-		$.ajax({
+        $.ajax({
             url:app.url_ajax,
             dataType: 'text',
             data: formData,
@@ -357,37 +416,37 @@ var propiedad = {
                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
             },
             beforeSend: function(){
-            	console.log("Jalando propiedades!!");
-            	cortina.show();
+                console.log("Jalando propiedades!!");
+                cortina.show();
             },
             success: function(a){
-            	console.log(a);
-            	if(a.msj_error){
-            		myModal.open('Oops',a.msj_error);
-            	}else{
-            		
-            		//jQuery("#propiedades-ul").innerHTML = a;            		
-            		jQuery("#propiedades-ul").html(a);            		
-            		//var table = document.getElementById("tablePropiedades");
-            		//table.innerHTML = a;
-            		//alert(table.outerHTML);         
-            		//table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';  		
+                console.log(a);
+                if(a.msj_error){
+                    myModal.open('Oops',a.msj_error);
+                }else{
+                    
+                    //jQuery("#propiedades-ul").innerHTML = a;                  
+                    jQuery("#propiedades-ul").html(a);                  
+                    //var table = document.getElementById("tablePropiedades");
+                    //table.innerHTML = a;
+                    //alert(table.outerHTML);         
+                    //table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';         
 
-            	}
-           	    
+                }
+                
             },
             complete: function(){
-            	cortina.hide();
-        	}
-       	});
-	},
-	toggle:function(tipo){
-		if(tipo=='hide'){
-			propiedad.crearScreen.hide('slide',{direction:'right'},'fast');
-		}else if(tipo=='show'){
-			propiedad.crearScreen.show('slide',{direction:'right'},'fast');
-		}
-	}
+                cortina.hide();
+            }
+        });
+    },
+    toggle:function(tipo){
+        if(tipo=='hide'){
+            propiedad.crearScreen.hide('slide',{direction:'right'},'fast');
+        }else if(tipo=='show'){
+            propiedad.crearScreen.show('slide',{direction:'right'},'fast');
+        }
+    }
 };
 
 
@@ -403,101 +462,103 @@ var app = {
         
         //if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         //ifmovil
-    	if(movil){  
-        	console.log('es movil');
-        	document.addEventListener("deviceready", this.onDeviceReady, false);
+        if(movil){  
+            console.log('es movil');
+            document.addEventListener("deviceready", this.onDeviceReady, false);
         } else {
-        	console.log('no es movil');
+            console.log('no es movil');
             app.onDeviceReady();
         }
     },
     loadEvents: function(){
-    	//Tabs Home
-    	/*
-    	$(".tab-content").on("swiperight",function() {
-    		console.log('swiperight');
+        //Tabs Home
+        /*
+        $(".tab-content").on("swiperight",function() {
+            console.log('swiperight');
             var $tab = $('#tablist .active').prev();
             if ($tab.length > 0)
                 $tab.find('a').tab('show');
         });
         $(".tab-content").on("swipeleft",function() {
-        	console.log('swipe left');
+            console.log('swipe left');
             var $tab = $('#tablist .active').next();
             if ($tab.length > 0)
                 $tab.find('a').tab('show');
         });
         */
-    	//General forms
-    	$(document).on('focus','.inputpz',function(){
-    		console.log('focus inputpz');
-    		console.log($(this));
-    		var parent = $(this).closest('.container');
-    		console.log(parent);
-    		parent.scrollTo(this);
-    	});
-    	
-    	//Login Screen
-    	
-    	login.form.parsley().on('form:success',function(){
-    		var formData = login.form.getFormData();
-    		console.log(formData);
-    		login.login(formData);
-    		
-    	});
-    	login.form.parsley().on('form:submit',function(){
-    		return false;
-    	});
-    	$('#tutorial-login').slick({
-		  dots: true,
-		  infinite: true,
-		  speed: 300,
-		  slidesToShow: 1,
-		  adaptiveHeight: true,
-		  arrows: false
-		});
+
+
+        //General forms
+        $(document).on('focus','.inputpz',function(){
+            console.log('focus inputpz');
+            console.log($(this));
+            var parent = $(this).closest('.container');
+            console.log(parent);
+            parent.scrollTo(this);
+        });
+        
+        //Login Screen
+        
+        login.form.parsley().on('form:success',function(){
+            var formData = login.form.getFormData();
+            console.log(formData);
+            login.login(formData);
+            
+        });
+        login.form.parsley().on('form:submit',function(){
+            return false;
+        });
+        $('#tutorial-login').slick({
+          dots: true,
+          infinite: true,
+          speed: 300,
+          slidesToShow: 1,
+          adaptiveHeight: true,
+          arrows: false
+        });
 
         //Register
-    	register.form.parsley().on('form:success',function(){
-    		var formData = register.form.getFormData();
-    		register.register(formData);
-    	});
-    	register.form.parsley().on('form:submit',function(){return false;});
-    	register.form.parsley().on('form:error',function(){
-    		
-    	});
+        register.form.parsley().on('form:success',function(){
+            var formData = register.form.getFormData();
+            register.register(formData);
+        });
+        register.form.parsley().on('form:submit',function(){return false;});
+        register.form.parsley().on('form:error',function(){
+            
+        });
 
 
 
 
-    	//Requerimiento
-    	requerimiento.form.parsley().on('form:success',function(){
-    		var formData = requerimiento.form.getFormData();
-    		requerimiento.requerimiento(formData);
-    	});
-    	requerimiento.form.parsley().on('form:submit',function(){return false;});
-    	requerimiento.form.parsley().on('form:error',function(){
+        //Requerimiento
+        requerimiento.form.parsley().on('form:success',function(){
+            var formData = requerimiento.form.getFormData();
+            requerimiento.requerimiento(formData);
+        });
+        requerimiento.form.parsley().on('form:submit',function(){return false;});
+        requerimiento.form.parsley().on('form:error',function(){
 
-    	});
+        });
 
 
 
-    	//Propiedad
-    	propiedad.form.parsley().on('form:success',function(){
-    		var formData = propiedad.form.getFormData();
-    		propiedad.propiedad(formData);
-    	});
-    	propiedad.form.parsley().on('form:submit',function(){return false;});
-    	propiedad.form.parsley().on('form:error',function(){
-    		
-    	});
-    	console.log('load events');
-    	//login.screen.hide();
-    	
-    	setTimeout(function(){
-    		user.initialize();
-    	},2000);
-    	
-    },	
+        //Propiedad
+        propiedad.form.parsley().on('form:success',function(){
+            var formData = propiedad.form.getFormData();
+            propiedad.propiedad(formData);
+        });
+        propiedad.form.parsley().on('form:submit',function(){return false;});
+        propiedad.form.parsley().on('form:error',function(){
+            
+        });
+        console.log('load events');
+        //login.screen.hide();
+        
+        setTimeout(function(){
+            user.initialize();
+        },2000);
+        
+    },  
     onDeviceReady: function() {
         
         console.log('device ready');
@@ -510,231 +571,299 @@ app.initialize();
 
 
 $.fn.loader = function(tipo, texto){
-	if(tipo==='disable'){
-		$(this).attr('disabled',true);
-		$(this).append(app.loader);
-	}else{
-		$(this).attr('disabled',false);
-		$(this).html(texto);
-	}
+    if(tipo==='disable'){
+        $(this).attr('disabled',true);
+        $(this).append(app.loader);
+    }else{
+        $(this).attr('disabled',false);
+        $(this).html(texto);
+    }
 };
 $.fn.scrollTo = function( target, options, callback ){
-	  if(typeof options == 'function' && arguments.length == 2){ callback = options; options = target; }
-	  var settings = $.extend({
-	    scrollTarget  : target,
-	    offsetTop     : 120,
-	    duration      : 500,
-	    easing        : 'swing'
-	  }, options);
-	  return this.each(function(){
-	    var scrollPane = $(this);
-	    var scrollTarget = (typeof settings.scrollTarget == "number") ? settings.scrollTarget : $(settings.scrollTarget);
-	    var scrollY = (typeof scrollTarget == "number") ? scrollTarget : scrollTarget.offset().top + scrollPane.scrollTop() - parseInt(settings.offsetTop);
-	    scrollPane.animate({scrollTop : scrollY }, parseInt(settings.duration), settings.easing, function(){
-	      if (typeof callback == 'function') { callback.call(this); }
-	    });
-	  });
-	};
+      if(typeof options == 'function' && arguments.length == 2){ callback = options; options = target; }
+      var settings = $.extend({
+        scrollTarget  : target,
+        offsetTop     : 120,
+        duration      : 500,
+        easing        : 'swing'
+      }, options);
+      return this.each(function(){
+        var scrollPane = $(this);
+        var scrollTarget = (typeof settings.scrollTarget == "number") ? settings.scrollTarget : $(settings.scrollTarget);
+        var scrollY = (typeof scrollTarget == "number") ? scrollTarget : scrollTarget.offset().top + scrollPane.scrollTop() - parseInt(settings.offsetTop);
+        scrollPane.animate({scrollTop : scrollY }, parseInt(settings.duration), settings.easing, function(){
+          if (typeof callback == 'function') { callback.call(this); }
+        });
+      });
+    };
 
 $.fn.getFormData = function(){
-	var thisForm = this;
-	var data = {};
-	$(thisForm).find('.inputpz').each(function(){
-		var name = $(this).attr('name');
-		if($(this).is('select')){
-			data[name] = $(this).val();
-		}else if($(this).is('input')){
-			var type = $(this).attr('type');
-			switch (type){
-			case 'hidden':
-				data[name] = $(this).val();
-				break;
-			case 'text':
-				data[name] = $(this).val();
-				break;
-			case 'radio':
-				var valor = $('input[name='+name+']:checked', thisForm).val();
-				data[name] = valor;
-				break;
-			case 'checkbox':
-				var valor = $('input[name='+name+']:checked', thisForm).map(function(){
-					return this.value;
-				}).get();
-				data[name] = valor;
-				break;
-			case 'date':
-				data[name] = $(this).val();
-				break;
-			case 'email':
-				data[name] = $(this).val();
-				break;
-			case 'number':
-				data[name] = $(this).val();
-				break;
-			case 'password':
-				data[name] = $(this).val();
-				break;
-			case 'time':
-				data[name] = $(this).val();
-				break;
-			case 'tel':
-				data[name] = $(this).val();
-				break;
-			}
-		}else if($(this).is('textarea')){
-			
-			data[name] = $(this).val();
-		}
-		
-		//eval("data."+name+" = $(this).val();");
-	});
-	
-	return data;
+    var thisForm = this;
+    var data = {};
+    $(thisForm).find('.inputpz').each(function(){
+        var name = $(this).attr('name');
+        if($(this).is('select')){
+            data[name] = $(this).val();
+        }else if($(this).is('input')){
+            var type = $(this).attr('type');
+            switch (type){
+            case 'hidden':
+                data[name] = $(this).val();
+                break;
+            case 'text':
+                data[name] = $(this).val();
+                break;
+            case 'radio':
+                var valor = $('input[name='+name+']:checked', thisForm).val();
+                data[name] = valor;
+                break;
+            case 'checkbox':
+                var valor = $('input[name='+name+']:checked', thisForm).map(function(){
+                    return this.value;
+                }).get();
+                data[name] = valor;
+                break;
+            case 'date':
+                data[name] = $(this).val();
+                break;
+            case 'email':
+                data[name] = $(this).val();
+                break;
+            case 'number':
+                data[name] = $(this).val();
+                break;
+            case 'password':
+                data[name] = $(this).val();
+                break;
+            case 'time':
+                data[name] = $(this).val();
+                break;
+            case 'tel':
+                data[name] = $(this).val();
+                break;
+            }
+        }else if($(this).is('textarea')){
+            
+            data[name] = $(this).val();
+        }
+        
+        //eval("data."+name+" = $(this).val();");
+    });
+    
+    return data;
 };
+
+
+function get_departamentos(){
+
+        $.ajax({
+        url:app.url_ajax,
+        dataType: 'text',
+        data: {
+            action: "get_departamentos"
+        },
+        type: 'post',
+        timeout: 15000,
+        error: function(a,b,c){
+            console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+            myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+        },
+        beforeSend: function(){
+            console.log("Jalando get_departamentos!!");
+        },
+        success: function(a){
+            console.log(a);
+            if(a.msj_error){
+                myModal.open('Oops',a.msj_error);
+            }else{
+                
+                //jQuery("#propiedades-ul").innerHTML = a;                  
+                jQuery(".departamento").html(a);                    
+                //var table = document.getElementById("tablePropiedades");
+                //table.innerHTML = a;
+                //alert(table.outerHTML);         
+                //table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';         
+
+            }
+            
+        },
+        complete: function(){
+
+        }
+    });
+
+}
+
+
+function get_mispropiedades(){
+    $.ajax({
+        url:app.url_ajax,
+        dataType: 'text',
+        data: {
+            action: "get_mispropiedades",
+            user_email: user.email,
+            user_pass : user.pass
+        },
+        type: 'post',
+        timeout: 15000,
+        error: function(a,b,c){
+            console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+            myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+        },
+        beforeSend: function(){
+            console.log("Jalando mis propiedades!!");
+            cortina.show();
+        },
+        success: function(a){
+            console.log(a);
+            if(a.msj_error){
+                myModal.open('Oops',a.msj_error);
+            }else{                
+                jQuery("#propiedades-ul").html(a);                  
+            }
+            
+        },
+        complete: function(){
+            cortina.hide();
+        }
+    });
+}
 
 jQuery(document).ready(function($){
 
-	$.ajax({
-	    url:app.url_ajax,
-	    dataType: 'text',
-	    data: {
-            action: "get_departamentos"
-        },
-	    type: 'post',
-	    timeout: 15000,
-	    error: function(a,b,c){
-	        console.log('error '+JSON.stringify(a)+JSON.stringify(b));
-	        myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
-	    },
-	    beforeSend: function(){
-	    	console.log("Jalando get_departamentos!!");
-	    },
-	    success: function(a){
-	    	console.log(a);
-	    	if(a.msj_error){
-	    		myModal.open('Oops',a.msj_error);
-	    	}else{
-	    		
-	    		//jQuery("#propiedades-ul").innerHTML = a;            		
-	    		jQuery(".departamento").html(a);            		
-	    		//var table = document.getElementById("tablePropiedades");
-	    		//table.innerHTML = a;
-	    		//alert(table.outerHTML);         
-	    		//table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';  		
+    get_departamentos();
 
-	    	}
-	   	    
-	    },
-	    complete: function(){
+    $(".departamento").on("change",function(){
+        var depa = $(this).val();
+        $.ajax({
+            url:app.url_ajax,
+            dataType: 'text',
+            data: {
+                action: "get_municipios",
+                departamento: depa,
 
-		}
-	});
+            },
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+                console.log("Jalando get_departamentos!!");
+                cortina.show();
+            },
+            success: function(a){
+                console.log(a);
+                if(a.msj_error){
+                    myModal.open('Oops',a.msj_error);
+                }else{
+                    
+                    //jQuery("#propiedades-ul").innerHTML = a;                  
+                    jQuery(".municipio").html(a);                   
+                    //var table = document.getElementById("tablePropiedades");
+                    //table.innerHTML = a;
+                    //alert(table.outerHTML);         
+                    //table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';         
 
-	$(".departamento").change(function(){
-		var depa = $(this).val();
-		$.ajax({
-		    url:app.url_ajax,
-		    dataType: 'text',
-		    data: {
-	            action: "get_municipios",
-	            departamento: depa,
+                }
+                
+            },
+            complete: function(){
+                if(depa == 'GUA'){
+                    $.ajax({
+                        url:app.url_ajax,
+                        dataType: 'text',
+                        data: {
+                            action: "get_zonas",
+                            departamento: depa,
 
-	        },
-		    type: 'post',
-		    timeout: 15000,
-		    error: function(a,b,c){
-		        console.log('error '+JSON.stringify(a)+JSON.stringify(b));
-		        myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
-		    },
-		    beforeSend: function(){
-		    	console.log("Jalando get_departamentos!!");
-		    	cortina.show();
-		    },
-		    success: function(a){
-		    	console.log(a);
-		    	if(a.msj_error){
-		    		myModal.open('Oops',a.msj_error);
-		    	}else{
-		    		
-		    		//jQuery("#propiedades-ul").innerHTML = a;            		
-		    		jQuery(".municipio").html(a);            		
-		    		//var table = document.getElementById("tablePropiedades");
-		    		//table.innerHTML = a;
-		    		//alert(table.outerHTML);         
-		    		//table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';  		
+                        },
+                        type: 'post',
+                        timeout: 15000,
+                        error: function(a,b,c){
+                            console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                            myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+                        },
+                        beforeSend: function(){
+                            console.log("Jalando municipiops!!");
+                        },
+                        success: function(a){
+                            $(".zona").html(a);
+                        },
+                        complete: function(){
+                            cortina.hide();
+                        }
+                    });
+                }else{
+                    cortina.hide();
+                    $("#zona").attr("disabled", "disabled");
+                }
+                
+            }
+        });
+    
+    });
 
-		    	}
-		   	    
-		    },
-		    complete: function(){
-		    	if(depa == 'GUA'){
-	    			$.ajax({
-					    url:app.url_ajax,
-					    dataType: 'text',
-					    data: {
-				            action: "get_zonas",
-				            departamento: depa,
 
-				        },
-					    type: 'post',
-					    timeout: 15000,
-					    error: function(a,b,c){
-					        console.log('error '+JSON.stringify(a)+JSON.stringify(b));
-					        myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
-					    },
-					    beforeSend: function(){
-					    	console.log("Jalando municipiops!!");
-					    },
-					    success: function(a){
-					   	    $(".zona").html(a);
-					    },
-					    complete: function(){
-					    	cortina.hide();
-						}
-					});
-		    	}else{
-		    		cortina.hide();
-		    		$("#zona").attr("disabled", "disabled");
-		    	}
-		    	
-			}
-		});
-	
-	});
+    $("#filtrocasa").click(function(){
+        console.log($(this).attr('src'));
+
+        if($(this).attr('src') == '../www/img/iconos/header-ver-propiedades.png'){
+            $(this).attr('src', '../www/img/iconos/housewhite.png');
+            $(this).css({
+                'width' : '35px',
+                'top' : '1px',
+                'left' : '1px',
+            });
+            get_mispropiedades();
+
+
+        }else{
+            $(this).attr('src','../www/img/iconos/header-ver-propiedades.png')
+            $(this).css({
+                'width' : '25px',
+                'top' : '5px',
+                'left' : '5px',
+            });
+
+            propiedad.getPropiedades();
+        }
+    });
 
 
 
 
-	$(".mas").click(function(){
-		var tr = $(this).closest('tr').prev();
-		var valor = tr.find("input").val();
-		var suma = parseInt(valor) + 1;
-		tr.find("input").val(suma);
-		
-	});
+    $(".mas").click(function(){
+        var tr = $(this).closest('tr').prev();
+        var valor = tr.find("input").val();
+        var suma = parseInt(valor) + 1;
+        tr.find("input").val(suma);
+        
+    });
 
-	$(".menos").click(function(){
-		var tr = $(this).closest('tr').prev();
-		var valor = tr.find("input").val();
-		if(valor > 0){
-			var resta = parseInt(valor) -1;
-			tr.find("input").val(resta);	
-		}		
-	});
+    $(".menos").click(function(){
+        var tr = $(this).closest('tr').prev();
+        var valor = tr.find("input").val();
+        if(valor > 0){
+            var resta = parseInt(valor) -1;
+            tr.find("input").val(resta);    
+        }       
+    });
 
-	$("#formaPago").change(function(){
-		var forma = $(this).val();
-		console.log(forma);
-		if(forma == "financiado"){
-			$(".masInfoFinanciera").toggle('slow');
-		}else if(forma == "contado"){
+    $("#formaPago").change(function(){
+        var forma = $(this).val();
+        console.log(forma);
+        if(forma == "financiado"){
             $(".masInfoFinanciera").toggle('slow');
-		}
+        }else if(forma == "contado"){
+            $(".masInfoFinanciera").toggle('slow');
+        }
 
 
         
 
-	});
+    });
 
 
     $("#spanPre").click(function(){
@@ -744,26 +873,40 @@ jQuery(document).ready(function($){
 
     });
 
-	$(".expandirInfo").click(function(){
-		var div = $(this).closest('tr');
-		var masInfo = div.closest('table').next();
-		masInfo.toggle('slow');
-		$(".arrowD").css("display", "none");
-	});
+    $(".expandirInfo").click(function(){
+        var div = $(this).closest('tr');
+        var masInfo = div.closest('table').next();
+        masInfo.toggle('slow');
+        $(".arrowD").css("display", "none");
+    });
 
-	$(".contraerInfo").click(function(){
-		$(".expandirInfo").click();
-		$(".arrowD").css("display", "block");
-	});
+    $(".contraerInfo").click(function(){
+        $(".expandirInfo").click();
+        $(".arrowD").css("display", "block");
+    });
+
+    $(".expandirInfoUbicacion").click(function(){
+        var div = $(this).closest('tr');
+        var masInfo = div.closest('tbody').next();
+        masInfo.toggle();
+        $(".arrowD").css("display", "none");
+    });
+
+    $(".contraerInfoUbicacion").click(function(){
+        $(".expandirInfoUbicacion").click();
+        $(".arrowD").css("display", "block");
+    });
+
+    
 
 
 
-	$("#plazoA").change(function(){
-		var anos = $(this).val();
-		var result = parseInt(anos) * 12;
-		$("#plazoM").val(result);
+    $("#plazoA").change(function(){
+        var anos = $(this).val();
+        var result = parseInt(anos) * 12;
+        $("#plazoM").val(result);
         calcular_presupuesto();
-	});
+    });
 
 
     
@@ -924,11 +1067,6 @@ var api_mapa = {
 
 };
 
-	
-	
+    
+    
 //REQUERIMIENTO
-
-
-
-
-
