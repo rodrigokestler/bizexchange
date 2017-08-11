@@ -1,4 +1,3 @@
-
 /*
 Guia de Colores
 azul oscuro: #262261; (footer)
@@ -29,39 +28,39 @@ html, body{ margin:0; padding:0;  height:100% }
     color:#848383!important;
 }
 .color-gris-claro{
-	color:rgb(238,240,239) !important;
+    color:rgb(238,240,239) !important;
 }
 
 .color-gris-oscuro{
     color:rgb(91,91,91) !important;
 }
 .color-white{
-	color:white!important;
+    color:white!important;
 }
 .bg-azul{
-	background-color:#2f5da8!important;
+    background-color:#2f5da8!important;
 }
 .bg-gris{
-	background-color:rgb(238,240,239) !important;
+    background-color:rgb(238,240,239) !important;
 }
 .width100{
-	width:100%!important;
+    width:100%!important;
 }
 
 .nav>li>a{
     padding:10px 0!important;
 }
 .nivel1{
-	z-index:11!important;
+    z-index:11!important;
 }
 .nivel2{
-	z-index:12!important;
+    z-index:12!important;
 }
 .nivel3{
-	z-index:13!important;
+    z-index:13!important;
 }
 .nivel4{
-	z-index:14!important;
+    z-index:14!important;
 }
 
 .screen{
@@ -83,12 +82,12 @@ html, body{ margin:0; padding:0;  height:100% }
     background-color:transparent;
 }
 .container-flex{
-	
+    
     display:flex;
     flex-direction:column;
     justify-content:start-flex;
     margin: auto 5%;
-	height:auto;
+    height:auto;
 }
 footer{
     
@@ -231,7 +230,7 @@ select.select_formR{
     box-shadow:none;
 }
 .input-login:focus{
-	box-shadow:none;
+    box-shadow:none;
 }
 .input-register{
     width: 220px;
@@ -373,73 +372,73 @@ select.select_formR{
     width:106%;
 }
 .table-propiedad, .table-requerimiento{
-	margin-left: 10px;
+    margin-left: 10px;
     width: 90%;
     table-layout: fixed;
     white-space: nowrap;
 }
 
 .icono-m2{
-	width:20px;
-	height:12px;
-	background-size:contain;
-	background-repeat:no-repeat;
-	background-position:center;
-	margin:0!important;
-	padding:0!important;
-	display:inline-block;
-	background-image:url(../img/iconos/mt.png);
+    width:20px;
+    height:12px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+    margin:0!important;
+    padding:0!important;
+    display:inline-block;
+    background-image:url(../img/iconos/mt.png);
 }
 .icono-niveles{
-	width:20px;
-	height:12px;
-	background-size:contain;
-	background-repeat:no-repeat;
-	background-position:center;
-	margin:0!important;
-	padding:0!important;
-	display:inline-block;
-	background-image:url(../img/iconos/niveles.png);
+    width:20px;
+    height:12px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+    margin:0!important;
+    padding:0!important;
+    display:inline-block;
+    background-image:url(../img/iconos/niveles.png);
 }
 .icono-habitaciones{
-	width:20px;
-	height:12px;
-	background-size:contain;
-	background-repeat:no-repeat;
-	background-position:center;
-	margin:0!important;
-	padding:0!important;
-	display:inline-block;
-	background-image:url(../img/iconos/habitaciones.png);
+    width:20px;
+    height:12px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+    margin:0!important;
+    padding:0!important;
+    display:inline-block;
+    background-image:url(../img/iconos/habitaciones.png);
 }
 .icono-parqueos{
-	width:20px;
-	height:12px;
-	background-size:contain;
-	background-repeat:no-repeat;
-	background-position:center;
-	margin:0!important;
-	padding:0!important;
-	display:inline-block;
-	background-image:url(../img/iconos/parqueos.png);
+    width:20px;
+    height:12px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+    margin:0!important;
+    padding:0!important;
+    display:inline-block;
+    background-image:url(../img/iconos/parqueos.png);
 }
 .icono-banos{
-	width:20px;
-	height:12px;
-	background-size:contain;
-	background-repeat:no-repeat;
-	background-position:center;
-	margin:0!important;
-	padding:0!important;
-	display:inline-block;
-	background-image:url(../img/iconos/banos.png);
+    width:20px;
+    height:12px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+    margin:0!important;
+    padding:0!important;
+    display:inline-block;
+    background-image:url(../img/iconos/banos.png);
 }
 .propiedad, .requerimiento{
-	height:110px;
-	width:97%;
+    height:110px;
+    width:97%;
 }
 .agregar-propiedad{
-	width: 80px;
+    width: 80px;
     height: 80px;
     background-color: transparent;
     background-size: contain;
@@ -454,7 +453,7 @@ select.select_formR{
     border: none;
 }
 .agregar-requerimiento{
-	width: 80px;
+    width: 80px;
     height: 80px;
     background-color: transparent;
     background-size: contain;
@@ -469,7 +468,7 @@ select.select_formR{
     border: none;
 }
 .icono-casa{
-	width: 80px;
+    width: 80px;
     height: 80px;
     background-color: transparent;
     background-size: contain;
@@ -481,7 +480,7 @@ select.select_formR{
     border: none;
 }
 .icono-oficina{
-	width: 80px;
+    width: 80px;
     height: 80px;
     background-color: transparent;
     background-size: contain;
@@ -493,7 +492,7 @@ select.select_formR{
     border: none;
 }
 .icono-terreno{
-	width: 80px;
+    width: 80px;
     height: 80px;
     background-color: transparent;
     background-size: contain;
@@ -505,7 +504,7 @@ select.select_formR{
     border: none;
 }
 .icono-apartamento{
-	width: 80px;
+    width: 80px;
     height: 80px;
     background-color: transparent;
     background-size: contain;
@@ -536,17 +535,17 @@ select.select_formR{
     -webkit-box-shadow: none; 
 }
 .container-form{
-	background-color:white;
-	padding:20px 10px;
-	margin-bottom:10px;
+    background-color:white;
+    padding:20px 10px;
+    margin-bottom:10px;
     overflow-x: scroll !important;
 }
 .titulo-container-form{
-	color:rgb(151,151,151) ;
-	font-size:12px!important;
+    color:rgb(151,151,151) ;
+    font-size:12px!important;
 }
 .btn-form-tipo-requerimiento{
-	margin: 0 auto!important;
+    margin: 0 auto!important;
     width: 90%;
     display: block;
     height: 40px;
@@ -614,13 +613,13 @@ input:checked + .slider:before {
 }
 /*termina switch*/
 .texto-nuevo-requerimiento{
-	color: rgb(58,58,58) ;
+    color: rgb(58,58,58) ;
     font-size: 12px!important;
-	
+    
 }
 .table-nuevo{
-	width:100%;
-	text-align:center;
+    width:100%;
+    text-align:center;
 }
 
 input[type=radio].tipo_operacion{
@@ -904,3 +903,4 @@ td.icon_ti{
     height: 16px;
     background: url('../img/star.png') 0 -16px;
 }
+Contact GitHub API Training Shop Blog About
