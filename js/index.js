@@ -616,7 +616,7 @@ jQuery(document).ready(function($){
 	    	}else{
 	    		
 	    		//jQuery("#propiedades-ul").innerHTML = a;            		
-	    		jQuery("#departamento").html(a);            		
+	    		jQuery(".departamento").html(a);            		
 	    		//var table = document.getElementById("tablePropiedades");
 	    		//table.innerHTML = a;
 	    		//alert(table.outerHTML);         
@@ -630,7 +630,7 @@ jQuery(document).ready(function($){
 		}
 	});
 
-	$("#departamento").change(function(){
+	$(".departamento").change(function(){
 		var depa = $(this).val();
 		$.ajax({
 		    url:app.url_ajax,
@@ -657,7 +657,7 @@ jQuery(document).ready(function($){
 		    	}else{
 		    		
 		    		//jQuery("#propiedades-ul").innerHTML = a;            		
-		    		jQuery("#municipio").html(a);            		
+		    		jQuery(".municipio").html(a);            		
 		    		//var table = document.getElementById("tablePropiedades");
 		    		//table.innerHTML = a;
 		    		//alert(table.outerHTML);         
@@ -683,10 +683,10 @@ jQuery(document).ready(function($){
 					        myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
 					    },
 					    beforeSend: function(){
-					    	console.log("Jalando get_departamentos!!");
+					    	console.log("Jalando municipiops!!");
 					    },
 					    success: function(a){
-					   	    $("#zona").html(a);
+					   	    $(".zona").html(a);
 					    },
 					    complete: function(){
 					    	cortina.hide();
@@ -730,11 +730,18 @@ jQuery(document).ready(function($){
 		}else if(forma == "contado"){
             $(".masInfoFinanciera").toggle('slow');
 		}
+
+
+        
+
 	});
 
 
     $("#spanPre").click(function(){
-          $(".masInfoPrecalificacion").toggle('slow');  
+          $(".masInfoPrecalificacion").toggle('slow');
+          $("#presupuesto_max").removeAttr("readonly", "readonly");
+
+
     });
 
 	$(".expandirInfo").click(function(){
@@ -755,7 +762,54 @@ jQuery(document).ready(function($){
 		var anos = $(this).val();
 		var result = parseInt(anos) * 12;
 		$("#plazoM").val(result);
+        calcular_presupuesto();
 	});
+
+
+    
+    function calcular_presupuesto(){
+        var tasa = $("#tasa_reque").val();
+        var ingresos = $("#ingresos_reque").val();
+        var egresos = $("#egresos_reque").val();
+        var enganche = $("#enganche_reque").val();
+        var plazo = $("#plazoA").val();
+
+        $.ajax({
+            url:app.url_ajax,
+            dataType: 'text',
+            data: {
+                action: "calcular_presupuesto",
+                tasa: tasa,
+                ingresos: ingresos,
+                egresos: egresos,
+                enganche: enganche,
+                plazo: plazo,
+
+            },
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+                console.log("Calculando presupuesto");
+                cortina.show();
+            },
+            success: function(a){
+                $("#presupuesto_max").val(a);
+                $("#presupuesto_max").attr("readonly", "readonly");
+            },
+            complete: function(){
+                cortina.hide();
+            }
+        });
+        
+        
+    }
+
+    
+
 
     $("#micomi").change(function(){
         var precio = $("#precioP").val();
