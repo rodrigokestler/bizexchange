@@ -665,6 +665,7 @@ input[type=radio]:checked.tipo_operacion + label{
  input[type=radio]:checked.tipo_inmueble.tipo_casa
 {
     background-image: url(../img/iconos/agregar-propiedad-casa-marcado.png);
+
 }
  input[type=radio].tipo_inmueble.tipo_apartamento
 {
@@ -757,6 +758,7 @@ input[type=radio]:checked.tipo_operacion + label{
     background-position: center;
     background-size: contain;
     margin:0 auto;
+
 }
 
 
