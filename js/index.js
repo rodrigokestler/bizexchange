@@ -206,11 +206,21 @@ var requerimiento = {
     form: $('#requerimientoForm'), 
     btnUbicacionExtra: $('#ubicacion_extra'),
     containerUbicaciones: $('#contenedor_ubicaciones'),
+
     agregarUbicacion: function(){
         var cant_ubicaciones = $('.ubicacion-requerimiento').length;
         console.log(cant_ubicaciones);
         var id = cant_ubicaciones + 1;
-        requerimiento.containerUbicaciones.append('<div class="ubicacion-requerimiento">'
+        requerimiento.containerUbicaciones.append('<br><br><table style="width:100%;" class="tableUbicacion-'+id+'">'
+                                    +'<tr>'
+                                       +' <td colspan="5" class="titulo-container-form">'
+                                      +'  UBICACION '+(parseInt(cant_ubicaciones) + 1)
+                                      +'  </td>'
+                                      +'  <td style="padding-bottom: 5px;" colspan="1"><button style="margin-left:-15px;" class="btn_mas_menos quitarUbi" data-id="tableUbicacion-'+id+'"  type="button">-</button></td>'
+                                   +' </tr>'
+                               +' </table>'
+                               +' <div id="contenedor_ubicaciones" class="tableUbicacion-'+id+'">'
+                                        +'<div class="ubicacion-requerimiento" id="ubicacion-'+(parseInt(cant_ubicaciones) + 1)+'">'
                                        +' <table style="width:100%;">'
                                            +' <tr style="margin:2px 0;">'
                                              +'   <td colspan="6">'
@@ -221,7 +231,7 @@ var requerimiento = {
                                             +' <tr>' 
                                                +'  <td colspan="2" class="texto-nuevo-requerimiento">Departamento</td>' 
                                                 +' <td colspan="3">' 
-                                                +'     <select name="departamento-'+id+'" class="color-gris-oscuro select_formR departamento inputpz" style="border:none;">' 
+                                                +'     <select name="departamento-'+id+'" class="color-gris-oscuro select_formR departamento inputpz" id="departamento-'+(parseInt(cant_ubicaciones) + 1)+'" data-id="municipio-'+(parseInt(cant_ubicaciones) + 1)+'" style="border:none;">' 
                                                         
                                                  +'    </select>' 
                                                +'  </td>' 
@@ -234,7 +244,7 @@ var requerimiento = {
                                            +'  <tr>' 
                                                +'  <td colspan="2" class="texto-nuevo-requerimiento">Municipio</td>' 
                                                +'  <td colspan="3">' 
-                                               +'      <select name="municipio-'+id+'"  class="color-gris-oscuro select_formR municipio inputpz" style="border:none;">' 
+                                               +'      <select name="municipio-'+id+'" id="municipio-'+id+'" class="color-gris-oscuro select_formR municipio inputpz" style="border:none;">' 
                                                         
                                                   +'   </select>' 
                                                +'  </td>' 
@@ -244,32 +254,12 @@ var requerimiento = {
                                                  +'   <hr style="margin:0!important;">' 
                                                 +' </td>' 
                                             +' </tr>' 
-                                            +' <tr>'                                             
+
+                                            +' <tr>' 
                                                +'  <td colspan="2" class="texto-nuevo-requerimiento">Zona</td>' 
                                                +'  <td colspan="3">' 
-                                                  +'   <select name="zona-'+id+'" class="color-gris-oscuro select_formR zona inputpz" style="border:none;">'
-                                                     +'       <option value="1">1</option>'
-                                                      +'      <option value="2">2</option>'
-                                                       +'     <option value="3">3</option>'
-                                                        +'    <option value="4">4</option>'
-                                                         +'   <option value="5">5</option>'
-                                                          +'  <option value="6">6</option>'
-                                                           +' <option value="7">7</option>'
-                                                            +'<option value="8">8</option>'
-                                                            +'<option value="9">9</option>'
-                                                            +'<option value="10">10</option>'
-                                                            +'<option value="11">11</option>'
-                                                            +'<option value="12">12</option>'
-                                                            +'<option value="13">13</option>'
-                                                            +'<option value="14">14</option>'
-                                                            +'<option value="15">15</option>'
-                                                            +'<option value="16">16</option>'
-                                                            +'<option value="17">17</option>'
-                                                            +'<option value="18">18</option>'
-                                                            +'<option value="19">19</option>'
-                                                            +'<option value="21">21</option> '
+                                                  +'   <select name="zona-'+id+'" class="color-gris-oscuro select_formR zona inputpz" style="border:none;">' 
                                                    +'  </select>' 
-                                                    +'<input type="hidden" name="cant_ubicaciones" value="'+cant_ubicaciones+'">'
                                             +' </tr>' 
                                            +'  <tr style="margin:2px 0;">' 
                                                +'  <td colspan="5">' 
@@ -295,6 +285,22 @@ var requerimiento = {
                                           +'   </tr>'
                                        +'  </table>'
                                    +'  </div>');
+                                propiedad.getDepartamentos("departamento-"+id);
+
+                                $(".departamento").on("change",function(){
+                                    var depa = $(this).val();
+                                    var municipio = $(this).attr("data-id"); 
+                                    propiedad.getMunicipios(depa, municipio);
+                                   
+                            
+                                });
+
+
+                                $(".quitarUbi").click(function(){
+                                    var ubi = $(this).attr("data-id");
+                                    $("."+ubi).remove();
+                                });
+
     },
     requerimiento: function(formData){
         formData.action = 'crear_requerimiento';
@@ -308,7 +314,7 @@ var requerimiento = {
 
         $.ajax({
             url:app.url_ajax,
-            dataType: 'text',
+            dataType: 'json',
             data: formData,
             type: 'post',
             timeout: 15000,
@@ -321,9 +327,7 @@ var requerimiento = {
                 cortina.show();
             },
             success: function(a){
-
-                console.log(a);
-               /* console.log(JSON.stringify(a));
+                console.log(JSON.stringify(a));
                 
                 if(a.msj_error){
                     myModal.open('Oops',a.msj_error);
@@ -331,7 +335,7 @@ var requerimiento = {
                     myModal.open('Se ha creado el requerimiento con exito.');
                     requerimiento.getRequerimientos(user.email, user.pass);
                     requerimiento.toggle('hide');
-                }*/
+                }
                 
             },
             complete: function(){
@@ -492,14 +496,7 @@ var propiedad = {
                 if(a.msj_error){
                     myModal.open('Oops',a.msj_error);
                 }else{
-                    
-                    //jQuery("#propiedades-ul").innerHTML = a;                  
                     jQuery("#propiedades-ul").html(a);                  
-                    //var table = document.getElementById("tablePropiedades");
-                    //table.innerHTML = a;
-                    //alert(table.outerHTML);         
-                    //table.innerHTML =  '<tr><td style="width:37%;position:relative;"><div style="background-image:url(\"http:\/\/megethosinmobiliaria.com/wp-content/uploads/2017/05/Fachada-de-moderna-casa-de-dos-pisos-wbhomes.com_.au-560x352.jpg\");" class="img-list-propiedades"></div></td><td><table class="table-propiedad"><tr><td colspan="5" class="color-azul font-600"># 1305</td></tr><tr><td colspan="3" class="color-azul font-600">casa en venta                        </td><td colspan="2" class="color-azul font-600">Q350,000                        </td></tr><tr><td colspan="5" class="color-gris" style="overflow:hidden;text-overflow:ellipsis;"> 3era calle B, 20-18 Zona 14                        </td></tr><tr><table style="margin-left:10px;width:100%"><tr class="color-gris" style="width:100%;"><td > 20mts<div class="icono-m2"></div></td><td > 2<div class="icono-niveles"></div></td><td > <div class="icono-habitaciones"></div></td><td > 2<div class="icono-parqueos"></div></td><td > <div class="icono-banos"></div></td></tr></table></tr></table></td></tr>';         
-
                 }
                 
             },
@@ -510,8 +507,8 @@ var propiedad = {
     },
     
     
-    getDepartamentos:function(){
-    	
+    getDepartamentos:function(departamento){
+
     	 $.ajax({
              url:app.url_ajax,
              dataType: 'text',
@@ -532,7 +529,7 @@ var propiedad = {
                  if(a.msj_error){
                      myModal.open('Oops',a.msj_error);
                  }else{
-                     jQuery(".departamento").html(a);                    
+                     jQuery("#"+departamento).html(a);                    
                  }
                  
              },
@@ -579,7 +576,7 @@ var propiedad = {
          });
     	
     },
-    getMunicipios:function(depa){
+    getMunicipios:function(depa, municipio){
     	 $.ajax({
              url:app.url_ajax,
              dataType: 'text',
@@ -603,7 +600,7 @@ var propiedad = {
                  if(a.msj_error){
                      myModal.open('Oops',a.msj_error);
                  }else{
-                     jQuery(".municipio").html(a);                   
+                     jQuery("#"+municipio).html(a);                   
                  }
                  
              },
@@ -758,7 +755,10 @@ var app = {
         }
     },
     loadEvents: function(){
-        propiedad.getDepartamentos();
+        
+
+        propiedad.getDepartamentos("departamento-1");
+        propiedad.getDepartamentos("departamento-propiedades");
         //Tabs Home
         /*
         $(".tab-content").on("swiperight",function() {
@@ -849,7 +849,8 @@ var app = {
 
         $(".departamento").on("change",function(){
 	        var depa = $(this).val();
-	        propiedad.getMunicipios(depa);
+            var municipio = $(this).attr("data-id"); 
+	        propiedad.getMunicipios(depa, municipio);
 	       
     
         });
