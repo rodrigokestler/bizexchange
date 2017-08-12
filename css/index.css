@@ -148,10 +148,12 @@ input,select{
 }
 
 select.select_formR{
+    -webkit-appearance:none;
     background-image:url(../img/iconos/arrowDB.png);
     background-position: center right;
     background-repeat: no-repeat;
     background-size: 18px 100%;
+    width: 150px;
 }
 
 .grad {
@@ -538,8 +540,16 @@ select.select_formR{
     background-color:white;
     padding:20px 10px;
     margin-bottom:10px;
-    overflow-x: scroll !important;
+    overflow-x: hidden;
 }
+
+.scrolleable_div{
+    overflow-x: scroll !important;
+    width: 100%;
+    display: block; 
+}
+
+
 .titulo-container-form{
     color:rgb(151,151,151) ;
     font-size:12px!important;
@@ -766,6 +776,12 @@ td.icon_ti{
 
 .inputText{
     border-bottom: 1px solid #D7D7D7 !important;
+}
+
+.inputCMI{
+    border-bottom: 1px solid #D7D7D7 !important;
+    width: 30px !important;
+    margin-bottom: 7px !important;
 }
 
 
