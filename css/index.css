@@ -453,6 +453,7 @@ select.select_formR{
     right: 20px;
     background-image: url(../img/iconos/Agregar-propiedad.png);
     border: none;
+    z-index: 10;
 }
 .agregar-requerimiento{
     width: 80px;
@@ -468,6 +469,7 @@ select.select_formR{
     right: 20px;
     background-image: url(../img/iconos/Agregar-requerimiento.png);
     border: none;
+    z-index: 10;
 }
 .icono-casa{
     width: 80px;
@@ -919,4 +921,29 @@ td.icon_ti{
     height: 16px;
     background: url('../img/star.png') 0 -16px;
 }
-Contact GitHub API Training Shop Blog About
+
+.tab-content{
+    min-height: 400px;
+    z-index: 5;
+}
+
+.tapholdOptions{
+    position: absolute;
+    top: 29px;
+    width: 155px;
+    right: 0px;
+    background: white;    
+    border: 1px solid;
+    height: 100px;
+    z-index: 20;
+    padding-left: 10px;
+}
+
+.tapholdOptions p{
+    display: block;
+    width: 100%;
+}
+
+.prevent_click{
+    pointer-events: none !important;
+}
