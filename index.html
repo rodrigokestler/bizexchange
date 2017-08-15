@@ -896,8 +896,12 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" class="texto-nuevo-requerimiento">Km</td>
-                                        <td colspan="3"><input name="km" id="telRegisterRequerimiento " class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='number'>
+                                        <td colspan="1" class="texto-nuevo-requerimiento">Km</td>
+                                        <td colspan="1"><input name="km" id="telRegisterRequerimiento " class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:30px;" type='number'>
+                                        </td>
+                                        <td colspan="3">
+                                            <select name="carretera" id="carretera-propiedades" class="color-gris-oscuro select_formR carretera inputpz" style="border:none;">
+                                            </select>
                                         </td>
                                     </tr>
                                     <tr style="margin:2px 0;">
@@ -1097,6 +1101,28 @@
                 </div>
             </div>
         </div>
+
+
+
+
+
+        <div class="screen nivel2" id="single_propiedad" style="padding:0!important;display:none;">
+            <div class="container" style="margin:0!important;padding:0!important;">
+                <div class="container-flex" style="margin:0!important;">
+                    <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
+                        <span class="text-header2" id="headerSingle_prop"></span>
+                        <button onclick="propiedad.verScreen.toggle('hide');" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                    </div>
+
+                    <div class="div_propiedad_single">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
 
 
 
@@ -1782,51 +1808,68 @@
                                                 <td colspan="5">
                                                     <hr style="margin:0!important;">
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" class="texto-nuevo-requerimiento">Municipio</td>
-                                                <td colspan="3">
-                                                    <select name="municipio-1"  id="municipio-1" class="color-gris-oscuro select_formR municipio inputpz" style="border:none;">
-                                                        
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            <tr style="margin:2px 0;">
-                                                <td colspan="5">
-                                                    <hr style="margin:0!important;">
+                                                <td class="expandirInfoUbicacion" data-ubi="masInfoUbicacion-1">
+                                                    <div class="arrowD" style="background-image:url(../www/img/iconos/arrowD.png)" ></div>
                                                 </td>
                                             </tr>
 
-                                            <tr>
-                                                <td colspan="2" class="texto-nuevo-requerimiento">Zona</td>
-                                                <td colspan="3">
-                                                    <select name="zona-1" class="color-gris-oscuro select_formR zona inputpz"  style="border:none;">
-                                                    </select>
-                                            </tr>
-                                            <tr style="margin:2px 0;">
-                                                <td colspan="5">
-                                                    <hr style="margin:0!important;">
-                                                </td>
-                                            </tr>
+                                            <tbody class="masInfoUbicacion" id="masInfoUbicacion-1" style="display: none;">
+                                                
+                                                <tr>
+                                                    <td colspan="2" class="texto-nuevo-requerimiento">Municipio</td>
+                                                    <td colspan="3">
+                                                        <select name="municipio-1"  id="municipio-1" class="color-gris-oscuro select_formR municipio inputpz" style="border:none;">
+                                                            
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr style="margin:2px 0;">
+                                                    <td colspan="5">
+                                                        <hr style="margin:0!important;">
+                                                    </td>
+                                                </tr>
 
-                                            <tr>
-                                                <td colspan="2" class="texto-nuevo-requerimiento">Km</td>
-                                                <td colspan="3"><input name="km-1"  class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='number'>
-                                                </td>
-                                            </tr>
-                                            <tr style="margin:2px 0;">
-                                                <td colspan="5">
-                                                    <hr style="margin:0!important;">
-                                                </td>
-                                            </tr>
+                                                <tr>
+                                                    <td colspan="2" class="texto-nuevo-requerimiento">Zona</td>
+                                                    <td colspan="3">
+                                                        <select name="zona-1" class="color-gris-oscuro select_formR zona inputpz"  style="border:none;">
+                                                        </select>
+                                                </tr>
+                                                <tr style="margin:2px 0;">
+                                                    <td colspan="5">
+                                                        <hr style="margin:0!important;">
+                                                    </td>
+                                                </tr>
 
-                                             <tr>
-                                                <td colspan="3" class="texto-nuevo-requerimiento">Otras especificaciones</td>
-                                                <td colspan="2" style="text-align: rigth;"><input name="otras_espec-1"  class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" placeholder="Ej: El naranjo..." type='text'>
-                                                </td>
-                                            </tr>
+                                                <tr>
+                                                     <td colspan="1" class="texto-nuevo-requerimiento">Km</td>
+                                                    <td colspan="1"><input name="km-1" id="telRegisterRequerimiento " class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:30px;" type='number'>
+                                                    </td>
+                                                    <td colspan="3">
+                                                        <select name="carretera-1" class="color-gris-oscuro select_formR carretera inputpz" style="border:none;">
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr style="margin:2px 0;">
+                                                    <td colspan="5">
+                                                        <hr style="margin:0!important;">
+                                                    </td>
+                                                </tr>
+
+                                                 <tr>
+                                                    <td colspan="3" class="texto-nuevo-requerimiento">Otras especificaciones</td>
+                                                    <td colspan="2" style="text-align: rigth;"><input name="otras_espec-1"  class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" placeholder="Ej: El naranjo..." type='text'>
+                                                    </td>
+                                                </tr>
+                                                 <tr>
+                                                    <td class="contraerInfoUbicacion" data-ubi="masInfoUbicacion-1" colspan="4">
+                                                        <div class="arrowU" style="background-image:url(../www/img/iconos/arrowU.png)" ></div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
                                         </table>
                                     </div>
+                                    <br><br>
                                 </div>
                             </div>
                             <div class="container-form">
@@ -1837,6 +1880,26 @@
                 </div>
             </div>
         </div>
+
+
+
+        <div class="screen nivel2" id="single_requerimiento" style="padding:0!important;display:none;">
+            <div class="container" style="margin:0!important;padding:0!important;">
+                <div class="container-flex" style="margin:0!important;">
+                    <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
+                        <span class="text-header2" id="headerSingle_req"></span>
+                        <button onclick="requerimiento.verScreen.toggle('hide');" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                    </div>
+
+                    <div class="div_requerimiento_single">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
 
 
 
@@ -1862,9 +1925,11 @@
         var movil=false;
         </script>
            
-        <script type="text/javascript" src="cordova.js"></script>
+       <!--<script type="text/javascript" src="cordova.js"></script>-->
         
-        <script type="text/javascript" src="js/jQuery.js"></script> 
+        <script src="https://code.jquery.com/jquery-2.1.4.js" integrity="sha256-siFczlgw4jULnUICcdm9gjQPZkw/YPDqhQ9+nAOScE4=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="js/jquery.mobile.js"></script>
+
 
         <script type="text/javascript" src="js/jquery-ui.min.js"></script>
         
