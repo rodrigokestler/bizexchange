@@ -202,6 +202,7 @@ var register = {
 
 var requerimiento = {
     crearScreen: $('#crear_requerimiento'),
+    verScreen :$('#single_requerimiento'),
     btnForm: $('#requerimientoBtn'),
     form: $('#requerimientoForm'), 
     btnUbicacionExtra: $('#ubicacion_extra'),
@@ -211,7 +212,7 @@ var requerimiento = {
         var cant_ubicaciones = $('.ubicacion-requerimiento').length;
         console.log(cant_ubicaciones);
         var id = cant_ubicaciones + 1;
-        requerimiento.containerUbicaciones.append('<br><br><table style="width:100%;" class="tableUbicacion-'+id+'">'
+        requerimiento.containerUbicaciones.append('<table style="width:100%;" class="tableUbicacion-'+id+'">'
                                     +'<tr>'
                                        +' <td colspan="5" class="titulo-container-form">'
                                       +'  UBICACION '+(parseInt(cant_ubicaciones) + 1)
@@ -231,7 +232,7 @@ var requerimiento = {
                                             +' <tr>' 
                                                +'  <td colspan="2" class="texto-nuevo-requerimiento">Departamento</td>' 
                                                 +' <td colspan="3">' 
-                                                +'     <select name="departamento-'+id+'" class="color-gris-oscuro select_formR departamento inputpz" id="departamento-'+(parseInt(cant_ubicaciones) + 1)+'" data-id="municipio-'+(parseInt(cant_ubicaciones) + 1)+'" style="border:none;">' 
+                                                +'     <select name="departamento-'+id+'" class="color-gris-oscuro select_formR departamento inputpz" id="departamento-'+(parseInt(cant_ubicaciones) + 1)+'" data-id="municipio-'+(parseInt(cant_ubicaciones) + 1)+'" data-carre="carretera-'+id+'" style="border:none;">' 
                                                         
                                                  +'    </select>' 
                                                +'  </td>' 
@@ -239,8 +240,12 @@ var requerimiento = {
                                            +'  <tr style="margin:2px 0;">' 
                                              +'    <td colspan="5">' 
                                              +'        <hr style="margin:0!important;">' 
-                                               +'  </td>' 
+                                               +'  </td>'
+                                               +'<td class="expandirInfoUbicacion" data-id="masInfoUbicacion-'+id+'">'
+                                                +'    <div class="arrowD" style="background-image:url(../www/img/iconos/arrowD.png)" ></div>'
+                                                +'</td> '
                                            +'  </tr>' 
+                                           +'<tbody class="masInfoUbicacion" id="masInfoUbicacion-'+id+'" style="display: none;">'
                                            +'  <tr>' 
                                                +'  <td colspan="2" class="texto-nuevo-requerimiento">Municipio</td>' 
                                                +'  <td colspan="3">' 
@@ -268,9 +273,13 @@ var requerimiento = {
                                            +'  </tr>' 
 
                                            +'  <tr>' 
-                                               +'  <td colspan="2" class="texto-nuevo-requerimiento">Km</td>' 
-                                                +' <td colspan="3"><input name="km-'+id+'"  class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type="number">' 
+                                               +'  <td colspan="1" class="texto-nuevo-requerimiento">Km</td>' 
+                                                +' <td colspan="1"><input name="km-'+id+'"  class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:30px;" type="number">' 
                                                +'  </td>'
+                                               +'<td colspan="3">'
+                                                 +' <select name="carretera-'+id+'" id="carretera-'+id+'" class="color-gris-oscuro select_formR carretera inputpz" style="border:none;">'
+                                                  +'</select>'
+                                              +'</td>'
                                            +'  </tr>'
                                            +'  <tr style="margin:2px 0;">'
                                                +'  <td colspan="5">'
@@ -283,14 +292,21 @@ var requerimiento = {
                                               +'   <td colspan="2" style="text-align: rigth;"><input name="otras_espec-'+id+'"  class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" placeholder="Ej: El naranjo..." type="text">'
                                               +'   </td>'
                                           +'   </tr>'
+                                         +'<tr>'
+                                           +'         <td class="contraerInfoUbicacion" data-id="masInfoUbicacion-'+id+'" colspan="4">'
+                                             +'           <div class="arrowU" style="background-image:url(../www/img/iconos/arrowU.png)" ></div>'
+                                               +'     </td>'
+                                               +' </tr>'
+                                          +'</tbody>'
                                        +'  </table>'
-                                   +'  </div>');
-                                propiedad.getDepartamentos("departamento-"+id);
+                                   +'  </div><br>');
+                                propiedad.getDepartamentos("departamento-"+id, "carretera-"+id);
 
                                 $(".departamento").on("change",function(){
                                     var depa = $(this).val();
                                     var municipio = $(this).attr("data-id"); 
-                                    propiedad.getMunicipios(depa, municipio);
+                                    var carretera = $(this).attr("data-carre");
+                                    propiedad.getMunicipios(depa, municipio, carretera);
                                    
                             
                                 });
@@ -300,6 +316,22 @@ var requerimiento = {
                                     var ubi = $(this).attr("data-id");
                                     $("."+ubi).remove();
                                 });
+
+                                $(".expandirInfoUbicacion").click(function(){
+                                    var masInfo = $(this).attr("data-id");
+                                    //var div = $(this).closest('tr');
+                                    //var masInfo = div.closest('tbody').next();
+                                    masInfo.toggle();
+                                    $(".arrowD").css("display", "none");
+                                });
+
+                                $(".contraerInfoUbicacion").click(function(){
+                                    var masInfo = $(this).attr("data-id");
+                                    $("#"+masInfo).click();
+                                    $(".arrowD").css("display", "block");
+                                });
+
+
 
     },
     requerimiento: function(formData){
@@ -328,7 +360,9 @@ var requerimiento = {
             },
             success: function(a){
                 console.log(JSON.stringify(a));
-                
+                requerimiento.clean();
+
+
                 if(a.msj_error){
                     myModal.open('Oops',a.msj_error);
                 }else{
@@ -370,7 +404,16 @@ var requerimiento = {
                 if(a.msj_error){
                     myModal.open('Oops',a.msj_error);
                 }else{
-                    jQuery("#requerimientos-ul").html(a);                   
+                    jQuery("#requerimientos-ul").html(a);   
+
+
+                    $(".requerimiento").on("click", function(){
+                        var id = $(this).attr("data-id");
+                        var tipo = $(this).attr("data-tipo");
+                        console.log(id +" "+tipo);
+                        requerimiento.getSingleRequerimiento(id,tipo);
+
+                    });                
                 }
                 
             },
@@ -378,7 +421,82 @@ var requerimiento = {
             }
         });
     },
-    
+    getMisRequerimientos: function(){
+      
+       $.ajax({
+             url:app.url_ajax,
+             dataType: 'text',
+             data: {
+                 action: "get_misrequerimientos",
+                 user_email: user.email,
+                 user_pass : user.pass
+             },
+             type: 'post',
+             timeout: 15000,
+             error: function(a,b,c){
+                 console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+             },
+             beforeSend: function(){
+                 console.log("Jalando mis requerimientos!!");
+                 cortina.show();
+             },
+             success: function(a){
+                 console.log(a);
+                 if(a.msj_error){
+                     myModal.open('Oops',a.msj_error);
+                 }else{                
+                     jQuery("#requerimientos-ul").html(a);                  
+                 }
+                 
+             },
+             complete: function(){
+                 cortina.hide();
+             }
+         });
+      
+    },
+    getSingleRequerimiento: function(id, tipo){
+        console.log("ya dentro de la funcion "+id+" "+tipo);
+        var id = id;
+        var tipo = tipo;
+        jQuery("#headerSingle_req").html("#"+id+" | "+tipo);                 
+        $.ajax({
+            url:app.url_ajax,
+            dataType: 'text',
+            data: {
+              action: "get_single_requerimiento",
+              id : id,
+              user_email: user.email,
+              user_pass : user.pass,
+            },
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+                console.log("Jalando single!!");
+                cortina.show();
+            },
+            success: function(a){
+                console.log(a);
+                if(a.msj_error){
+                    myModal.open('Oops',a.msj_error);
+                }else{
+                    jQuery("#div_requerimiento_single").html(a);  
+                }
+                
+            },
+            complete: function(){
+              requerimiento.verScreen.toggle('show');
+              cortina.hide();
+            }
+        });
+
+
+    },
     calcularPresupuesto:function(){
     	var tasa = $("#tasa_reque").val();
         var ingresos = $("#ingresos_reque").val();
@@ -424,11 +542,19 @@ var requerimiento = {
         }else if(tipo=='show'){
             requerimiento.crearScreen.show('slide',{direction:'right'},'fast');
         }
+    },
+    clean: function(){
+      $(':input','#requerimientoForm')
+        .not(':button, :submit, :reset, :hidden')
+        .val('')
+        .removeAttr('checked')
+        .removeAttr('selected');
     }
 };
 
 var propiedad = {
     crearScreen: $('#crear_propiedad'),
+    verScreen: $('#single_propiedad'),
     btnForm: $('#propiedadBtn'),
     form: $('#propiedadForm'), 
     propiedad: function(formData){
@@ -454,7 +580,7 @@ var propiedad = {
             },
             success: function(a){
                 console.log(JSON.stringify(a));
-                
+                propiedad.clean();
                 if(a.msj_error){
                     myModal.open('Oops',a.msj_error);
                 }else{
@@ -496,54 +622,108 @@ var propiedad = {
                 if(a.msj_error){
                     myModal.open('Oops',a.msj_error);
                 }else{
-                    jQuery("#propiedades-ul").html(a);                  
+                    jQuery("#propiedades-ul").html(a);  
+
+
+                    $(".propiedad").on("click", function(){
+                        var aux = false;
+                        $( "div.divTaphold" ).each(function( index ) {
+                            if($(this).css("display") == "none"){
+                              aux = true;
+                             // alert("no hay nada abierto");
+                              return false;
+                            }else{
+                              aux = false;
+                              $(this).css("display", "none");
+                             // alert("hay abierto");
+                              $(this).parent().removeClass("prevent_click");      
+                              return false;
+                            }
+                        });
+                        //alert(aux);
+                        if(aux){
+                          var id = $(this).attr("data-id");
+                          var tipo = $(this).attr("data-tipo");
+                          console.log(id +" "+tipo);
+                          propiedad.getSinglePropiedad(id,tipo);        
+                        }
+                        
+                        
+                        
+
+                    });    
+
+                    $(".propiedad").on("taphold", function(){
+                        var autor = $(this).attr("data-mail");
+                        if(autor == user.email){
+                          $(this).addClass("prevent_click");
+                          console.log("taphold");
+                          var id = $(this).attr("data-id");
+                          var tipo = $(this).attr("data-tipo");
+                          $(this).find("div.divTaphold").addClass("tapholdOptions");
+                          $(this).find("div.divTaphold").toggle("slow");  
+                        }else{
+                          return false;
+                        }
+
+                        
+                        //propiedad.getSinglePropiedad(id,tipo);
+
+                    });                  
+
                 }
                 
             },
             complete: function(){
+
+
                 cortina.hide();
             }
         });
     },
-    
-    
-    getDepartamentos:function(departamento){
 
-    	 $.ajax({
-             url:app.url_ajax,
-             dataType: 'text',
-             data: {
-                 action: "get_departamentos"
-             },
-             type: 'post',
-             timeout: 15000,
-             error: function(a,b,c){
-                 console.log('error '+JSON.stringify(a)+JSON.stringify(b));
-                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
-             },
-             beforeSend: function(){
-                 console.log("Jalando get_departamentos!!");
-             },
-             success: function(a){
-                 console.log(a);
-                 if(a.msj_error){
-                     myModal.open('Oops',a.msj_error);
-                 }else{
-                     jQuery("#"+departamento).html(a);                    
-                 }
-                 
-             },
-             complete: function(){
-
-             }
-         });
-    	
-    	
+    getSinglePropiedad: function(id, tipo){
+        console.log("ya dentro de la funcion "+id+" "+tipo);
+        var id = id;
+        var tipo = tipo;
+        jQuery("#headerSingle_prop").text("#"+id+" | "+tipo);                 
+        $.ajax({
+            url:app.url_ajax,
+            dataType: 'text',
+            data: {
+              action: "get_single_propiedad",
+              id : id,
+              user_email: user.email,
+              user_pass : user.pass,
+            },
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+                console.log("Jalando single!!");
+                cortina.show();
+            },
+            success: function(a){
+                console.log(a);
+                if(a.msj_error){
+                    myModal.open('Oops',a.msj_error);
+                }else{
+                    jQuery("#div_propiedad_single").html(a);  
+                }
+                
+            },
+            complete: function(){
+              requerimiento.verScreen.toggle('show');
+              cortina.hide();
+            }
+        });
     },
-    
     getMisPropiedades: function(){
-    	
-    	 $.ajax({
+      
+       $.ajax({
              url:app.url_ajax,
              dataType: 'text',
              data: {
@@ -574,9 +754,70 @@ var propiedad = {
                  cortina.hide();
              }
          });
+      
+    },    
+    getDepartamentos:function(departamento, carretera){
+
+    	 $.ajax({
+             url:app.url_ajax,
+             dataType: 'text',
+             data: {
+                 action: "get_departamentos"
+             },
+             type: 'post',
+             timeout: 15000,
+             error: function(a,b,c){
+                 console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+             },
+             beforeSend: function(){
+                cortina.show();
+                 console.log("Jalando get_departamentos!!");
+             },
+             success: function(a){
+                 console.log(a);
+                 if(a.msj_error){
+                     myModal.open('Oops',a.msj_error);
+                 }else{
+                     jQuery("#"+departamento).html(a);                    
+                 }
+                 
+             },
+             complete: function(){
+                cortina.hide();
+
+                $.ajax({
+                   url:app.url_ajax,
+                   dataType: 'text',
+                   data: {
+                       action: "get_carreteras",
+                   },
+                   type: 'post',
+                   timeout: 15000,
+                   error: function(a,b,c){
+                       console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                       myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+                   },
+                   beforeSend: function(){
+                       console.log("Jalando municipiops!!");
+                   },
+                   success: function(a){
+                       $(".carretera").html(a);
+                   },
+                   complete: function(){
+                       cortina.hide();
+                   }
+               });
+
+
+
+             }
+         });
+    	
     	
     },
-    getMunicipios:function(depa, municipio){
+
+    getMunicipios:function(depa, municipio, carretera){
     	 $.ajax({
              url:app.url_ajax,
              dataType: 'text',
@@ -645,6 +886,13 @@ var propiedad = {
         }else if(tipo=='show'){
             propiedad.crearScreen.show('slide',{direction:'right'},'fast');
         }
+    },
+    clean: function(){
+      $(':input','#propiedadForm')
+        .not(':button, :submit, :reset, :hidden')
+        .val('')
+        .removeAttr('checked')
+        .removeAttr('selected');
     }
 };
 
@@ -757,23 +1005,23 @@ var app = {
     loadEvents: function(){
         
 
-        propiedad.getDepartamentos("departamento-1");
-        propiedad.getDepartamentos("departamento-propiedades");
+        propiedad.getDepartamentos("departamento-1", "carretera-1");
+        propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
         //Tabs Home
-        /*
+        
         $(".tab-content").on("swiperight",function() {
             console.log('swiperight');
-            var $tab = $('#tablist .active').prev();
+            var $tab = $('#tablist li.active').prev();
             if ($tab.length > 0)
                 $tab.find('a').tab('show');
         });
         $(".tab-content").on("swipeleft",function() {
             console.log('swipe left');
-            var $tab = $('#tablist .active').next();
+            var $tab = $('#tablist li.active').next();
             if ($tab.length > 0)
                 $tab.find('a').tab('show');
         });
-        */
+      
 
 
         //General forms
@@ -867,6 +1115,7 @@ var app = {
                 'left' : '1px',
             });
             propiedad.getMisPropiedades();
+            requerimiento.getMisRequerimientos();
 
 
         }else{
@@ -877,6 +1126,7 @@ var app = {
                 'left' : '5px',
             });
             propiedad.getPropiedades();
+            requerimiento.getRequerimientos();
         }
     });
 
