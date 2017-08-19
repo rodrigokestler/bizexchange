@@ -46,14 +46,11 @@
         <div class="screen grad nivel1" id="loginScreen" style="color:#ffffff;">
             <div class="container">
                 <div class="container-flex">
+
                     <div id="tutorial-login" style="text-align:center;height:250px;">
                       <div style="position:relative;height:250px;width:250px;">
-                        <div style="margin-top: 20px;
-    letter-spacing: 1px;
-    font-size: 18px;">Bienvenidos a</div>
-                        <div style="margin: 50px;
-    font-size: 30px;
-    letter-spacing: 1px;">Biz Exchange</div>
+                        <div style="margin-top: 20px; letter-spacing: 1px; font-size: 18px;">Bienvenidos a</div>
+                            <div style="margin: 50px; font-size: 30px; letter-spacing: 1px;">Biz Exchange</div>
                         <div style="font-size:15px;">Una aplicacion revolucionaria, dise&ntilde;ada espec&iacute;ficamente
                           para el cierre de negocios inmobiliarios</div>
                       </div>
@@ -78,6 +75,7 @@
                         </div>
                       </div>
                     </div>
+
                     <div>
                         <form id="loginForm">
                             <div class="container-input-login">
@@ -115,7 +113,7 @@
                             <div class="container-input-register">
                                 <div class="icon-form" style="background-image:url('../www/img/iconos/registro-tipo-de-asesor.png');"></div>
                                 
-                                <select required="" name="tipo_usuario" style="width:220px!important;margin:0!important" class="form-control input-register inputpz">
+                                <select required="" name="tipo_usuario" style="width:220px!important;margin:0!important" id="tipo_usuario" class="form-control input-register inputpz">
                                     <option value="asesor">Asesor</option>
                                     <option value="cliente">Cliente</option>
                                 </select>
@@ -136,6 +134,10 @@
                             <div class="container-input-register">
                                 <div class="icon-form" style="background-image:url('../www/img/iconos/registro-confirmar-password.png');"></div>
                                 <input type="password" required="" id="registerPass2" placeholder="Repetir contrase&ntilde;a" class="inputpz form-control input-register" name="user_pass2">
+                            </div>
+                            <div class="container-input-register" id="container-codigo-asesor" style="display:none;">
+                                <div class="icon-form" style="background-image:url('../www/img/iconos/registro-tipo-de-asesor.png');"></div>
+                                <input type="number" id="codigo_asesor" placeholder="Codigo de tu asesor" class="inputpz form-control input-register" name="codigo_asesor">
                             </div>
                             <div>
                                 <div class="terms-conds">Al hacer click en "Registrarse", aceptas nuestros 
@@ -172,33 +174,41 @@
                     </div>
                     <div class="body-screen">
                         <ul class="nav nav-tabs " role="tablist" id="tablist">
+                            
+                          
+
+
                           <li style="width:40%" class="active col-xs-4">
-                            <img style="float: left;
-                                width: 25px;
-                                position: absolute;
-                                left: 5px;
-                                z-index: 10;
-                                top: 5px;"  src="../www/img/iconos/header-ver-propiedades.png" id="filtrocasa">
-                            <a data-toggle="tab" style="padding-left: 25px !important;" href="#propiedades">Propiedades</a>
-                        </li>
-                          <li style="width:30%"  class="col-xs-4"><a data-toggle="tab" href="#requerimientos">Requerimientos</a></li>
+                                <img style="float: left;
+                                    width: 25px;
+                                    position: absolute;
+                                    left: 5px;
+                                    z-index: 10;
+                                    top: 5px;"  src="../www/img/iconos/header-ver-propiedades.png" id="filtrocasa">
+                                <a data-toggle="tab" style="padding-left: 25px !important;" href="#propiedades">Propiedades</a>
+                            </li>
+
+                            <li style="width:30%"  class="col-xs-4"><a data-toggle="tab" href="#requerimientos">Requerimientos</a></li>
+
                           <li style="width:30%" class="col-xs-4"><a data-toggle="tab" href="#compatibilidades">Negocios</a></li>
                         </ul>
 
 
-                        <div class="tab-content">
+                        <div class="tab-content" id="tab-content-id">
                           <div id="propiedades" class="tab-pane fade in active">
-                            <button onclick="propiedad.crearScreen.toggle('show')" id="agregar_propiedad" class="agregar-propiedad btnCrear" ></button>
+                            <button onclick="propiedad.crearScreen.toggle('show')" id="agregar_propiedad" class="agregar-propiedad btnCrear" style="display:none;" ></button>
                             <ul id="propiedades-ul" style="height:100vh;overflow-y:scroll;">
                                 
                             </ul>
                           </div>
+
                           <div id="requerimientos" class="tab-pane fade">
-                            <button onclick="requerimiento.crearScreen.toggle('show');" id="agregar_requerimiento" class="agregar-requerimiento btnCrear"></button>
+                            <button onclick="requerimiento.crearScreen.toggle('show');" id="agregar_requerimiento" class="agregar-requerimiento btnCrear" style="display:none;"></button>
                             <ul id="requerimientos-ul" style="height:100vh;overflow-y:scroll;">
                             
                             </ul>
                           </div>
+
                           <div id="compatibilidades" class="tab-pane fade">
                             <h3>Negocios</h3>
                             <p>No hay negocios disponibles.</p>
@@ -625,7 +635,7 @@
                                     </tr>
                                     <tr>
                                         <td style="font-size:12px;">Amenidades/extras
-                                        </td>
+                                        </td>   
                                         <td colspan="2" style="text-align: right;">
                                             <input type="text" style="border:none;text-align:right; width: 150px !important;" class="inputpz width100" name="extras" placeholder="teatro en casa, piscina, etc">
                                         </td>
@@ -1846,7 +1856,7 @@
                                                     <td colspan="1"><input name="km-1" id="telRegisterRequerimiento " class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:30px;" type='number'>
                                                     </td>
                                                     <td colspan="3">
-                                                        <select name="carretera-1" class="color-gris-oscuro select_formR carretera inputpz" style="border:none;">
+                                                        <select name="carretera-1" id="carretera-1" class="color-gris-oscuro select_formR carretera inputpz" style="border:none;">
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -1925,12 +1935,11 @@
         var movil=false;
         </script>
            
-       <!--<script type="text/javascript" src="cordova.js"></script>-->
-        
-        <script src="https://code.jquery.com/jquery-2.1.4.js" integrity="sha256-siFczlgw4jULnUICcdm9gjQPZkw/YPDqhQ9+nAOScE4=" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="js/jquery.mobile.js"></script>
+       <script type="text/javascript" src="cordova.js"></script>
 
 
+        <script type="text/javascript" src="js/jQuery.js"></script>
+        <script type="text/javascript" src="js/hammer-time.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui.min.js"></script>
         
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
