@@ -54,11 +54,7 @@ var user = {
             
                 $('#user_email_login').val(user.email);
                 $('#user_pass_login').val(user.pass);
-                //login.loginBtn.trigger('click');
                 login.loginBtn.click();
-                //var formData = login.form.getFormData();
-                //login.login(formData);
-            
         }
     }
 };
@@ -94,38 +90,27 @@ var login = {
                     user.email = formData.user_email;
                     user.estado = a.data.estado;
                     user.role = a.roles[0];
+                    console.log(user.role+" , "+user.estado);
 
-                    //console.log(user.estado);
-                    if(user.estado != 'aprobado'){
-                        $(".btnCrear").css('display', 'none !important');
-                    }else{
-                        $(".btnCrear").css('display', 'block !important');
+                    if(user.estado == 'aprobado' && user.role == 'asesor'){
+                        //alert("si puede crear chivas");
+                        $(".btnCrear").toggle();
                     }
 
                     window.localStorage.setItem('user',JSON.stringify(a));
                     window.localStorage.setItem('correo',user.email);
                     window.localStorage.setItem('password',user.pass);
 
-                    requerimiento.getRequerimientos(user.email, user.pass);
                     propiedad.getPropiedades(user.email, user.pass);
-                    
-                    
-
-
+                    requerimiento.getRequerimientos(user.email, user.pass);
                     login.screen.hide('slide',{direction:'left'},'fast');
-                    /*
-                    if(user.estado.toLowerCase()!='pendiente'){
-                        login.screen.hide('slide',{direction:'left'},'fast');
-                    }else{
-                        myModal.open('Bienvenido','Tu cuenta todav�a no ha sido aprobada. Un asesor se estar� poniendo en contacto contigo pronto.');
-                    }
-                    */
-                    
                 }
                 
             },
             complete: function(){ 
-                cortina.hide();
+                setTimeout(function(){
+                  cortina.hide();
+                },3000)
             }
        });
     },
@@ -167,13 +152,13 @@ var register = {
                           .val('')
                           .removeAttr('checked')
                           .removeAttr('selected');
-                        register.toggle('hide');
+
                         if(formData.tipo_usuario=='cliente'){
                             user.pass = formData.user_pass;
                             user.email = formData.user_email;
                             user.role = 'cliente';
                             user.estado = 'aprobado';
-                            login.screen.hide();
+                            
                         }else{
                             
                             myModal.open('Bienvenido','Tu cuenta todavía no ha sido aprobada. Un asesor se estará poniendo en contacto contigo pronto.');
@@ -186,7 +171,11 @@ var register = {
                     }
                     
                 },
-                complete: function(){ 
+                complete: function(){
+                    $("#user_email_login").val(user.email);
+                    $("#user_pass_login").val(user.pass);
+
+                    register.screen.toggle("hide");
                     register.btnForm.loader('enable',"REGISTRARSE");
                 }
            });
@@ -241,8 +230,8 @@ var requerimiento = {
                                              +'    <td colspan="5">' 
                                              +'        <hr style="margin:0!important;">' 
                                                +'  </td>'
-                                               +'<td class="expandirInfoUbicacion" data-id="masInfoUbicacion-'+id+'">'
-                                                +'    <div class="arrowD" style="background-image:url(../www/img/iconos/arrowD.png)" ></div>'
+                                               +'<td class="expandirInfoUbicacion" data-id="masInfoUbicacion-'+id+'" data-arrow="'+id+'">'
+                                                +'    <div class="arrowD" id="arrowD-'+id+'" style="background-image:url(../www/img/iconos/arrowD.png)" ></div>'
                                                 +'</td> '
                                            +'  </tr>' 
                                            +'<tbody class="masInfoUbicacion" id="masInfoUbicacion-'+id+'" style="display: none;">'
@@ -293,43 +282,45 @@ var requerimiento = {
                                               +'   </td>'
                                           +'   </tr>'
                                          +'<tr>'
-                                           +'         <td class="contraerInfoUbicacion" data-id="masInfoUbicacion-'+id+'" colspan="4">'
+                                           +'         <td class="contraerInfoUbicacion" data-id="masInfoUbicacion-'+id+'" data-arrow="'+id+'" colspan="4">'
                                              +'           <div class="arrowU" style="background-image:url(../www/img/iconos/arrowU.png)" ></div>'
                                                +'     </td>'
                                                +' </tr>'
                                           +'</tbody>'
                                        +'  </table>'
                                    +'  </div><br>');
-                                propiedad.getDepartamentos("departamento-"+id, "carretera-"+id);
+            propiedad.getDepartamentos("departamento-"+id, "carretera-"+id);
 
-                                $(".departamento").on("change",function(){
-                                    var depa = $(this).val();
-                                    var municipio = $(this).attr("data-id"); 
-                                    var carretera = $(this).attr("data-carre");
-                                    propiedad.getMunicipios(depa, municipio, carretera);
-                                   
-                            
-                                });
+            $(".departamento").on("change",function(){
+                var depa = $(this).val();
+                var municipio = $(this).attr("data-id"); 
+                var carretera = $(this).attr("data-carre");
+                propiedad.getMunicipios(depa, municipio, carretera);
+               
+        
+            });
 
 
-                                $(".quitarUbi").click(function(){
-                                    var ubi = $(this).attr("data-id");
-                                    $("."+ubi).remove();
-                                });
+            $(".quitarUbi").click(function(){
+                var ubi = $(this).attr("data-id");
+                $("."+ubi).remove();
+            });
 
-                                $(".expandirInfoUbicacion").click(function(){
-                                    var masInfo = $(this).attr("data-id");
-                                    //var div = $(this).closest('tr');
-                                    //var masInfo = div.closest('tbody').next();
-                                    masInfo.toggle();
-                                    $(".arrowD").css("display", "none");
-                                });
+            $(".expandirInfoUbicacion").click(function(){
+                var masInfo = $(this).attr("data-id");
+                var arrow = $(this).attr("data-arrow");
+                //var div = $(this).closest('tr');
+                //var masInfo = div.closest('tbody').next();
+                $("#"+masInfo).toggle("slow");
+                $("#arrowD-"+arrow).toggle();
+            });
 
-                                $(".contraerInfoUbicacion").click(function(){
-                                    var masInfo = $(this).attr("data-id");
-                                    $("#"+masInfo).click();
-                                    $(".arrowD").css("display", "block");
-                                });
+            $(".contraerInfoUbicacion").click(function(){
+                var masInfo = $(this).attr("data-id");
+                $("#"+masInfo).toggle();
+                var arrow = $(this).attr("data-arrow");
+                $("#arrowD-"+arrow).toggle();
+            });
 
 
 
@@ -341,12 +332,10 @@ var requerimiento = {
 
         
         console.log(JSON.stringify(formData));
-        //console.log(formData.tipo_operacion);
-
-
+      
         $.ajax({
             url:app.url_ajax,
-            dataType: 'json',
+            dataType: 'text',
             data: formData,
             type: 'post',
             timeout: 15000,
@@ -378,46 +367,82 @@ var requerimiento = {
         });
     },  
     getRequerimientos:function(user_email, user_pass){
-        var formData = requerimiento.form.getFormData();
-        formData.action = 'get_requerimientos';
-        formData.user_email = user.email;
-        formData.user_pass = user.pass;
-
-        console.log(JSON.stringify(formData));
 
         $.ajax({
             url:app.url_ajax,
-            dataType: 'text',
-            data: formData,
+            dataType: 'html',
+            data: {
+              action: "get_requerimientos",
+              user_email : user_email,
+              user_pass : user_pass
+            },
             type: 'post',
-            timeout: 15000,
+            timeout: 30000,
             error: function(a,b,c){
                 console.log('error '+JSON.stringify(a)+JSON.stringify(b));
                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
             },
             beforeSend: function(){
                 console.log("Jalando requerimientos!!");
-                //cortina.show();
+                cortina.show();
             },
             success: function(a){
                 console.log(a);
+
+                if(!a){
+                  requerimiento.getRequerimientos(user_email, user_pass);
+                }
+
                 if(a.msj_error){
                     myModal.open('Oops',a.msj_error);
                 }else{
                     jQuery("#requerimientos-ul").html(a);   
 
-
-                    $(".requerimiento").on("click", function(){
-                        var id = $(this).attr("data-id");
-                        var tipo = $(this).attr("data-tipo");
-                        console.log(id +" "+tipo);
-                        requerimiento.getSingleRequerimiento(id,tipo);
-
-                    });                
                 }
+
+                $(".requerimiento").on("click", function(){
+                    var aux = true;
+                    $( "div.divTaphold" ).each(function( index ) {
+                        if($(this).css("display") == "none"){
+                          aux = true;
+                        }else{
+                          aux = false;
+                          $(this).css("display", "none");
+                          $(this).parent().removeClass("prevent_click");                                   
+                          return false;
+                        }
+                    });
+
+                    if(aux){
+                      var id = $(this).attr("data-id");
+                      var tipo = $(this).attr("data-tipo");
+                      requerimiento.getSingleRequerimiento(id,tipo);        
+                    }
+                });    
+                
+                $('.requerimiento').each(function(){   //tagname based selector
+                    var mc = new Hammer(this);
+                    var autor = $(this).attr("data-mail");
+                    var dis = $(this);
+                    mc.on("press", function(e) {
+                          console.log(e.type);
+                          if(autor == user.email){
+                            dis.addClass("prevent_click");    
+                            var id = dis.attr("data-id");
+                            var tipo = dis.attr("data-tipo");
+                            dis.find("div.divTaphold").addClass("tapholdOptions");
+                            dis.find("div.divTaphold").toggle("slow");  
+
+                          }else{
+                            return false;
+                          }
+
+                    });
+                });        
                 
             },
             complete: function(){
+              cortina.hide();
             }
         });
     },
@@ -446,8 +471,49 @@ var requerimiento = {
                  if(a.msj_error){
                      myModal.open('Oops',a.msj_error);
                  }else{                
-                     jQuery("#requerimientos-ul").html(a);                  
-                 }
+                     jQuery("#requerimientos-ul").html(a);   
+
+                }
+
+                 $(".requerimiento").on("click", function(){
+                    var aux = true;
+                    $( "div.divTaphold" ).each(function( index ) {
+                        if($(this).css("display") == "none"){
+                          aux = true;
+                        }else{
+                          aux = false;
+                          $(this).css("display", "none");
+                          $(this).parent().removeClass("prevent_click");                                   
+                          return false;
+                        }
+                    });
+
+                    if(aux){
+                      var id = $(this).attr("data-id");
+                      var tipo = $(this).attr("data-tipo");
+                      requerimiento.getSingleRequerimiento(id,tipo);        
+                    }
+                });    
+                
+                $('.requerimiento').each(function(){   //tagname based selector
+                    var mc = new Hammer(this);
+                    var autor = $(this).attr("data-mail");
+                    var dis = $(this);
+                    mc.on("press", function(e) {
+                          console.log(e.type);
+                          if(autor == user.email){
+                            dis.addClass("prevent_click");    
+                            var id = dis.attr("data-id");
+                            var tipo = dis.attr("data-tipo");
+                            dis.find("div.divTaphold").addClass("tapholdOptions");
+                            dis.find("div.divTaphold").toggle("slow");  
+
+                          }else{
+                            return false;
+                          }
+
+                    });
+                });          
                  
              },
              complete: function(){
@@ -477,7 +543,7 @@ var requerimiento = {
                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
             },
             beforeSend: function(){
-                console.log("Jalando single!!");
+                console.log("Jalando single requerimiento!!");
                 cortina.show();
             },
             success: function(a){
@@ -485,8 +551,22 @@ var requerimiento = {
                 if(a.msj_error){
                     myModal.open('Oops',a.msj_error);
                 }else{
-                    jQuery("#div_requerimiento_single").html(a);  
+                    jQuery(".div_requerimiento_single").html(a);  
+
                 }
+
+
+                $(".expandirInfoRequerimientoSingle").click(function(){
+                    var masInfo = $(".masInfoRequerimientoSingle");
+                    masInfo.toggle('slow');
+                    $(this).find(".arrowD").css("display", "none");
+                });
+
+                $(".contraerInfoRequerimientoSingle").click(function(){
+                    $(".expandirInfoRequerimientoSingle").click();
+                    $(".arrowD").css("display", "block");
+                });
+                
                 
             },
             complete: function(){
@@ -596,19 +676,16 @@ var propiedad = {
         });
     },      
     getPropiedades: function(user_email, user_pass){
-        var formData = propiedad.form.getFormData();
-        formData.action = 'get_propiedades';
-        formData.user_email = user.email;
-        formData.user_pass = user.pass;
-
-        console.log(JSON.stringify(formData));
-
         $.ajax({
             url:app.url_ajax,
-            dataType: 'text',
-            data: formData,
+            dataType: 'html',
+            data: {
+              action: 'get_propiedades',
+              user_email : user_email,
+              user_pass : user_pass
+            },
             type: 'post',
-            timeout: 15000,
+            timeout: 30000,
             error: function(a,b,c){
                 console.log('error '+JSON.stringify(a)+JSON.stringify(b));
                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
@@ -619,64 +696,62 @@ var propiedad = {
             },
             success: function(a){
                 console.log(a);
+                if(!a){
+                  propiedad.getPropiedades(user_email, user_pass);  
+                }
+                
+
                 if(a.msj_error){
                     myModal.open('Oops',a.msj_error);
                 }else{
                     jQuery("#propiedades-ul").html(a);  
 
 
-                    $(".propiedad").on("click", function(){
-                        var aux = false;
-                        $( "div.divTaphold" ).each(function( index ) {
-                            if($(this).css("display") == "none"){
-                              aux = true;
-                             // alert("no hay nada abierto");
-                              return false;
-                            }else{
-                              aux = false;
-                              $(this).css("display", "none");
-                             // alert("hay abierto");
-                              $(this).parent().removeClass("prevent_click");      
-                              return false;
-                            }
-                        });
-                        //alert(aux);
-                        if(aux){
-                          var id = $(this).attr("data-id");
-                          var tipo = $(this).attr("data-tipo");
-                          console.log(id +" "+tipo);
-                          propiedad.getSinglePropiedad(id,tipo);        
-                        }
-                        
-                        
-                        
-
-                    });    
-
-                    $(".propiedad").on("taphold", function(){
-                        var autor = $(this).attr("data-mail");
-                        if(autor == user.email){
-                          $(this).addClass("prevent_click");
-                          console.log("taphold");
-                          var id = $(this).attr("data-id");
-                          var tipo = $(this).attr("data-tipo");
-                          $(this).find("div.divTaphold").addClass("tapholdOptions");
-                          $(this).find("div.divTaphold").toggle("slow");  
+                }
+                 
+                $(".propiedad").on("click", function(){
+                    var aux = true;
+                    $( "div.divTaphold" ).each(function( index ) {
+                        if($(this).css("display") == "none"){
+                          aux = true;
                         }else{
+                          aux = false;
+                          $(this).css("display", "none");
+                          $(this).parent().removeClass("prevent_click");                                   
                           return false;
                         }
+                    });
 
-                        
-                        //propiedad.getSinglePropiedad(id,tipo);
+                    if(aux){
+                      var id = $(this).attr("data-id");
+                      var tipo = $(this).attr("data-tipo");
+                      propiedad.getSinglePropiedad(id,tipo);        
+                    }
+                });    
+                
+                $('.propiedad').each(function(){   //tagname based selector
+                    var mc = new Hammer(this);
+                    var autor = $(this).attr("data-mail");
+                    var dis = $(this);
+                    mc.on("press", function(e) {
+                          console.log(e.type);
+                          if(autor == user.email){
+                            dis.addClass("prevent_click");    
+                            var id = dis.attr("data-id");
+                            var tipo = dis.attr("data-tipo");
+                            dis.find("div.divTaphold").addClass("tapholdOptions");
+                            dis.find("div.divTaphold").toggle("slow");  
 
-                    });                  
+                          }else{
+                            return false;
+                          }
 
-                }
+                    });
+                });  
+
                 
             },
             complete: function(){
-
-
                 cortina.hide();
             }
         });
@@ -684,12 +759,12 @@ var propiedad = {
 
     getSinglePropiedad: function(id, tipo){
         console.log("ya dentro de la funcion "+id+" "+tipo);
-        var id = id;
-        var tipo = tipo;
-        jQuery("#headerSingle_prop").text("#"+id+" | "+tipo);                 
+        
+        $("#headerSingle_prop").text("#"+id+" | "+tipo);                 
+
         $.ajax({
             url:app.url_ajax,
-            dataType: 'text',
+            dataType: 'html',
             data: {
               action: "get_single_propiedad",
               id : id,
@@ -703,7 +778,7 @@ var propiedad = {
                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
             },
             beforeSend: function(){
-                console.log("Jalando single!!");
+                console.log("Jalando single propiedad!!");
                 cortina.show();
             },
             success: function(a){
@@ -711,18 +786,41 @@ var propiedad = {
                 if(a.msj_error){
                     myModal.open('Oops',a.msj_error);
                 }else{
-                    jQuery("#div_propiedad_single").html(a);  
+                    jQuery(".div_propiedad_single").html(a);  
                 }
+                setTimeout(function(){
+                  $('#carrusel-propiedades').slick({
+                    dots: true,
+                    infinite: true,
+                    speed: 300,
+                    slidesToShow: 1,
+                    adaptiveHeight: true,
+                    arrows: false
+                  });
+                }, 2000);
+                 
+
+              $(".expandirInfoPropiedadSingle").click(function(){
+                  var masInfo = $(".masInfoPropiedadSingle");
+                  masInfo.toggle('slow');
+                  $(this).find(".arrowD").css("display", "none");
+              });
+
+              $(".contraerInfoPropiedadSingle").click(function(){
+                  $(".expandirInfoPropiedadSingle").click();
+                  $(".arrowD").css("display", "block");
+              });
+
                 
             },
             complete: function(){
-              requerimiento.verScreen.toggle('show');
+              propiedad.verScreen.toggle('show');
               cortina.hide();
             }
         });
     },
-    getMisPropiedades: function(){
-      
+
+    getMisPropiedades: function(){  
        $.ajax({
              url:app.url_ajax,
              dataType: 'text',
@@ -746,8 +844,49 @@ var propiedad = {
                  if(a.msj_error){
                      myModal.open('Oops',a.msj_error);
                  }else{                
-                     jQuery("#propiedades-ul").html(a);                  
-                 }
+                     jQuery("#propiedades-ul").html(a);  
+
+                }
+
+                $(".propiedad").on("click", function(){
+                    var aux = true;
+                    $( "div.divTaphold" ).each(function( index ) {
+                        if($(this).css("display") == "none"){
+                          aux = true;
+                        }else{
+                          aux = false;
+                          $(this).css("display", "none");
+                          $(this).parent().removeClass("prevent_click");                                   
+                          return false;
+                        }
+                    });
+
+                    if(aux){
+                      var id = $(this).attr("data-id");
+                      var tipo = $(this).attr("data-tipo");
+                      propiedad.getSinglePropiedad(id,tipo);        
+                    }
+                });    
+                
+                $('.propiedad').each(function(){   //tagname based selector
+                    var mc = new Hammer(this);
+                    var autor = $(this).attr("data-mail");
+                    var dis = $(this);
+                    mc.on("press", function(e) {
+                          console.log(e.type);
+                          if(autor == user.email){
+                            dis.addClass("prevent_click");    
+                            var id = dis.attr("data-id");
+                            var tipo = dis.attr("data-tipo");
+                            dis.find("div.divTaphold").addClass("tapholdOptions");
+                            dis.find("div.divTaphold").toggle("slow");  
+
+                          }else{
+                            return false;
+                          }
+
+                    });
+                });              
                  
              },
              complete: function(){
@@ -802,7 +941,7 @@ var propiedad = {
                        console.log("Jalando municipiops!!");
                    },
                    success: function(a){
-                       $(".carretera").html(a);
+                       $("#"+carretera).html(a);
                    },
                    complete: function(){
                        cortina.hide();
@@ -1003,13 +1142,31 @@ var app = {
         }
     },
     loadEvents: function(){
-        
-
         propiedad.getDepartamentos("departamento-1", "carretera-1");
         propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
         //Tabs Home
+
+/*
+          var tabs = document.querySelector(".tab-content");
+          var mc = new Hammer(tabs);
+
+          mc.on("panleft", function(ev) {
+            console.log('swipe left');
+            var $tab = $('#tablist li.active').next();
+            if ($tab.length > 0)
+            $tab.find('a').tab('show');
+            
+        });
+
+        mc.on("panright", function(ev) {
+            console.log('swipe right');
+            var $tab = $('#tablist li.active').prev();
+            if ($tab.length > 0)
+            $tab.find('a').tab('show');
+            
+        });
         
-        $(".tab-content").on("swiperight",function() {
+       /* $(".tab-content").on("swiperight",function() {
             console.log('swiperight');
             var $tab = $('#tablist li.active').prev();
             if ($tab.length > 0)
@@ -1020,7 +1177,7 @@ var app = {
             var $tab = $('#tablist li.active').next();
             if ($tab.length > 0)
                 $tab.find('a').tab('show');
-        });
+        });*/ 
       
 
 
@@ -1031,6 +1188,10 @@ var app = {
             var parent = $(this).closest('.container');
             console.log(parent);
             parent.scrollTo(this);
+        });
+
+        $("#tipo_usuario").on("change", function(){
+            $("#container-codigo-asesor").toggle("show");
         });
         
         //Login Screen
@@ -1044,6 +1205,7 @@ var app = {
         login.form.parsley().on('form:submit',function(){
             return false;
         });
+
         $('#tutorial-login').slick({
           dots: true,
           infinite: true,
@@ -1095,13 +1257,13 @@ var app = {
         },1000);
 
 
-        $(".departamento").on("change",function(){
-	        var depa = $(this).val();
-            var municipio = $(this).attr("data-id"); 
-	        propiedad.getMunicipios(depa, municipio);
-	       
-    
-        });
+      $(".departamento").on("change",function(){
+        var depa = $(this).val();
+          var municipio = $(this).attr("data-id"); 
+        propiedad.getMunicipios(depa, municipio);
+       
+  
+      });
 
 
     $("#filtrocasa").click(function(){
@@ -1125,10 +1287,10 @@ var app = {
                 'top' : '5px',
                 'left' : '5px',
             });
-            propiedad.getPropiedades();
-            requerimiento.getRequerimientos();
+            propiedad.getPropiedades(user.email, user.pass);
+            requerimiento.getRequerimientos(user.email, user.pass);
         }
-    });
+      });
 
 
 
@@ -1211,7 +1373,7 @@ var app = {
         $("#comicompartotal").val(total);
     });
 
-    api_mapa.init();
+//    api_mapa.init();
 
         
     },  
