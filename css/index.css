@@ -291,11 +291,46 @@ select.select_formR{
     margin: 10px auto 0;
     background-position: center;
 }
+
+.singleProp-img{
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 200px;
+    width: 100%;
+    margin: 10px auto 0;
+    background-position: center;   
+}
+
+#cantidadFotos{
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    z-index: 100;
+    font-size: 17px;
+    color: white;
+}
+
 .tutorial-seccion{
     position:relative;
     height:200px;
     width:200px;
 }
+
+.carrusel-propiedades img{
+    width: 100%
+}
+
+.singleProp-seccion{
+    position:relative;
+    height:200px;
+    width:100%;
+}
+
+.singleProp-seccion img{
+    width: 100%;
+    height: auto;
+}
+
 .tutorial-texto{
     margin: 20px auto 0;
     letter-spacing: 1px;
@@ -342,7 +377,7 @@ select.select_formR{
     text-decoration: underline;
 }
 .img-list-propiedades{
-    height:100%;
+    height:90px;
     width:100%;
     background-size:100%;
     background-repeat:no-repeat;
@@ -369,10 +404,18 @@ select.select_formR{
 #propiedades-ul, #requerimientos-ul{
     margin:0;
     padding:0;
-    height:100vh;
-    overflow-y:scroll;
-    width:106%;
+    overflow-y:scroll !important;
+    width:100%;
 }
+
+#propiedades, #requerimientos{
+    position: absolute;
+    overflow-y: scroll;
+    top: 110px;
+    bottom: 0px;
+
+}
+
 .table-propiedad, .table-requerimiento{
     margin-left: 10px;
     width: 90%;
@@ -448,7 +491,7 @@ select.select_formR{
     background-position: center;
     margin: 0!important;
     padding: 0!important;
-    position: absolute;
+    position: fixed;
     bottom: 50px;
     right: 20px;
     background-image: url(../img/iconos/Agregar-propiedad.png);
@@ -464,7 +507,7 @@ select.select_formR{
     background-position: center;
     margin: 0!important;
     padding: 0!important;
-    position: absolute;
+    position: fixed;
     bottom: 50px;
     right: 20px;
     background-image: url(../img/iconos/Agregar-requerimiento.png);
@@ -829,6 +872,7 @@ td.icon_ti{
 
 .text-header2{
     margin-top: 18px !important;
+    font-size: 18px;
 }
 
 #mapa_{
@@ -922,6 +966,148 @@ td.icon_ti{
     background: url('../img/star.png') 0 -16px;
 }
 
+/*SINGLE*/
+
+.featured-image{
+    width: 100%;
+    height: 190px;
+    display: block;
+    overflow: hidden;
+    position: relative;
+}
+.featured-image img{
+    display: block;
+    margin: 0 auto;
+}
+
+.precio-table tr td{
+    vertical-align: middle;
+    height: 50px;
+}
+
+.td-precio{
+    width: 70%;
+}
+
+.td-precio{
+    color: #2f5da8;
+    font-size: 25px;
+}
+
+.td-precio label{    
+    color: black;
+    font-size: 14px;
+    margin-left: 10px;
+    display: inline;
+    font-weight: 400 !important;    
+}
+
+.td-precio span{ 
+    display: inline;   
+    color: #2f5da8;
+    font-size: 20px;
+    width: 46%;
+    float: left;
+    
+}
+
+.td-fecha{
+    font-weight: 700;       
+}
+
+.usuario-table{
+    background-color: #eee;
+}
+
+.td-avatar{
+    width: 60px;
+    height: 60px;
+    padding: 5px;
+}
+
+.td-avatar imt{
+    display: block;
+    margin: 0 auto;
+}
+
+.td-usuario{
+    padding: 10px;
+}
+
+.td-usuario p{
+    margin: 0;
+}
+
+.datos_default img{
+    height: 17px;
+    vertical-align: middle !important;
+    padding-top: -1px;
+    padding-left: 3px;
+}
+
+.datos_default tr td{
+    font-size: 16px;
+    vertical-align: middle;
+    float: left;
+    padding-left: 5px;
+    padding-right: 7px;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.datos_detalle tr td{
+    width: 33.33%;
+    min-height: 100px;
+    vertical-align: bottom;
+    padding: 10px;
+}
+
+.datos_detalle tr td img{
+    display: block;
+    margin: 0 auto;
+    height: 30px;
+}
+
+.datos_detalle tr td p{
+    font-size: 11px;
+    text-align: center;
+}
+
+.dir-table tr td{
+    vertical-align: middle;
+    height: 50px;
+}
+
+.botones_contacto{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+}
+
+.botones_contacto table{
+    width: 100%;
+}
+
+.botones_contacto table tr td{
+    vertical-align: middle;
+    width: 33.33%;
+    padding: 10px;
+    height: 100px;
+}
+
+.botones_contacto table tr td img{
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+    max-width: 100px;
+}
+
+
+/*TERMINA AGREGADO POR DIEGO*//*TERMINA AGREGADO POR DIEGO*//*TERMINA AGREGADO POR DIEGO*//*TERMINA AGREGADO POR DIEGO*/
+/*TERMINA AGREGADO POR DIEGO*//*TERMINA AGREGADO POR DIEGO*//*TERMINA AGREGADO POR DIEGO*//*TERMINA AGREGADO POR DIEGO*/
+
 .tab-content{
     min-height: 400px;
     z-index: 5;
@@ -929,7 +1115,7 @@ td.icon_ti{
 
 .tapholdOptions{
     position: absolute;
-    top: 29px;
+    top: 0px;
     width: 155px;
     right: 0px;
     background: white;    
@@ -937,6 +1123,8 @@ td.icon_ti{
     height: 100px;
     z-index: 20;
     padding-left: 10px;
+    pointer-events: visible;
+
 }
 
 .tapholdOptions p{
@@ -946,4 +1134,8 @@ td.icon_ti{
 
 .prevent_click{
     pointer-events: none !important;
+}
+
+.readonly{
+    pointer-events: none !important;   
 }
