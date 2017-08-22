@@ -204,8 +204,11 @@ var requerimiento = {
         requerimiento.containerUbicaciones.append('<table style="width:100%;" class="tableUbicacion-'+id+'">'
                                     +'<tr>'
                                        +' <td colspan="5" class="titulo-container-form">'
-                                      +'  UBICACION '+(parseInt(cant_ubicaciones) + 1)
+                                      +'  UBICACION '+(parseInt(cant_ubicaciones) + 1)+' <span class="resumen_ubi" id="resumen-'+id+'"></span>'
                                       +'  </td>'
+                                      +'<td class="expandirInfoUbicacion" data-id="masInfoUbicacion-'+id+'" data-arrow="'+id+'">'
+                                                +'    <div class="arrowD" id="arrowD-'+id+'" style="background-image:url(../www/img/iconos/arrowD.png); display: none; margin-right:30px;" ></div>'
+                                                +'</td> '
                                       +'  <td style="padding-bottom: 5px;" colspan="1"><button style="margin-left:-15px;" class="btn_mas_menos quitarUbi" data-id="tableUbicacion-'+id+'"  type="button">-</button></td>'
                                    +' </tr>'
                                +' </table>'
@@ -230,11 +233,8 @@ var requerimiento = {
                                              +'    <td colspan="5">' 
                                              +'        <hr style="margin:0!important;">' 
                                                +'  </td>'
-                                               +'<td class="expandirInfoUbicacion" data-id="masInfoUbicacion-'+id+'" data-arrow="'+id+'">'
-                                                +'    <div class="arrowD" id="arrowD-'+id+'" style="background-image:url(../www/img/iconos/arrowD.png)" ></div>'
-                                                +'</td> '
                                            +'  </tr>' 
-                                           +'<tbody class="masInfoUbicacion" id="masInfoUbicacion-'+id+'" style="display: none;">'
+                                           +'<tbody class="masInfoUbicacion" id="masInfoUbicacion-'+id+'">'
                                            +'  <tr>' 
                                                +'  <td colspan="2" class="texto-nuevo-requerimiento">Municipio</td>' 
                                                +'  <td colspan="3">' 
@@ -252,7 +252,7 @@ var requerimiento = {
                                             +' <tr>' 
                                                +'  <td colspan="2" class="texto-nuevo-requerimiento">Zona</td>' 
                                                +'  <td colspan="3">' 
-                                                  +'   <select name="zona-'+id+'" class="color-gris-oscuro select_formR zona inputpz" style="border:none;">' 
+                                                  +'   <select name="zona-'+id+'" id="zona-'+id+'" class="color-gris-oscuro select_formR zona inputpz" style="border:none;">' 
                                                    +'  </select>' 
                                             +' </tr>' 
                                            +'  <tr style="margin:2px 0;">' 
@@ -281,11 +281,14 @@ var requerimiento = {
                                               +'   <td colspan="2" style="text-align: rigth;"><input name="otras_espec-'+id+'"  class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" placeholder="Ej: El naranjo..." type="text">'
                                               +'   </td>'
                                           +'   </tr>'
-                                         +'<tr>'
-                                           +'         <td class="contraerInfoUbicacion" data-id="masInfoUbicacion-'+id+'" data-arrow="'+id+'" colspan="4">'
-                                             +'           <div class="arrowU" style="background-image:url(../www/img/iconos/arrowU.png)" ></div>'
-                                               +'     </td>'
-                                               +' </tr>'
+                                         +' <tr>'
+                                          +'      <td colspan="5">'
+                                          +'          <hr style="margin:0!important;">'
+                                          +'      </td>'
+                                          +'      <td class="contraerInfoUbicacion" data-id="masInfoUbicacion-'+id+'" data-arrow="'+id+'" colspan="5">'
+                                          +'          <div class="arrowU" style="background-image:url(../www/img/iconos/arrowU.png)" ></div>'
+                                           +'     </td>'
+                                           +' </tr>'
                                           +'</tbody>'
                                        +'  </table>'
                                    +'  </div><br>');
@@ -300,6 +303,8 @@ var requerimiento = {
         
             });
 
+            $("#departamento-"+id).focus();
+
 
             $(".quitarUbi").click(function(){
                 var ubi = $(this).attr("data-id");
@@ -309,20 +314,36 @@ var requerimiento = {
             $(".expandirInfoUbicacion").click(function(){
                 var masInfo = $(this).attr("data-id");
                 var arrow = $(this).attr("data-arrow");
-                //var div = $(this).closest('tr');
-                //var masInfo = div.closest('tbody').next();
+                $("#resumen-"+arrow).html("");
+                $("#departamento-"+arrow).closest("tr").toggle();
+                //$("#departamento-"+arrow).closest("tr").prev().toggle();
                 $("#"+masInfo).toggle("slow");
                 $("#arrowD-"+arrow).toggle();
             });
 
             $(".contraerInfoUbicacion").click(function(){
-                var masInfo = $(this).attr("data-id");
-                $("#"+masInfo).toggle();
                 var arrow = $(this).attr("data-arrow");
+                var depar = $("#departamento-"+arrow).val().toLowerCase();
+                var muni = $("#municipio-"+arrow).val();
+                var zona = $("#zona-"+arrow).val();
+
+                if(zona){
+                  $("#resumen-"+arrow).html("Zona "+zona+", "+muni+", "+depar+"...");  
+                }else if(depar || muni || zona){
+                  $("#resumen-"+arrow).html(muni+", "+depar+"...");  
+                }else{
+                  if(!depar || !muni || !zona){
+                    $("#resumen-"+arrow).html();  
+                  }
+                }
+
+
+                $("#departamento-"+arrow).closest("tr").toggle();
+                //$("#departamento-"+arrow).closest("tr").prev().toggle();
+                var masInfo = $(this).attr("data-id");
+                $("#"+masInfo).toggle("slow");
                 $("#arrowD-"+arrow).toggle();
             });
-
-
 
     },
     requerimiento: function(formData){
@@ -526,7 +547,8 @@ var requerimiento = {
         console.log("ya dentro de la funcion "+id+" "+tipo);
         var id = id;
         var tipo = tipo;
-        jQuery("#headerSingle_req").html("#"+id+" | "+tipo);                 
+        jQuery("#headerSingle_req").html("#"+id+" | "+tipo); 
+        $('#headerSingle_req').css('textTransform', 'capitalize');
         $.ajax({
             url:app.url_ajax,
             dataType: 'text',
@@ -761,7 +783,7 @@ var propiedad = {
         console.log("ya dentro de la funcion "+id+" "+tipo);
         
         $("#headerSingle_prop").text("#"+id+" | "+tipo);                 
-
+        $('#headerSingle_prop').css('textTransform', 'capitalize');
         $.ajax({
             url:app.url_ajax,
             dataType: 'html',
@@ -1316,31 +1338,76 @@ var app = {
         var forma = $(this).val();
         console.log(forma);
         if(forma == "financiado"){
-            $(".masInfoFinanciera").toggle('slow');
+            $(".masInfoFinanciera").toggle("slow");
         }else if(forma == "contado"){
-            $(".masInfoFinanciera").toggle('slow');
+            var status = $("#spanPre").attr("data-status");
+            if(status == "on"){
+              $("#spanPre").click();
+            }
+            $(".masInfoFinanciera").css("display", "none");
+            $(".masInfoPrecalificacion").css("display", "none");
         }
     });
 
 
     $("#spanPre").click(function(){
        $(".masInfoPrecalificacion").toggle('slow');
+       $("#spanPresupuesto").toggle();
+       var status = $("#spanPre").attr("data-status");
+       if(status != "on"){
+        $(this).attr("data-status", "on"); 
+       }else{
+        $(this).removeAttr("data-status"); 
+       }
+       
        $("#presupuesto_max").removeAttr("readonly", "readonly");
     });
 
     $(".expandirInfo").click(function(){
-        var div = $(this).closest('tr');
-        var masInfo = div.closest('table').next();
-        masInfo.toggle('slow');
-        $(".arrowD").css("display", "none");
+        var masInfo = $(this).attr("data-id");
+        var arrow = $(this).attr("data-arrow");
+        $("#"+masInfo).toggle('slow');
+        $("#"+arrow).css("display", "none");
     });
 
     $(".contraerInfo").click(function(){
-        $(".expandirInfo").click();
-        $(".arrowD").css("display", "block");
+        var masInfo = $(this).attr("data-id");
+        var arrow = $(this).attr("data-arrow");
+        $("#"+masInfo).toggle('slow');
+        $("#"+arrow).css("display", "block");
     });
 
-    $(".expandirInfoUbicacion").click(function(){
+
+
+
+     $(".expandirInfoContacto").click(function(){
+        var arrow = $(this).attr("data-id");
+        console.log(arrow);
+        if(arrow == "arrowD-contactoR"){
+          var masInfo = $("#masInfoContactoR");  
+        }else{
+          var masInfo = $("#masInfoContactoP");  
+        }
+        
+        masInfo.toggle('slow');
+        $("#"+arrow).css("display", "none");
+    });
+
+    $(".contraerInfoContacto").click(function(){
+        var arrow = $(this).attr("data-id");
+        console.log(arrow);
+        if(arrow == "arrowD-contactoR"){
+          var masInfo = $("#masInfoContactoR");  
+        }else{
+          var masInfo = $("#masInfoContactoP");  
+        }
+        masInfo.toggle('slow');
+        $("#"+arrow).css("display", "block");
+    });
+
+
+
+    /*$(".expandirInfoUbicacion").click(function(){
         var div = $(this).closest('tr');
         var masInfo = div.closest('tbody').next();
         masInfo.toggle();
@@ -1350,7 +1417,47 @@ var app = {
     $(".contraerInfoUbicacion").click(function(){
         $(".expandirInfoUbicacion").click();
         $(".arrowD").css("display", "block");
+    });*/
+
+
+
+
+    $(".expandirInfoUbicacion").click(function(){
+        var masInfo = $(this).attr("data-id");
+        var arrow = $(this).attr("data-arrow");
+        $("#resumen-"+arrow).html("");
+        $("#departamento-"+arrow).closest("tr").toggle();
+        //$("#departamento-"+arrow).closest("tr").prev().toggle();
+        $("#"+masInfo).toggle("slow");
+        $("#arrowD-"+arrow).toggle();
     });
+
+    $(".contraerInfoUbicacion").click(function(){
+        var arrow = $(this).attr("data-arrow");
+        var depar = $("#departamento-"+arrow).val().toLowerCase();
+        var muni = $("#municipio-"+arrow).val();
+        var zona = $("#zona-"+arrow).val();
+
+        if(zona){
+          $("#resumen-"+arrow).html("Zona "+zona+", "+muni+", "+depar+"...");  
+        }else if(depar || muni || zona){
+          $("#resumen-"+arrow).html(muni+", "+depar+"...");  
+        }else{
+          if(!depar || !muni || !zona){
+            $("#resumen-"+arrow).html();  
+          }
+        }
+//        $("#resumen-"+arrow).html("Zona "+zona+", "+muni+", "+depar+"...");
+        var masInfo = $(this).attr("data-id");
+        $("#departamento-"+arrow).closest("tr").toggle();
+        //$("#departamento-"+arrow).closest("tr").prev().toggle();
+        $("#"+masInfo).toggle("slow");
+        $("#arrowD-"+arrow).toggle();
+    });
+
+
+
+
 
     $("#plazoA").change(function(){
         var anos = $(this).val();
@@ -1371,6 +1478,41 @@ var app = {
         var to = parseInt($(this).val())*parseInt(totalcomi);;
         var total = to / 100;
         $("#comicompartotal").val(total);
+    });
+
+    $(".texto_operacion").click(function(){
+      $(this).prev().attr("checked", "true");
+      //console.log($(this).prev());
+    });
+
+
+    $("#requerimientoForm input").click(function(){
+        if($(this).val() == 0){
+          $(this).val("");
+        }
+    });
+
+    $("#propiedadForm input").click(function(){
+        if($(this).val() == 0){
+          $(this).val("");
+        }
+    });
+
+    $(".caracteristicas_extras").on("focusin", function(){
+      $(this).removeAttr("placeholder");
+    });
+
+    $(".caracteristicas_extras").on("focusout", function(){
+      if($(this).val==""){
+          $(this).attr("placeholder", "teatro en casa, piscina, etc");
+      }
+      
+    });
+
+    $("#moneda_ingresos").change(function(){
+      var moneda = $(this).val();
+      $(".moneda_IF").val(moneda);
+      $("span.moneda_IF").html(moneda);
     });
 
 //    api_mapa.init();
