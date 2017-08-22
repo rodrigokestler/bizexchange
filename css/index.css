@@ -18,6 +18,11 @@ html, body{ margin:0; padding:0;  height:100% }
     outline: none!important;
     
 }
+
+form *{
+    font-size: 13px !important;
+}
+
 .font-600{
     font-weight:600;
 }
@@ -327,8 +332,8 @@ select.select_formR{
 }
 
 .singleProp-seccion img{
-    width: 100%;
-    height: auto;
+    height: 100%;
+    width: auto;
 }
 
 .tutorial-texto{
@@ -379,7 +384,7 @@ select.select_formR{
 .img-list-propiedades{
     height:90px;
     width:100%;
-    background-size:100%;
+    background-size: auto 100%;
     background-repeat:no-repeat;
     background-position:center;
     position:absolute;
@@ -792,7 +797,7 @@ input[type=radio]:checked.tipo_operacion + label{
     max-width:60px;
 }
 .titulo_caract_min_inmueble{
-    font-size: 10px;
+    font-size: 11px !important;
     text-align: center;
 }
 .btn_mas_menos{
@@ -805,11 +810,11 @@ input[type=radio]:checked.tipo_operacion + label{
     font-size: 16px;
 }
 .icono_caract_min_inmueble{
-    width: 35px;
-    height: 30px;
+    width: 45px;
+    height: 40px;
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+    background-position: center !important;
+    background-size: contain !important;
     margin:0 auto;
 }
 
@@ -827,6 +832,21 @@ td.icon_ti{
     border-bottom: 1px solid #D7D7D7 !important;
     width: 30px !important;
     margin-bottom: 7px !important;
+}
+
+.inputIF{
+    border-bottom: 1px solid #D7D7D7 !important;
+    width: 60px !important;
+    margin-bottom: 7px !important;
+}
+
+.moneda_IF{
+    background-image: none !important;
+}
+
+span.moneda_IF{
+    margin-left: -60px;
+    margin-right: 60px;
 }
 
 
@@ -848,11 +868,29 @@ td.icon_ti{
     float: right;
 }
 
+.arrowD-contacto{
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin: 0 auto;
+}
+.arrowU-contacto{
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin: 0 auto;
+    float: right;
+}
+
 
 .slider_text{
     position: absolute;
     top: 22px;
-    font-size: 8px;
+    font-size: 9px !important;
     left: 5px;
 }
 
@@ -1138,4 +1176,11 @@ td.icon_ti{
 
 .readonly{
     pointer-events: none !important;   
+}
+
+
+.resumen_ubi{
+    margin-left: 30px;
+    text-transform: capitalize;
+
 }
