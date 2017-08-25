@@ -157,8 +157,20 @@ select.select_formR{
     background-image:url(../img/iconos/arrowDB.png);
     background-position: center right;
     background-repeat: no-repeat;
-    background-size: 18px 100%;
+    background-size: 10% 35%;
     width: 150px;
+    -webkit-padding-end: 30px !important;
+    -webkit-padding-start: 10px !important;
+}
+
+select.select_formRIF{
+    -webkit-appearance:none;
+    background-image:url(../img/iconos/arrowDB.png);
+    background-position: center right;
+    background-repeat: no-repeat;
+    background-size: 10% 35%;
+    width: 150px;
+
 }
 
 .grad {
@@ -826,6 +838,7 @@ td.icon_ti{
 
 .inputText{
     border-bottom: 1px solid #D7D7D7 !important;
+    width: 150px !important;
 }
 
 .inputCMI{
@@ -845,8 +858,25 @@ td.icon_ti{
 }
 
 span.moneda_IF{
-    margin-left: -60px;
-    margin-right: 60px;
+    margin-left: -30px;
+    margin-right: 0px;
+    display: inline-block;
+    width: 17% !important;
+}
+
+span.moneda_IFP{
+    margin-left: -30px;
+    margin-right: 0px;
+    display: inline-block;
+    width: 17% !important;
+}
+
+td select.moneda_IF{
+    text-align: left !important;
+}
+
+td select.moneda_IFP{
+    text-align: left !important;
 }
 
 
@@ -858,6 +888,18 @@ span.moneda_IF{
     background-size: contain;
     margin: 0 auto;
 }
+
+
+.arrowD2{
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40% 20% !important;
+    margin: 0 auto;
+    background-image: url(../img/iconos/arrowDB.png) !important;
+}
+
 .arrowU{
     width: 30px;
     height: 30px;
@@ -1181,6 +1223,17 @@ span.moneda_IF{
 
 .resumen_ubi{
     margin-left: 30px;
-    text-transform: capitalize;
+    width: 150px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    height: 19px;
+    display: inline-block;
+    margin-bottom: -7px;
+    white-space: nowrap;
 
+}
+
+.inputCalc{
+    border: none !important;
+    color: rgb(75,104,146) !important;
 }
