@@ -239,7 +239,7 @@ var requerimiento = {
                                                +'  <td colspan="2" class="texto-nuevo-requerimiento">Municipio</td>' 
                                                +'  <td colspan="3">' 
                                                +'      <select name="municipio-'+id+'" id="municipio-'+id+'" class="color-gris-oscuro select_formR municipio inputpz" style="border:none;">' 
-                                                        
+                                                         +'<option>--Seleccione--</option>   '
                                                   +'   </select>' 
                                                +'  </td>' 
                                            +'  </tr>' 
@@ -253,6 +253,7 @@ var requerimiento = {
                                                +'  <td colspan="2" class="texto-nuevo-requerimiento">Zona</td>' 
                                                +'  <td colspan="3">' 
                                                   +'   <select name="zona-'+id+'" id="zona-'+id+'" class="color-gris-oscuro select_formR zona inputpz" style="border:none;">' 
+                                                  +'<option>--Seleccione--</option>   '
                                                    +'  </select>' 
                                             +' </tr>' 
                                            +'  <tr style="margin:2px 0;">' 
@@ -263,7 +264,7 @@ var requerimiento = {
 
                                            +'  <tr>' 
                                                +'  <td colspan="1" class="texto-nuevo-requerimiento">Km</td>' 
-                                                +' <td colspan="1"><input name="km-'+id+'"  class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:30px;" type="number">' 
+                                                +' <td colspan="1"><input name="km-'+id+'"  class="color-gris-oscuro inputpz inputText inputOE" style="text-align:center;border:none;width:30px;" type="number" value="0">' 
                                                +'  </td>'
                                                +'<td colspan="3">'
                                                  +' <select name="carretera-'+id+'" id="carretera-'+id+'" class="color-gris-oscuro select_formR carretera inputpz" style="border:none;">'
@@ -278,7 +279,7 @@ var requerimiento = {
 
                                              +' <tr>'
                                               +'   <td colspan="3" class="texto-nuevo-requerimiento">Otras especificaciones</td>'
-                                              +'   <td colspan="2" style="text-align: rigth;"><input name="otras_espec-'+id+'"  class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" placeholder="Ej: El naranjo..." type="text">'
+                                              +'   <td colspan="2" style="text-align: rigth;"><input name="otras_espec-'+id+'"  class="color-gris-oscuro inputpz inputText inputOE" style="text-align:center;border:none;width:100px;" placeholder="Ej: El naranjo..." type="text">'
                                               +'   </td>'
                                           +'   </tr>'
                                          +' <tr>'
@@ -326,15 +327,44 @@ var requerimiento = {
                 var depar = $("#departamento-"+arrow).val().toLowerCase();
                 var muni = $("#municipio-"+arrow).val();
                 var zona = $("#zona-"+arrow).val();
+                var departamento = $("#departamento-"+arrow+ " :selected").text();
 
-                if(zona){
-                  $("#resumen-"+arrow).html("Zona "+zona+", "+muni+", "+depar+"...");  
-                }else if(depar || muni || zona){
-                  $("#resumen-"+arrow).html(muni+", "+depar+"...");  
-                }else{
-                  if(!depar || !muni || !zona){
+
+                if(depar == ""){
+                  depar = false;
+                }
+                if(zona == "--Seleccione--"){
+                  zona = false;
+                }
+                if(muni == "--Seleccione--"){
+                  muni = false;
+                }else if(muni == ""){
+                  console.log("entro aqui");
+                  muni = $("#municipio-"+arrow+" :selected").text();
+                  console.log(muni);
+                }else if(muni == null){
+                  muni = "";
+                }
+
+                if(!depar && !muni && !zona){
+                    console.log("ninguno escogido");
                     $("#resumen-"+arrow).html();  
-                  }
+
+                }else if(zona && muni && depar){
+                  console.log("todos escogidos");
+                  $("#resumen-"+arrow).html("Zona "+zona+", "+muni+", "+depar);  
+
+                }else if(!zona && !muni && depar) {
+                    console.log("Solo departamento");
+                    $("#resumen-"+arrow).html(departamento);  
+
+                }else if(muni == "" || muni == null || muni == undefined){
+                    console.log("Sin municipio");
+                    $("#resumen-"+arrow).html("Zona "+zona+", "+departamento);  
+
+                }else{
+                  console.log("no zona escogida");
+                  $("#resumen-"+arrow).html(muni+", "+departamento);  
                 }
 
 
@@ -344,6 +374,22 @@ var requerimiento = {
                 $("#"+masInfo).toggle("slow");
                 $("#arrowD-"+arrow).toggle();
             });
+
+            $(".inputOE").on("focusin", function(){
+              $(this).removeAttr("placeholder");
+              $(this).val("");
+            });
+
+            $(".inputOE").on("focusout", function(){
+              if($(this).val==""){
+                  $(this).attr("placeholder", "000");
+                  $(this).val(0);   
+              }
+              
+            });
+
+
+          
 
     },
     requerimiento: function(formData){
@@ -600,13 +646,16 @@ var requerimiento = {
 
     },
     calcularPresupuesto:function(){
-    	var tasa = $("#tasa_reque").val();
+
+    	   var tasa = $("#tasa_reque").val();
         var ingresos = $("#ingresos_reque").val();
         var egresos = $("#egresos_reque").val();
         var enganche = $("#enganche_reque").val();
         var plazo = $("#plazoA").val();
 
-        $.ajax({
+        console.log("ingresos : "+ingresos+" , egresos : "+egresos+" , enganche : "+enganche+" , plazo : "+plazo+" , tasa : "+tasa);
+
+       $.ajax({
             url:app.url_ajax,
             dataType: 'text',
             data: {
@@ -633,11 +682,79 @@ var requerimiento = {
                 $("#presupuesto_max").attr("readonly", "readonly");
             },
             complete: function(){
-                cortina.hide();
+
+                var pre = $("#presupuesto_max").val();
+                var cuotaMax = $("#cuota_max").val();
+                var tasa = $("#tasa_reque").val();
+                var plazo = $("#plazoA").val();
+
+                console.log("presupuesto : "+pre+" , cuotaMax : "+cuotaMax+" , tasa : "+tasa+" , plazo : "+plazo);
+
+                $.ajax({
+                    url:app.url_ajax,
+                    dataType: 'text',
+                    data: {
+                      action: "calcular_montomaximo",
+                      tasa: tasa,
+                      plazo: plazo,
+                      presupuesto: pre,
+                      cuotaMax : cuotaMax
+                    },
+                    type: 'post',
+                    timeout: 15000,
+                    error: function(a,b,c){
+                        console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                        myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+                    },
+                    beforeSend: function(){
+                        console.log("Calculando monto maximo");
+                    },
+                    success: function(a){
+                        $("#monto_maximo").val(a);
+                        
+                    },
+                    complete: function(){
+                        cortina.hide();
+
+                    }           
+                });
+    	
             }
         });
-    	
     },
+    calcularCuoutaMaxima: function(){
+        var ingresos = $("#ingresos_reque").val();
+        var egresos = $("#egresos_reque").val();
+        
+        $.ajax({
+            url:app.url_ajax,
+            dataType: 'text',
+            data: {
+                action: "calcular_cuotamaxima",
+                ingresos: ingresos,
+                egresos: egresos,
+
+            },
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+                console.log("Calculando cuota maxima");
+                cortina.show();
+            },
+            success: function(a){
+                $("#cuota_max").val(a);
+            },
+            complete: function(){
+              cortina.hide();
+            }
+        });
+      
+    }, 
+
     toggle:function(tipo){
         if(tipo=='hide'){
             requerimiento.crearScreen.hide('slide',{direction:'right'},'fast');
@@ -909,6 +1026,42 @@ var propiedad = {
 
                     });
                 });              
+                 
+             },
+             complete: function(){
+                 cortina.hide();
+             }
+         });
+      
+    },    
+    calcularIUSI: function(){  
+      var precio = $("#precioP").val();
+       $.ajax({
+             url:app.url_ajax,
+             dataType: 'text',
+             data: {
+                 action: "calcular_IUSI",
+                 precio:precio,
+             },
+             type: 'post',
+             timeout: 15000,
+             error: function(a,b,c){
+                 console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+             },
+             beforeSend: function(){
+                 console.log("calculando iusi");
+                 cortina.show();
+             },
+             success: function(a){
+                 console.log(a);
+                 if(a.msj_error){
+                     myModal.open('Oops',a.msj_error);
+                 }else{                
+                     jQuery("#iusi").val(a);  
+
+                }
+
                  
              },
              complete: function(){
@@ -1339,28 +1492,45 @@ var app = {
         console.log(forma);
         if(forma == "financiado"){
             $(".masInfoFinanciera").toggle("slow");
+
         }else if(forma == "contado"){
+            $("#presupuesto_max").removeClass("inputCalc"); 
+            $("#presupuesto_max").addClass("inputIF"); 
             var status = $("#spanPre").attr("data-status");
             if(status == "on"){
               $("#spanPre").click();
             }
             $(".masInfoFinanciera").css("display", "none");
             $(".masInfoPrecalificacion").css("display", "none");
+
         }
     });
 
 
     $("#spanPre").click(function(){
        $(".masInfoPrecalificacion").toggle('slow');
-       $("#spanPresupuesto").toggle();
+       $("#presupuesto_max").removeClass("inputIF"); 
+       $("#presupuesto_max").addClass("inputCalc");
+        $("#presupuesto_max").val(0);
        var status = $("#spanPre").attr("data-status");
        if(status != "on"){
         $(this).attr("data-status", "on"); 
+        $("#spanPresupuesto").attr("disabled", "disabled");
+        $("#spanPresupuesto").removeClass("arrowD2");
        }else{
         $(this).removeAttr("data-status"); 
+        $("#spanPresupuesto").removeAttr("disabled");
+        $("#spanPresupuesto").addClass("arrowD2");
+
+        $("#presupuesto_max").addClass("inputIF"); 
+        $("#presupuesto_max").removeClass("inputCalc"); 
+        $("#presupuesto_max").val("");
+        $("#presupuesto_max").attr("placeholder", "20000"); 
        }
        
-       $("#presupuesto_max").removeAttr("readonly", "readonly");
+        $("#presupuesto_max").removeAttr("readonly", "readonly");
+        
+        
     });
 
     $(".expandirInfo").click(function(){
@@ -1406,57 +1576,71 @@ var app = {
     });
 
 
-
-    /*$(".expandirInfoUbicacion").click(function(){
-        var div = $(this).closest('tr');
-        var masInfo = div.closest('tbody').next();
-        masInfo.toggle();
-        $(".arrowD").css("display", "none");
-    });
-
-    $(".contraerInfoUbicacion").click(function(){
-        $(".expandirInfoUbicacion").click();
-        $(".arrowD").css("display", "block");
-    });*/
-
-
-
-
-    $(".expandirInfoUbicacion").click(function(){
+    $(".expandirInfoUbicacionRe").click(function(){
         var masInfo = $(this).attr("data-id");
         var arrow = $(this).attr("data-arrow");
         $("#resumen-"+arrow).html("");
         $("#departamento-"+arrow).closest("tr").toggle();
-        //$("#departamento-"+arrow).closest("tr").prev().toggle();
         $("#"+masInfo).toggle("slow");
         $("#arrowD-"+arrow).toggle();
     });
 
-    $(".contraerInfoUbicacion").click(function(){
+    $(".contraerInfoUbicacionRe").click(function(){
         var arrow = $(this).attr("data-arrow");
         var depar = $("#departamento-"+arrow).val().toLowerCase();
         var muni = $("#municipio-"+arrow).val();
         var zona = $("#zona-"+arrow).val();
+        var departamento = $("#departamento-"+arrow+ " :selected").text();
 
-        if(zona){
-          $("#resumen-"+arrow).html("Zona "+zona+", "+muni+", "+depar+"...");  
-        }else if(depar || muni || zona){
-          $("#resumen-"+arrow).html(muni+", "+depar+"...");  
-        }else{
-          if(!depar || !muni || !zona){
-            $("#resumen-"+arrow).html();  
-          }
+
+        if(depar == ""){
+          depar = false;
         }
-//        $("#resumen-"+arrow).html("Zona "+zona+", "+muni+", "+depar+"...");
+        if(zona == "--Seleccione--"){
+          zona = false;
+        }
+        if(muni == "--Seleccione--"){
+          muni = false;
+        }else if(muni == ""){
+          console.log("entro aqui");
+          muni = $("#municipio-"+arrow+" :selected").text();
+          console.log(muni);
+        }else if(muni == null){
+          muni = "";
+        }
+
+
+        if(!depar && !muni && !zona){
+            console.log("ninguno escogido");
+            $("#resumen-"+arrow).html();  
+
+        }else if(zona && muni && depar){
+          console.log("todos escogidos");
+          $("#resumen-"+arrow).html("Zona "+zona+", "+muni+", "+depar);  
+
+        }else if(!zona && !muni && depar) {
+            console.log("Solo departamento");
+            $("#resumen-"+arrow).html(departamento);  
+
+        }else if(muni == "" || muni == null || muni == undefined){
+            console.log("Sin municipio");
+            $("#resumen-"+arrow).html("Zona "+zona+", "+departamento);  
+
+        }else{
+          console.log("no zona escogida");
+          $("#resumen-"+arrow).html(muni+", "+departamento);  
+        }
+
         var masInfo = $(this).attr("data-id");
         $("#departamento-"+arrow).closest("tr").toggle();
-        //$("#departamento-"+arrow).closest("tr").prev().toggle();
         $("#"+masInfo).toggle("slow");
         $("#arrowD-"+arrow).toggle();
     });
 
 
-
+    $("#precioP").on("change", function(){
+      propiedad.calcularIUSI();
+    });
 
 
     $("#plazoA").change(function(){
@@ -1482,7 +1666,6 @@ var app = {
 
     $(".texto_operacion").click(function(){
       $(this).prev().attr("checked", "true");
-      //console.log($(this).prev());
     });
 
 
@@ -1509,10 +1692,49 @@ var app = {
       
     });
 
+    $(".inputIF").on("focusin", function(){
+      $(this).removeAttr("placeholder");
+    });
+
+    $(".inputIF").on("focusout", function(){
+      if(!$(this).val){
+          $(this).attr("placeholder", "000");
+      }
+      
+    });
+
+    $(".inputOE").on("focusin", function(){
+      $(this).removeAttr("placeholder");
+    });
+
+    $(".inputOE").on("focusout", function(){
+      if(!$(this).val){
+          $(this).attr("placeholder", "000");
+      }
+      
+    });
+
     $("#moneda_ingresos").change(function(){
       var moneda = $(this).val();
       $(".moneda_IF").val(moneda);
-      $("span.moneda_IF").html(moneda);
+      $("span.moneda_IF").html(moneda.toUpperCase());
+      $("#spanPresupuesto").val(moneda);
+      
+    });
+
+    $("#moneda_Prop").change(function(){
+      var moneda = $(this).val();
+      //$(".moneda_IF").val(moneda);
+      $("span.moneda_IFP").html(moneda.toUpperCase());
+      //$("#spanPresupuesto").val(moneda);
+      
+    });
+
+
+
+    $("#egresos_reque").on("change",function(){
+        console.log("Llamando funcion cuota maxima");
+        requerimiento.calcularCuoutaMaxima();
     });
 
 //    api_mapa.init();
