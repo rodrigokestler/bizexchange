@@ -111,6 +111,8 @@ var login = {
                 setTimeout(function(){
                   cortina.hide();
                 },3000)
+
+                api_mapa.set_marker(14.598497, -90.507067);
             }
        });
     },
@@ -279,7 +281,7 @@ var requerimiento = {
 
                                              +' <tr>'
                                               +'   <td colspan="3" class="texto-nuevo-requerimiento">Otras especificaciones</td>'
-                                              +'   <td colspan="2" style="text-align: rigth;"><input name="otras_espec-'+id+'"  class="color-gris-oscuro inputpz inputText inputOE" style="text-align:center;border:none;width:100px;" placeholder="Ej: El naranjo..." type="text">'
+                                              +'   <td colspan="2" style="text-align: rigth;"><input name="otras_espec-'+id+'"  id="otras_espec-'+id+'" class="color-gris-oscuro inputpz inputText inputOE" style="text-align:center;border:none;width:100px;" placeholder="Ej: El naranjo..." type="text">'
                                               +'   </td>'
                                           +'   </tr>'
                                          +' <tr>'
@@ -327,14 +329,31 @@ var requerimiento = {
                 var depar = $("#departamento-"+arrow).val().toLowerCase();
                 var muni = $("#municipio-"+arrow).val();
                 var zona = $("#zona-"+arrow).val();
+                var km = $("#km-"+arrow).val();
+                var carretera = $("#carretera-"+arrow).val();
+                var otras_espec = $("#otras_espec-"+arrow).val();
                 var departamento = $("#departamento-"+arrow+ " :selected").text();
-
 
                 if(depar == ""){
                   depar = false;
                 }
                 if(zona == "--Seleccione--"){
                   zona = false;
+                }else{
+                  zona = "Zona "+zona;
+                }
+                if(km == 0){
+                  km = false;
+                }else{
+                  km = "Km "+km;
+                }
+                if(departamento == "--Seleccione--"){
+                  departamento = false;
+                }
+                if(carretera == "--Seleccione--"){
+                  carretera = false;
+                }else{
+                  carretera = carretera.replace("_", " ");
                 }
                 if(muni == "--Seleccione--"){
                   muni = false;
@@ -346,26 +365,8 @@ var requerimiento = {
                   muni = "";
                 }
 
-                if(!depar && !muni && !zona){
-                    console.log("ninguno escogido");
-                    $("#resumen-"+arrow).html();  
-
-                }else if(zona && muni && depar){
-                  console.log("todos escogidos");
-                  $("#resumen-"+arrow).html("Zona "+zona+", "+muni+", "+depar);  
-
-                }else if(!zona && !muni && depar) {
-                    console.log("Solo departamento");
-                    $("#resumen-"+arrow).html(departamento);  
-
-                }else if(muni == "" || muni == null || muni == undefined){
-                    console.log("Sin municipio");
-                    $("#resumen-"+arrow).html("Zona "+zona+", "+departamento);  
-
-                }else{
-                  console.log("no zona escogida");
-                  $("#resumen-"+arrow).html(muni+", "+departamento);  
-                }
+                var resu = $.grep([km, carretera, zona, otras_espec, muni, departamento], Boolean).join(", ");
+                $("#resumen-"+arrow).html(resu);  
 
 
                 $("#departamento-"+arrow).closest("tr").toggle();
@@ -950,6 +951,24 @@ var propiedad = {
                   $(".arrowD").css("display", "block");
               });
 
+              $(".ratingSingle").starRating({
+                totalStars: 5,
+                starShape: 'rounded',
+                starSize: 25,
+                emptyColor: 'lightgray',
+                hoverColor: 'rgb(0,110,202)',
+                activeColor: 'rgb(0,110,202)',
+                useGradient: false,
+                readOnly: true,
+                useFullStars : false
+              });
+
+              $(".ratingSingle").each(function(){
+                  $(this).starRating("setRating", $(this).data("value"));
+              });
+
+
+
                 
             },
             complete: function(){
@@ -1228,7 +1247,6 @@ var api_mapa = {
     init: function(){
         
         navigator.geolocation.getCurrentPosition(api_mapa.success,api_mapa.error,{ timeout: 30000 });
-        
         api_mapa.appendMapScript();
     },
     
@@ -1255,17 +1273,28 @@ var api_mapa = {
         for (var i = 0; i < api_mapa.markers.length; i++) {
             api_mapa.markers[i].setMap(null);
         }
+
         api_mapa.markers = [];  
         
         var marker = new google.maps.Marker({
+            //position: center,
             position: new google.maps.LatLng(lat, lon),
             map: api_mapa.map,
+            draggable : true,
             info: {
                 1: 'aqui va un JSON con data adicional que querras sacar'
-            }
+            }, 
         });
-            marker.addListener('click', function() {
-                api_mapa.show_details(this);
+        //    marker.addListener('click', function() {
+        //});
+                //api_mapa.show_details(this);
+        google.maps.event.addListener(marker, 'click', function () { 
+
+        });
+        google.maps.event.addListener(marker, 'dragend', function () {
+            console.log(marker.getPosition());
+            api_mapa.map.setCenter(marker.getPosition());
+            $('#coordenadas').val(marker.getPosition());
         });
 
         api_mapa.markers.push(marker);
@@ -1274,15 +1303,18 @@ var api_mapa = {
     handleApiReady: function() {
                 
         var center = new google.maps.LatLng(14.598497, -90.507067); //centro en zona 10
+
         var myOptions = {
             zoom: 14,
-            center: center,       
+            center: center,
+            draggable: true
         }
-        api_mapa.map = new google.maps.Map(document.getElementById("mapa_"), myOptions);
-        
+        api_mapa.map = new google.maps.Map(document.getElementById("mapa_"), myOptions); 
+
+
        
     },
-    
+
     ir: function(lat,lng){
         window.open("geo:"+lat+","+lng,'_system');
     },
@@ -1319,6 +1351,8 @@ var app = {
     loadEvents: function(){
         propiedad.getDepartamentos("departamento-1", "carretera-1");
         propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
+        //api_map.set_marker(14.598497, -90.507067);
+        api_mapa.init();
         //Tabs Home
 
 /*
@@ -1576,6 +1610,26 @@ var app = {
     });
 
 
+
+
+
+     $(".expandirInfoPrecio").click(function(){
+        var arrow = $(this).attr("data-id");
+        console.log(arrow);
+        var masInfo = $("#infoPrecio");
+        masInfo.toggle('slow');
+        $("#"+arrow).css("display", "none");
+    });
+
+    $(".contraerInfoPrecio").click(function(){
+        var arrow = $(this).attr("data-id");
+        console.log(arrow);
+        var masInfo = $("#infoPrecio");
+        masInfo.toggle('slow');
+        $("#"+arrow).css("display", "block");
+    });
+
+
     $(".expandirInfoUbicacionRe").click(function(){
         var masInfo = $(this).attr("data-id");
         var arrow = $(this).attr("data-arrow");
@@ -1590,14 +1644,31 @@ var app = {
         var depar = $("#departamento-"+arrow).val().toLowerCase();
         var muni = $("#municipio-"+arrow).val();
         var zona = $("#zona-"+arrow).val();
+        var km = $("#km-"+arrow).val();
+        var carretera = $("#carretera-"+arrow).val();
+        var otras_espec = $("#otras_espec-"+arrow).val();
         var departamento = $("#departamento-"+arrow+ " :selected").text();
-
 
         if(depar == ""){
           depar = false;
         }
         if(zona == "--Seleccione--"){
           zona = false;
+        }else{
+          zona = "Zona "+zona;
+        }
+        if(km == 0){
+          km = false;
+        }else{
+          km = "Km "+km;
+        }
+        if(departamento == "--Seleccione--"){
+          departamento = false;
+        }
+        if(carretera == "--Seleccione--"){
+          carretera = false;
+        }else{
+          carretera = carretera.replace("_", " ");
         }
         if(muni == "--Seleccione--"){
           muni = false;
@@ -1609,30 +1680,73 @@ var app = {
           muni = "";
         }
 
+        var resu = $.grep([km, carretera, zona, otras_espec, muni, departamento], Boolean).join(", ");
+        $("#resumen-"+arrow).html(resu);  
 
-        if(!depar && !muni && !zona){
-            console.log("ninguno escogido");
-            $("#resumen-"+arrow).html();  
-
-        }else if(zona && muni && depar){
-          console.log("todos escogidos");
-          $("#resumen-"+arrow).html("Zona "+zona+", "+muni+", "+depar);  
-
-        }else if(!zona && !muni && depar) {
-            console.log("Solo departamento");
-            $("#resumen-"+arrow).html(departamento);  
-
-        }else if(muni == "" || muni == null || muni == undefined){
-            console.log("Sin municipio");
-            $("#resumen-"+arrow).html("Zona "+zona+", "+departamento);  
-
-        }else{
-          console.log("no zona escogida");
-          $("#resumen-"+arrow).html(muni+", "+departamento);  
-        }
 
         var masInfo = $(this).attr("data-id");
         $("#departamento-"+arrow).closest("tr").toggle();
+        $("#"+masInfo).toggle("slow");
+        $("#arrowD-"+arrow).toggle();
+    });
+
+
+
+
+   $(".expandirInfoUbicacionP").click(function(){
+        var masInfo = $(this).attr("data-id");
+        var arrow = $(this).attr("data-arrow");
+        $("#resumen-"+arrow).html("");
+        $("#"+masInfo).toggle("slow");
+        $("#arrowD-"+arrow).toggle();
+    });
+
+    $(".contraerInfoUbicacionP").click(function(){
+        var arrow = $(this).attr("data-arrow");
+        var depar = $("#departamento-"+arrow).val().toLowerCase();
+        var muni = $("#municipio-"+arrow).val();
+        var zona = $("#zona-"+arrow).val();
+        var km = $("#km-"+arrow).val();
+        var carretera = $("#carretera-"+arrow).val();
+        var otras_espec = $("#direccion-"+arrow).val();
+        var departamento = $("#departamento-"+arrow+ " :selected").text();
+
+        if(depar == ""){
+          depar = false;
+        }
+        if(zona == "--Seleccione--"){
+          zona = false;
+        }else{
+          zona = "Zona "+zona;
+        }
+        if(km == 0){
+          km = false;
+        }else{
+          km = "Km "+km;
+        }
+        if(departamento == "--Seleccione--"){
+          departamento = false;
+        }
+        if(carretera == "--Seleccione--"){
+          carretera = false;
+        }else{
+          carretera = carretera.replace("_", " ");
+        }
+        if(muni == "--Seleccione--"){
+          muni = false;
+        }else if(muni == ""){
+          console.log("entro aqui");
+          muni = $("#municipio-"+arrow+" :selected").text();
+          console.log(muni);
+        }else if(muni == null){
+          muni = "";
+        }
+
+        var resu = $.grep([km, carretera, zona, otras_espec, muni, departamento], Boolean).join(", ");
+        $("#resumen-"+arrow).html(resu);  
+
+
+        var masInfo = $(this).attr("data-id");
         $("#"+masInfo).toggle("slow");
         $("#arrowD-"+arrow).toggle();
     });
@@ -1737,7 +1851,82 @@ var app = {
         requerimiento.calcularCuoutaMaxima();
     });
 
-//    api_mapa.init();
+
+
+
+    $(".ratingResult").starRating({
+      totalStars: 5,
+      starShape: 'rounded',
+      starSize: 20,
+      emptyColor: 'lightgray',
+      hoverColor: 'rgb(0,110,202)',
+      activeColor: 'rgb(0,110,202)',
+      useGradient: false,
+      readOnly: true,
+      useFullStars : false
+    });
+
+    
+    $(".rating").starRating({
+      totalStars: 5,
+      starShape: 'rounded',
+      starSize: 20,
+      emptyColor: 'lightgray',
+      hoverColor: 'rgb(239,175,0)',
+      activeColor: 'rgb(239,175,0)',
+      useGradient: false,
+      disableAfterRate : false,
+      useFullStars : true,
+      callback: function(currentRating, $el){
+          var suma = 0;
+          var prome = 0;
+          $($el).next().val(currentRating);
+
+
+          $(".rating").each(function(){
+              var rat = $(this).starRating("getRating");
+              if(rat != "0.00")suma += +rat;
+
+              prome = suma/7;
+          });
+
+          console.log("suma de estrellas "+suma);
+
+          console.log("promedio "+(Math.round(prome * 2) / 2).toFixed(1));
+          $(".ratingResult").starRating('setRating', (Math.round(prome * 2) / 2).toFixed(1)); 
+          $(".ratingResult").next().val((Math.round(prome * 2) / 2).toFixed(1));
+
+
+      }
+    });
+
+    $(".expandirInfoMapa").click(function(){
+
+        $("#infoMapa").toggle("slow");
+        $("#arrow-mapa").css("display", "none");
+    });
+
+    $(".contraerInfoMapa").click(function(){
+        $("#arrow-mapa").css("display", "block");
+        $("#infoMapa").toggle("slow");
+    });
+
+
+
+    $(".expandirInfoEstrellas").click(function(){
+
+        $("#infoEstrellas").toggle("slow");
+        $("#arrow-star").css("display", "none");
+    });
+
+    $(".contraerInfoEstrellas").click(function(){
+        $("#arrow-star").css("display", "block");
+        $("#infoEstrellas").toggle("slow");
+    });
+
+
+
+    //api_mapa.init();
 
         
     },  
@@ -1750,6 +1939,8 @@ var app = {
 };
 
 app.initialize();
+
+
 
 
 $.fn.loader = function(tipo, texto){
