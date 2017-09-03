@@ -150,6 +150,14 @@ input,select{
     margin: 15px 0!important;
     position:inherit!important;
 
+
+}
+
+.input_like{
+    background-color:inherit;
+    margin: 15px 0!important;
+    position:inherit!important;
+    height: 45px;
 }
 
 select.select_formR{
@@ -1245,7 +1253,6 @@ td select.moneda_IFP{
     height: 100px;
     z-index: 20;
     padding-left: 10px;
-    pointer-events: visible;
 
 }
 
@@ -1253,6 +1260,30 @@ td select.moneda_IFP{
     display: block;
     width: 100%;
 }
+
+
+
+.dot_submenu{
+    position: absolute;
+    top: 0px;
+    width: 155px;
+    right: 0px;
+    background: white;    
+    border: 1px solid;
+    height: 100px;
+    z-index: 20;
+    padding-left: 10px;
+    pointer-events: visible;
+
+}
+
+.dot_submenu p{
+    display: block;
+    width: 100%;
+    color: black;
+    font-size: 15px;
+}
+
 
 .prevent_click{
     pointer-events: none !important;

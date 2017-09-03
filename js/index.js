@@ -469,23 +469,9 @@ var requerimiento = {
                 }
 
                 $(".requerimiento").on("click", function(){
-                    var aux = true;
-                    $( "div.divTaphold" ).each(function( index ) {
-                        if($(this).css("display") == "none"){
-                          aux = true;
-                        }else{
-                          aux = false;
-                          $(this).css("display", "none");
-                          $(this).parent().removeClass("prevent_click");                                   
-                          return false;
-                        }
-                    });
-
-                    if(aux){
                       var id = $(this).attr("data-id");
                       var tipo = $(this).attr("data-tipo");
                       requerimiento.getSingleRequerimiento(id,tipo);        
-                    }
                 });    
                 
                 $('.requerimiento').each(function(){   //tagname based selector
@@ -495,14 +481,13 @@ var requerimiento = {
                     mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
-                            dis.addClass("prevent_click");    
                             var id = dis.attr("data-id");
                             var tipo = dis.attr("data-tipo");
+                            dis.addClass("prevent_click");    
                             dis.find("div.divTaphold").addClass("tapholdOptions");
                             dis.find("div.divTaphold").toggle("slow");  
-
                           }else{
-                            return false;
+                            return;
                           }
 
                     });
@@ -544,23 +529,9 @@ var requerimiento = {
                 }
 
                  $(".requerimiento").on("click", function(){
-                    var aux = true;
-                    $( "div.divTaphold" ).each(function( index ) {
-                        if($(this).css("display") == "none"){
-                          aux = true;
-                        }else{
-                          aux = false;
-                          $(this).css("display", "none");
-                          $(this).parent().removeClass("prevent_click");                                   
-                          return false;
-                        }
-                    });
-
-                    if(aux){
                       var id = $(this).attr("data-id");
                       var tipo = $(this).attr("data-tipo");
                       requerimiento.getSingleRequerimiento(id,tipo);        
-                    }
                 });    
                 
                 $('.requerimiento').each(function(){   //tagname based selector
@@ -570,9 +541,9 @@ var requerimiento = {
                     mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
-                            dis.addClass("prevent_click");    
                             var id = dis.attr("data-id");
                             var tipo = dis.attr("data-tipo");
+                            dis.addClass("prevent_click");    
                             dis.find("div.divTaphold").addClass("tapholdOptions");
                             dis.find("div.divTaphold").toggle("slow");  
 
@@ -850,23 +821,10 @@ var propiedad = {
                 }
                  
                 $(".propiedad").on("click", function(){
-                    var aux = true;
-                    $( "div.divTaphold" ).each(function( index ) {
-                        if($(this).css("display") == "none"){
-                          aux = true;
-                        }else{
-                          aux = false;
-                          $(this).css("display", "none");
-                          $(this).parent().removeClass("prevent_click");                                   
-                          return false;
-                        }
-                    });
-
-                    if(aux){
-                      var id = $(this).attr("data-id");
-                      var tipo = $(this).attr("data-tipo");
-                      propiedad.getSinglePropiedad(id,tipo);        
-                    }
+                    var id = $(this).attr("data-id");
+                    var tipo = $(this).attr("data-tipo");
+                    propiedad.getSinglePropiedad(id,tipo);        
+                    
                 });    
                 
                 $('.propiedad').each(function(){   //tagname based selector
@@ -1007,23 +965,9 @@ var propiedad = {
                 }
 
                 $(".propiedad").on("click", function(){
-                    var aux = true;
-                    $( "div.divTaphold" ).each(function( index ) {
-                        if($(this).css("display") == "none"){
-                          aux = true;
-                        }else{
-                          aux = false;
-                          $(this).css("display", "none");
-                          $(this).parent().removeClass("prevent_click");                                   
-                          return false;
-                        }
-                    });
-
-                    if(aux){
-                      var id = $(this).attr("data-id");
-                      var tipo = $(this).attr("data-tipo");
-                      propiedad.getSinglePropiedad(id,tipo);        
-                    }
+                     var id = $(this).attr("data-id");
+                    var tipo = $(this).attr("data-tipo");
+                    propiedad.getSinglePropiedad(id,tipo);        
                 });    
                 
                 $('.propiedad').each(function(){   //tagname based selector
@@ -1329,6 +1273,151 @@ var api_mapa = {
 
 
 
+
+//ASESORES
+
+var asesor = {
+    aprobarScreen: $('#aprobar_asesor'),
+    verScreen: $('#listado_asesores'),
+    btnForm: $('#actualizarAsesorBtn'),
+    form: $('#asesorForm'), 
+    asesor: function(formData){
+        formData.action = 'aprobar_asesor';
+        formData.user_email = user.email;
+        formData.user_pass = user.pass;
+
+        console.log(JSON.stringify(formData));
+
+        $.ajax({
+            url:app.url_ajax,
+            dataType: 'json',
+            data: formData,
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+                console.log("Entro!!");
+                cortina.show();
+            },
+            success: function(a){
+                console.log(JSON.stringify(a));
+                propiedad.clean();
+                if(a.msj_error){
+                    myModal.open('Oops',a.msj_error);
+                }else{
+                    myModal.open('Se ha aprobado al asesor con exito.');
+                   asesor.verScreen.html(a);
+                    
+                }
+                
+            },
+            complete: function(){
+                cortina.hide();
+                asesor.verScreen.toggle('show');
+            }
+        });
+    },
+
+    verAsesor: function(){
+
+      $.ajax({
+            url:app.url_ajax,
+            dataType: 'text',
+             data: {
+                 action: "get_asesores",
+                 user_email: user.email,
+                 user_pass : user.pass
+             },
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+                console.log("Entro!!");
+                cortina.show();
+            },
+            success: function(a){
+                console.log(JSON.stringify(a));
+                propiedad.clean();
+                if(a.msj_error){
+                    myModal.open('Oops',a.msj_error);
+                }else{
+                    $("#body_asesores").html(a);
+                    $("#listado_asesores").toggle("slow");
+                }
+                
+            },
+            complete: function(){
+                cortina.hide();
+            }
+        });
+
+    },
+    traer_single_asesor: function(attr){
+        var id = $(attr).data('id');
+        $.ajax({
+            url:app.url_ajax,
+            dataType: 'text',
+             data: {
+                 action: "get_single_asesor",
+                 user_email: user.email,
+                 user_pass : user.pass,
+                 asesor_id : id,
+             },
+            type: 'post',
+            timeout: 15000,
+            error: function(a,b,c){
+                console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+            },
+            beforeSend: function(){
+                console.log("Entro!!");
+                cortina.show();
+            },
+            success: function(a){
+                console.log(JSON.stringify(a));
+                propiedad.clean();
+                if(a.msj_error){
+                    myModal.open('Oops',a.msj_error);
+                }else{
+                    $("#id_cuentaA").val(id);
+                    //$("#body_asesores").html(a);
+                    asesor.aprobarScreen.toggle("show");
+                }
+                
+            },
+            complete: function(){
+                cortina.hide();
+            }
+        });
+
+    },     
+    toggle:function(tipo){
+        if(tipo=='hide'){
+            asesor.crearScreen.hide('slide',{direction:'right'},'fast');
+           // asesor.verScreen.hide('slide',{direction:'right'},'fast');
+        }else if(tipo=='show'){
+            asesor.crearScreen.show('slide',{direction:'right'},'fast');
+            //asesor.verScreen.show('slide',{direction:'right'},'fast');
+        }
+    },
+    clean: function(){
+      $(':input','#propiedadForm')
+        .not(':button, :submit, :reset, :hidden')
+        .val('')
+        .removeAttr('checked')
+        .removeAttr('selected');
+    }
+};
+
+
+
+
 var app = {
     
     url : 'http://megethosinmobiliaria.com/',
@@ -1353,6 +1442,17 @@ var app = {
         propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
         //api_map.set_marker(14.598497, -90.507067);
         api_mapa.init();
+
+
+        for(var i=1960;i<2051;i++)
+        {
+            $(".selectAno").append(new Option(i,i));
+        }
+
+        for(var i=1;i<32;i++)
+        {
+            $(".selectDia").append(new Option(i,i));
+        }
         //Tabs Home
 
 /*
@@ -1460,6 +1560,20 @@ var app = {
         });
         console.log('load events');
         //login.screen.hide();
+
+
+
+
+        //Asesor
+        asesor.form.parsley().on('form:success',function(){
+            var formData = asesor.form.getFormData();
+            asesor.asesor(formData);
+        });
+        asesor.form.parsley().on('form:submit',function(){return false;});
+        asesor.form.parsley().on('form:error',function(){
+            
+        });
+        console.log('load events');
         
         setTimeout(function(){
             user.initialize();
@@ -1838,9 +1952,7 @@ var app = {
 
     $("#moneda_Prop").change(function(){
       var moneda = $(this).val();
-      //$(".moneda_IF").val(moneda);
       $("span.moneda_IFP").html(moneda.toUpperCase());
-      //$("#spanPresupuesto").val(moneda);
       
     });
 
@@ -1924,6 +2036,33 @@ var app = {
         $("#infoEstrellas").toggle("slow");
     });
 
+
+    $("#dot_menu").click(function(){
+      //asesor.verAsesor();
+      $(".dot_submenu").css("display", "block");
+    });
+
+    $(".dot_submenu").click(function(e){
+      //e.stopPropagation();
+
+    });
+
+    $('.screen').on("click", function(e) {
+      console.log(e.target);
+      if($(e.target).is('#dot_menu') || $(e.target).is(".dot_submenu") || $(e.target).is(".dot_submenu p") || $(e.target).is("#propiedades-ul ") || $(e.target).is(".tapholdOptions p")){
+           return;
+        }else{
+          $(".dot_submenu").css("display", "none");  
+          $(".divTaphold").css("display", "none"); 
+          $(".requerimiento").removeClass("prevent_click");   
+          $(".propiedad").removeClass("prevent_click");   
+          //console.log("click aqui......");
+        }
+    });
+
+    $(".aprobar_asesor").click(function(){
+        asesor.verAsesor();
+    });
 
 
     //api_mapa.init();

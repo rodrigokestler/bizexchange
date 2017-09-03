@@ -158,26 +158,23 @@
                     <div class="screen-header">
                         <table style="width:90%;margin:10px auto;">
                             <tr style="width:100%;">
-                                <td style="width: 45%;
-                                font-size: 1em;">Biz Exchange</td>
-                                                            <td style="width: 40%;
-                                position: relative;"><i style="position: absolute;
-                                top: 0;
-                                right: 0;" class="fa fa-search fa-flip-horizontal" aria-hidden="true"></i></td>
-                                                            <td style="    width: 15%;
-                                position: relative;"><button style="position: absolute;
-                                top: -5px;
-                                right: 5px;" class="menu"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button></td>
-                                                        </tr>
+                                <td style="width: 45%; font-size: 1em;">Biz Exchange</td>
+                                <td style="width: 40%; position: relative;">
+                                    <i style="position: absolute; top: 0; right: 0;" class="fa fa-search fa-flip-horizontal" aria-hidden="true"></i></td>
+                                
+                                <td style="    width: 15%; position: relative;" >
+                                    <button style="position: absolute; top: -5px; right: 5px;" class="menu" ><i id="dot_menu" class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                                    <div class="dot_submenu" style="display:none; position:absolute;">
+                                        <p style="padding-top: 5px;" class="aprobar_asesor">Aprobar asesor</p>
+                                        <p class="cerrar_sesion">Cerrar sesion</p>
+                                    </div>
+                                </td>
+                            </tr>
                         </table>
                         
                     </div>
                     <div class="body-screen">
                         <ul class="nav nav-tabs " role="tablist" id="tablist">
-                            
-                          
-
-
                           <li style="width:40%" class="active col-xs-4">
                                 <img style="float: left;
                                     width: 25px;
@@ -204,7 +201,7 @@
 
                           <div id="requerimientos" class="tab-pane fade">
                             <button onclick="requerimiento.crearScreen.toggle('show');" id="agregar_requerimiento" class="agregar-requerimiento btnCrear" style="display:none;"></button>
-                            <ul id="requerimientos-ul" style="height:100vh;overflow-y:scroll;">
+                            <ul id="requerimientos-ul" style="height:100px;overflow-y:scroll; display: block;">
                             
                             </ul>
                           </div>
@@ -1029,7 +1026,7 @@
                                                 <table style="width:100%;">
                                                     <tr>
                                                         <td colspan="3" class="titulo-container-form">COMUNIDAD</td>
-                                                        <td colspan="2">
+                                                        <td colspan="2" style="text-align: right;">
                                                             <div class="ratingResult" id="ratingComunidad"></div>
                                                             <input type="hidden" class="rating-input inputpz" name="comunidad" value="" >
 
@@ -2023,11 +2020,295 @@
         
           </div>
         </div>
+
+
+
+
+        <!-- APROBAR ASESOR -->
+        <div class="screen nivel2" id="listado_asesores" style="padding:0!important; display: none;" >
+            <div class="container" style="margin:0!important;padding:0!important;">
+                <div class="container-flex" style="margin:0!important;">
+                    <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
+                        <span class="text-header2">ASESORES</span>
+                        <button onclick="asesor.verScreen.toggle('hide');" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="body-screen bg-gris" id="body_asesores">
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="screen nivel2" id="aprobar_asesor" style="padding:0!important;display:none;">
+            <div class="container" style="margin:0!important;padding:0!important;">
+                <div class="container-flex" style="margin:0!important;">
+                    <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
+                        <span class="text-header2">AUTORIZAR CUENTA ASESOR</span>
+                        <button onclick="asesor.aprobarScreen.toggle('hide');" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="body-screen bg-gris">
+                        <form id="asesorForm">
+
+                            <div class="container-form">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td colspan="5" class="titulo-container-form">
+                                        CUENTA
+                                        </td>
+                                    </tr>
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Tipo de cuenta</td>
+                                        <td colspan="4" style="text-align: right;"><input name="tipo_cuentaA"  class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text' value="Asesor" readonly="readonly">
+                                        </td>
+                                    </tr>
+
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">ID de mi cuenta</td>
+                                        <td colspan="4" style="text-align: right;"><input name="id_cuentaA"  id="id_cuentaA" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='number' value="" readonly="readonly">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+                            <div class="container-form">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td colspan="5" class="titulo-container-form">
+                                        INFORMACION PERSONAL
+                                        </td>
+                                    </tr>
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Nombre</td>
+                                        <td colspan="4" style="text-align: right;"><input name="nombre_asesor" id="nombre_asesor" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text' value="">
+                                        </td>
+                                    </tr>
+
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Telefono celular</td>
+                                        <td colspan="4" style="text-align: right;"><input name="telefono_asesor" id="telefono_asesor" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='number' placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">E-mail</td>
+                                        <td colspan="4" style="text-align: right;"><input name="correo_asesor" id="correo_asesor" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text' value="example@example.com">
+                                        </td>
+                                    </tr>
+
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="texto-nuevo-requerimiento">Fecha de Nacimiento</td>
+                                        <td colspan="1" style="text-align: right;">
+                                            <select name="diaNac_asesor" class="color-gris-oscuro inputpz select_formR selectDia" style="border:none; width: 50px !important; background-size: 30% 35% !important;">
+                                                <option value="">DD</option>
+
+                                            </select>
+                                        </td>
+                                        <td colspan="1" style="text-align: right;">
+                                            <select name="mesNac_asesor" class="color-gris-oscuro inputpz select_formR" style="border:none; width: 50px !important; background-size: 30% 35% !important;">
+                                                <option value="">MM</option>
+                                                 <option value="1">Enero</option>
+                                                <option value="2">Febrero</option>
+                                                <option value="3">Marzo</option>
+                                                <option value="4">Abril</option>
+                                                <option value="5">Mayo</option>
+                                                <option value="6">Junio</option>
+                                                <option value="7">Julio</option>
+                                                <option value="8">Agosto</option>
+                                                <option value="9">Septiembre</option>
+                                                <option value="10">Octubre</option>
+                                                <option value="11">Noviembre</option>
+                                                <option value="12">Diciembre</option>
+                                            </select>
+                                        </td>
+                                        <td colspan="1" style="text-align: right;">
+                                            <select name="anosNac_asesor" class="color-gris-oscuro inputpz select_formR selectAno" style="border:none; width: 50px !important; background-size: 30% 35% !important;">
+                                                <option value="">AAAA</option>
+                                            </select>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                                </div>
+
+
+                                 <div class="container-form">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td colspan="5" class="titulo-container-form">
+                                        INFORMACION LABORAL
+                                        </td>
+                                    </tr>
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Cuenta con oficinas</td>
+                                        <td colspan="4" style="text-align: right;"><input name="oficinasA" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text' value="">
+                                        </td>
+                                    </tr>
+
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Nombre de la empresa</td>
+                                        <td colspan="4" style="text-align: right;"><input name="empresaA" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text' placeholder="">
+                                        </td>
+                                    </tr>
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Telefono oficina</td>
+                                        <td colspan="4" style="text-align: right;"><input name="telOfiA" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text' value="">
+                                        </td>
+                                    </tr>
+
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Direccion oficina</td>
+                                        <td colspan="4" style="text-align: right;"><input name="direccionOfiA" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text' placeholder="">
+                                        </td>
+                                    </tr>
+
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Direccion web</td>
+                                        <td colspan="4" style="text-align: right;"><input name="urlOfiA" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text' placeholder="http://">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="container-form">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td colspan="5" class="titulo-container-form">
+                                        EXPERIENCIA EN BIENES RAICES
+                                        </td>
+                                    </tr>
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="texto-nuevo-requerimiento">Fecha en que inicio</td>
+                                        <td colspan="1" style="text-align: right;">
+                                            <select name="diaExp_asesor" class="color-gris-oscuro inputpz select_formR selectDia" style="border:none; width: 50px !important; background-size: 30% 35% !important;">
+                                                <option value="">DD</option>
+                                            </select>
+                                        </td>
+                                        <td colspan="1" style="text-align: right;">
+                                            <select name="mesExp_asesor" class="color-gris-oscuro inputpz select_formR" style="border:none; width: 50px !important; background-size: 30% 35% !important;">
+                                                <option value="">MM</option>
+                                            </select>
+                                        </td>
+                                        <td colspan="1" style="text-align: right;">
+                                            <select name="anosExp_asesor"  class="color-gris-oscuro inputpz select_formR selectAno" style="border:none; width: 50px !important; background-size: 30% 35% !important;">
+                                                <option value="">AAAA</option>
+                                            </select>
+                                        </td>
+
+                                    </tr>
+                                     <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Region en que esta especializado</td>
+                                        <td colspan="4" style="text-align: right;"><input name="regionA" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text' value="">
+                                        </td>
+                                    </tr>
+
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="6">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Informacion adicional</td>
+                                        <td colspan="4" style="text-align: right;"><input name="infoAdiA" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text' placeholder="">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+
+
+
+                                <div class="container-form">
+                                    <button type="submit" id="actualizarAsesorBtn" class="btn btn-default btn-block requerimiento-btn">Aprobar</button>
+                                </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
         <script>
         var movil=false;
         </script>
            
-     <!-- <script type="text/javascript" src="cordova.js"></script>-->
+        <!--<script type="text/javascript" src="cordova.js"></script>-->
 
 
         <script type="text/javascript" src="js/jQuery.js"></script>
