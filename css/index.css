@@ -150,6 +150,14 @@ input,select{
     margin: 15px 0!important;
     position:inherit!important;
 
+
+}
+
+.input_like{
+    background-color:inherit;
+    margin: 15px 0!important;
+    position:inherit!important;
+    height: 45px;
 }
 
 select.select_formR{
@@ -966,16 +974,16 @@ td select.moneda_IFP{
 }
 
 .estrellitas table tr{
-    border-bottom: 1px solid #eaeaea;
+   // border-bottom: 1px solid #eaeaea;
 }
 
 .estrellitas table tr td{
-    height: 40px;
+    height: 27px;
     vertical-align: middle;
 }
 
 .estrellitas .texto-nuevo-requerimiento{
-    color: #999;
+    /*color: #999;*/
 }
 
 .rating {
@@ -1185,6 +1193,48 @@ td select.moneda_IFP{
 }
 
 
+
+
+.jq-stars {
+  display: inline-block;
+}
+
+.jq-rating-label {
+  font-size: 22px;
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  font-family: helvetica, arial, verdana;
+}
+
+.jq-star {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.jq-star-svg {
+  padding-left: 3px;
+  width: 100%;
+  height: 100% ;
+}
+
+.jq-star:hover .fs-star-svg path {
+}
+
+.jq-star-svg path {
+  /* stroke: #000; */
+  stroke-linejoin: round;
+}
+
+/* un-used */
+.jq-shadow {
+  -webkit-filter: drop-shadow( -2px -2px 2px #888 );
+  filter: drop-shadow( -2px -2px 2px #888 );
+}
+
+
 /*TERMINA AGREGADO POR DIEGO*//*TERMINA AGREGADO POR DIEGO*//*TERMINA AGREGADO POR DIEGO*//*TERMINA AGREGADO POR DIEGO*/
 /*TERMINA AGREGADO POR DIEGO*//*TERMINA AGREGADO POR DIEGO*//*TERMINA AGREGADO POR DIEGO*//*TERMINA AGREGADO POR DIEGO*/
 
@@ -1203,7 +1253,6 @@ td select.moneda_IFP{
     height: 100px;
     z-index: 20;
     padding-left: 10px;
-    pointer-events: visible;
 
 }
 
@@ -1211,6 +1260,30 @@ td select.moneda_IFP{
     display: block;
     width: 100%;
 }
+
+
+
+.dot_submenu{
+    position: absolute;
+    top: 0px;
+    width: 155px;
+    right: 0px;
+    background: white;    
+    border: 1px solid;
+    height: 100px;
+    z-index: 20;
+    padding-left: 10px;
+    pointer-events: visible;
+
+}
+
+.dot_submenu p{
+    display: block;
+    width: 100%;
+    color: black;
+    font-size: 15px;
+}
+
 
 .prevent_click{
     pointer-events: none !important;
