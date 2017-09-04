@@ -1130,7 +1130,6 @@ var propiedad = {
     	
     	
     },
-
     getMunicipios:function(depa, municipio, carretera){
     	 $.ajax({
              url:app.url_ajax,
@@ -1297,15 +1296,13 @@ var api_mapa = {
 
 
 
-var app = {
-    
+var app = {   
     url : 'http://megethosinmobiliaria.com/',
     url_ajax : 'http://megethosinmobiliaria.com/wp-admin/admin-ajax.php',
     loader_block: '<div style="display:block;margin:0 auto;width:40px;"><i class="fa fa-cog fa-spin" style="font-size:30px;font-color:black;"></i></div>',
     loader2 : '<div style="display:inline-block;margin:0 auto;width:40px;"><i class="fa fa-cog fa-spin" style="font-size:30px;font-color:black;"></i></div>',
     loader: '<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>',
-    initialize: function() {
-        
+    initialize: function() {      
         //if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         //ifmovil
         if(movil){  
@@ -1316,12 +1313,12 @@ var app = {
             app.onDeviceReady();
         }
     },
-    loadEvents: function(){
+    onDeviceReady: function(){
+    	console.log('start on device ready');
         propiedad.getDepartamentos("departamento-1", "carretera-1");
         propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
         //Tabs Home
-
-/*
+        /*
           var tabs = document.querySelector(".tab-content");
           var mc = new Hammer(tabs);
 
@@ -1340,22 +1337,7 @@ var app = {
             $tab.find('a').tab('show');
             
         });
-        
-       /* $(".tab-content").on("swiperight",function() {
-            console.log('swiperight');
-            var $tab = $('#tablist li.active').prev();
-            if ($tab.length > 0)
-                $tab.find('a').tab('show');
-        });
-        $(".tab-content").on("swipeleft",function() {
-            console.log('swipe left');
-            var $tab = $('#tablist li.active').next();
-            if ($tab.length > 0)
-                $tab.find('a').tab('show');
-        });*/ 
-      
-
-
+        */
         //General forms
         $(document).on('focus','.inputpz',function(){
             console.log('focus inputpz');
@@ -1370,7 +1352,6 @@ var app = {
         });
         
         //Login Screen
-        
         login.form.parsley().on('form:success',function(){
             var formData = login.form.getFormData();
             console.log(formData);
@@ -1399,10 +1380,6 @@ var app = {
         register.form.parsley().on('form:error',function(){
             
         });
-
-
-
-
         //Requerimiento
         requerimiento.form.parsley().on('form:success',function(){
             var formData = requerimiento.form.getFormData();
@@ -1412,9 +1389,6 @@ var app = {
         requerimiento.form.parsley().on('form:error',function(){
 
         });
-
-
-
         //Propiedad
         propiedad.form.parsley().on('form:success',function(){
             var formData = propiedad.form.getFormData();
@@ -1424,26 +1398,19 @@ var app = {
         propiedad.form.parsley().on('form:error',function(){
             
         });
-        console.log('load events');
-        //login.screen.hide();
-        
+       
         setTimeout(function(){
             user.initialize();
         },1000);
-
 
       $(".departamento").on("change",function(){
         var depa = $(this).val();
           var municipio = $(this).attr("data-id"); 
         propiedad.getMunicipios(depa, municipio);
-       
-  
       });
-
 
     $("#filtrocasa").click(function(){
         console.log($(this).attr('src'));
-
         if($(this).attr('src') == '../www/img/iconos/header-ver-propiedades.png'){
             $(this).attr('src', '../www/img/iconos/housewhite.png');
             $(this).css({
@@ -1453,8 +1420,6 @@ var app = {
             });
             propiedad.getMisPropiedades();
             requerimiento.getMisRequerimientos();
-
-
         }else{
             $(this).attr('src','../www/img/iconos/header-ver-propiedades.png')
             $(this).css({
@@ -1466,9 +1431,6 @@ var app = {
             requerimiento.getRequerimientos(user.email, user.pass);
         }
       });
-
-
-
 
     $(".mas").click(function(){
         var tr = $(this).closest('tr').prev();
@@ -1547,9 +1509,6 @@ var app = {
         $("#"+arrow).css("display", "block");
     });
 
-
-
-
      $(".expandirInfoContacto").click(function(){
         var arrow = $(this).attr("data-id");
         console.log(arrow);
@@ -1591,8 +1550,6 @@ var app = {
         var muni = $("#municipio-"+arrow).val();
         var zona = $("#zona-"+arrow).val();
         var departamento = $("#departamento-"+arrow+ " :selected").text();
-
-
         if(depar == ""){
           depar = false;
         }
@@ -1608,7 +1565,6 @@ var app = {
         }else if(muni == null){
           muni = "";
         }
-
 
         if(!depar && !muni && !zona){
             console.log("ninguno escogido");
@@ -1641,7 +1597,6 @@ var app = {
     $("#precioP").on("change", function(){
       propiedad.calcularIUSI();
     });
-
 
     $("#plazoA").change(function(){
         var anos = $(this).val();
@@ -1726,11 +1681,8 @@ var app = {
       var moneda = $(this).val();
       //$(".moneda_IF").val(moneda);
       $("span.moneda_IFP").html(moneda.toUpperCase());
-      //$("#spanPresupuesto").val(moneda);
-      
+      //$("#spanPresupuesto").val(moneda);    
     });
-
-
 
     $("#egresos_reque").on("change",function(){
         console.log("Llamando funcion cuota maxima");
@@ -1738,19 +1690,9 @@ var app = {
     });
 
 //    api_mapa.init();
-
-        
-    },  
-    onDeviceReady: function() {
-        
-        console.log('device ready');
-        app.loadEvents();
-    },
-      
+    console.log('termino de load events');
+    },       
 };
-
-app.initialize();
-
 
 $.fn.loader = function(tipo, texto){
     if(tipo==='disable'){
@@ -1834,4 +1776,4 @@ $.fn.getFormData = function(){
     
     return data;
 };
-
+app.initialize();
