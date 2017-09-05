@@ -103,6 +103,11 @@ var login = {
 
                     propiedad.getPropiedades(user.email, user.pass);
                     requerimiento.getRequerimientos(user.email, user.pass);
+                    propiedad.getDepartamentos("departamento-1", "carretera-1");
+                    propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
+                    //api_map.set_marker(14.598497, -90.507067);
+                    api_mapa.init();
+
                     login.screen.hide('slide',{direction:'left'},'fast');
                 }
                 
@@ -118,6 +123,9 @@ var login = {
     },
     hide: function(){
         login.screen.hide('slide',{direction:'left'},'fast');
+    },
+    show: function(){
+        login.screen.show('slide',{direction:'right'},'fast');
     }
 };
 
@@ -475,22 +483,40 @@ var requerimiento = {
                 });    
                 
                 $('.requerimiento').each(function(){   //tagname based selector
+                     var top = $(this).position();
                     var mc = new Hammer(this);
                     var autor = $(this).attr("data-mail");
                     var dis = $(this);
-                    mc.on("press", function(e) {
+                     mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
                             var id = dis.attr("data-id");
+                            var estado = dis.attr("data-estado");
                             var tipo = dis.attr("data-tipo");
-                            dis.addClass("prevent_click");    
-                            dis.find("div.divTaphold").addClass("tapholdOptions");
-                            dis.find("div.divTaphold").toggle("slow");  
+                            var html = '<div class="divTaphold tapholdOptions" style="position:absolute; top:'+top.top+'px !important " >'
+                                        +'<p style="padding-top: 5px;" data-id="'+id+'" class="editar_prop">Editar</p>'
+                                        +'<p class="eliminar_x" data-id="'+id+'">Eliminar</p>'
+                                        +'Estado   '
+                                            +'<select id="select_estadoInmueble" data-id="'+id+'" style=" margin-top: 0px !important; margin-left: 5px !important;">'
+                                               +' <option value="disponible">Disponible</option>'
+                                               +' <option value="'+estado+'">'+estado+'</option>'
+                                          +'  </select>'
+                                    +'</div>';
+                            dis.parent().parent().prepend(html);
+                            dis.addClass("prevent_click"); 
+
                           }else{
                             return;
                           }
 
                     });
+
+                    $('#requerimientos').on('click', '.eliminar_x', function(e){
+                        e.stopPropagation();
+                        var id= $(this).attr("data-id");
+                        propiedad.borrarPost(id);
+                    });
+        
                 });        
                 
             },
@@ -535,23 +561,41 @@ var requerimiento = {
                 });    
                 
                 $('.requerimiento').each(function(){   //tagname based selector
+                     var top = $(this).position();
                     var mc = new Hammer(this);
                     var autor = $(this).attr("data-mail");
                     var dis = $(this);
-                    mc.on("press", function(e) {
+                     mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
                             var id = dis.attr("data-id");
+                            var estado = dis.attr("data-estado");
                             var tipo = dis.attr("data-tipo");
-                            dis.addClass("prevent_click");    
-                            dis.find("div.divTaphold").addClass("tapholdOptions");
-                            dis.find("div.divTaphold").toggle("slow");  
+                            var html = '<div class="divTaphold tapholdOptions" style="position:absolute; top:'+top.top+'px !important " >'
+                                        +'<p style="padding-top: 5px;" data-id="'+id+'" class="editar_prop">Editar</p>'
+                                        +'<p class="eliminar_x" data-id="'+id+'">Eliminar</p>'
+                                        +'Estado   '
+                                            +'<select id="select_estadoInmueble" data-id="'+id+'" style=" margin-top: 0px !important; margin-left: 5px !important;">'
+                                               +' <option value="disponible">Disponible</option>'
+                                               +' <option value="'+estado+'">'+estado+'</option>'
+                                          +'  </select>'
+                                    +'</div>';
+                            dis.parent().parent().prepend(html);
+                            dis.addClass("prevent_click"); 
 
                           }else{
                             return false;
                           }
 
                     });
+
+                $('#requerimientos').on('click', '.eliminar_x', function(e){
+                      e.stopPropagation();
+                        var id= $(this).attr("data-id");
+                        propiedad.borrarPost(id);
+                });
+
+
                 });          
                  
              },
@@ -828,23 +872,41 @@ var propiedad = {
                 });    
                 
                 $('.propiedad').each(function(){   //tagname based selector
+                     var top = $(this).position();
                     var mc = new Hammer(this);
                     var autor = $(this).attr("data-mail");
                     var dis = $(this);
-                    mc.on("press", function(e) {
+                     mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
-                            dis.addClass("prevent_click");    
                             var id = dis.attr("data-id");
+                            var estado = dis.attr("data-estado");
                             var tipo = dis.attr("data-tipo");
-                            dis.find("div.divTaphold").addClass("tapholdOptions");
-                            dis.find("div.divTaphold").toggle("slow");  
+                            var html = '<div class="divTaphold tapholdOptions" style="position:absolute; top:'+top.top+'px !important " >'
+                                        +'<p style="padding-top: 5px;" data-id="'+id+'" class="editar_prop">Editar</p>'
+                                        +'<p class="eliminar_x" data-id="'+id+'">Eliminar</p>'
+                                        +'Estado   '
+                                            +'<select id="select_estadoInmueble" data-id="'+id+'" style=" margin-top: 0px !important; margin-left: 5px !important;">'
+                                               +' <option value="disponible">Disponible</option>'
+                                               +' <option value="'+estado+'">'+estado+'</option>'
+                                          +'  </select>'
+                                    +'</div>';
+                            dis.parent().parent().prepend(html);
+                            dis.addClass("prevent_click"); 
 
                           }else{
                             return false;
                           }
 
                     });
+
+
+                  $('#propiedades').on('click', '.eliminar_x', function(e){
+                        e.stopPropagation();
+                        var id= $(this).attr("data-id");
+                        propiedad.borrarPost(id);
+                  });
+
                 });  
 
                 
@@ -912,7 +974,7 @@ var propiedad = {
               $(".ratingSingle").starRating({
                 totalStars: 5,
                 starShape: 'rounded',
-                starSize: 25,
+                starSize: 20,
                 emptyColor: 'lightgray',
                 hoverColor: 'rgb(0,110,202)',
                 activeColor: 'rgb(0,110,202)',
@@ -971,23 +1033,40 @@ var propiedad = {
                 });    
                 
                 $('.propiedad').each(function(){   //tagname based selector
+                     var top = $(this).position();
                     var mc = new Hammer(this);
                     var autor = $(this).attr("data-mail");
                     var dis = $(this);
-                    mc.on("press", function(e) {
+                     mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
-                            dis.addClass("prevent_click");    
                             var id = dis.attr("data-id");
+                            var estado = dis.attr("data-estado");
                             var tipo = dis.attr("data-tipo");
-                            dis.find("div.divTaphold").addClass("tapholdOptions");
-                            dis.find("div.divTaphold").toggle("slow");  
+                            var html = '<div class="divTaphold tapholdOptions" style="position:absolute; top:'+top.top+'px !important " >'
+                                        +'<p style="padding-top: 5px;" data-id="'+id+'" class="editar_prop">Editar</p>'
+                                        +'<p class="eliminar_x" data-id="'+id+'">Eliminar</p>'
+                                        +'Estado   '
+                                            +'<select id="select_estadoInmueble" data-id="'+id+'" style=" margin-top: 0px !important; margin-left: 5px !important;">'
+                                               +' <option value="disponible">Disponible</option>'
+                                               +' <option value="'+estado+'">'+estado+'</option>'
+                                          +'  </select>'
+                                    +'</div>';
+                            dis.parent().parent().prepend(html);
+                            dis.addClass("prevent_click"); 
 
                           }else{
                             return false;
                           }
 
                     });
+
+                   $('#propiedades').on('click', '.eliminar_x', function(e){
+                        e.stopPropagation();
+                        var id= $(this).attr("data-id");
+                        propiedad.borrarPost(id);
+                    }); 
+
                 });              
                  
              },
@@ -1170,6 +1249,46 @@ var propiedad = {
         .val('')
         .removeAttr('checked')
         .removeAttr('selected');
+    },
+    borrarPost: function(post_id){
+      $.ajax({
+         url:app.url_ajax,
+         dataType: 'text',
+         data: {
+             action: "borrar_post",
+             post_id: post_id,
+
+         },
+         type: 'post',
+         timeout: 15000,
+         error: function(a,b,c){
+             console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+             myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+         },
+         beforeSend: function(){
+              cortina.show();
+             console.log("borrando post");
+         },
+         success: function(a){
+              console.log(a);
+              if(a == "propiedades" && $("#filtrocasa").attr("src") == "../www/img/iconos/housewhite.png"){
+                  propiedad.getMisPropiedades();
+              }else if(a == "propiedades" && $("#filtrocasa").attr("src") != "../www/img/iconos/housewhite.png"){
+                  propiedad.getPropiedades();
+
+              }if(a == "requerimientos" && $("#filtrocasa").attr("src") == "../www/img/iconos/housewhite.png"){
+                  requerimiento.getMisRequerimientos();
+              }else if(a == "requerimientos" && $("#filtrocasa").attr("src") != "../www/img/iconos/housewhite.png"){
+                  requerimiento.getRequerimientos();
+
+              }
+             myModal.open('Se ha borrado con exito.');
+
+         },
+         complete: function(){
+             cortina.hide();
+         }
+     });
     }
 };
 
@@ -1462,11 +1581,6 @@ var app = {
         }
     },
     loadEvents: function(){
-        propiedad.getDepartamentos("departamento-1", "carretera-1");
-        propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
-        //api_map.set_marker(14.598497, -90.507067);
-        api_mapa.init();
-
 
         for(var i=1960;i<2051;i++)
         {
@@ -2076,13 +2190,14 @@ var app = {
 
     $('.screen').on("click", function(e) {
       console.log(e.target);
-      if($(e.target).is('#dot_menu') || $(e.target).is(".dot_submenu") || $(e.target).is(".dot_submenu p") || $(e.target).is("#propiedades-ul ") || $(e.target).is(".tapholdOptions p")){
+      if($(e.target).is('#dot_menu') || $(e.target).is(".dot_submenu") || $(e.target).is(".dot_submenu p") || $(e.target).is("#tapholdOptions") || $(e.target).is(".tapholdOptions p") | $(e.target).is(".tapholdOptions select")){
            return;
         }else{
           $(".dot_submenu").css("display", "none");  
           $(".divTaphold").css("display", "none"); 
           $(".requerimiento").removeClass("prevent_click");   
-          $(".propiedad").removeClass("prevent_click");   
+          $(".propiedad").removeClass("prevent_click"); 
+          $('.tapholdOptions').remove();  
           //console.log("click aqui......");
         }
     });
@@ -2090,6 +2205,13 @@ var app = {
     $(".aprobar_asesor").click(function(){
         asesor.verAsesor();
     });
+
+    $(".cerrar_sesion").click(function(){
+        window.localStorage.removeItem('correo');
+        window.localStorage.removeItem('password');
+        login.screen.show();
+    });
+
 
 
     //api_mapa.init();
