@@ -1290,7 +1290,7 @@ var asesor = {
 
         $.ajax({
             url:app.url_ajax,
-            dataType: 'json',
+            dataType: 'text',
             data: formData,
             type: 'post',
             timeout: 15000,
@@ -1303,20 +1303,18 @@ var asesor = {
                 cortina.show();
             },
             success: function(a){
-                console.log(JSON.stringify(a));
-                propiedad.clean();
-                if(a.msj_error){
-                    myModal.open('Oops',a.msj_error);
-                }else{
-                    myModal.open('Se ha aprobado al asesor con exito.');
-                   asesor.verScreen.html(a);
+                asesor.clean();
+                myModal.open('Se ha aprobado al asesor con exito.');
+                asesor.aprobarScreen.toggle('hide');
+                $("#listado_asesores").css("display", "block");
+
+                //asesor.verScreen.html(a);
                     
-                }
+              
                 
             },
             complete: function(){
                 cortina.hide();
-                asesor.verScreen.toggle('show');
             }
         });
     },
@@ -1362,7 +1360,7 @@ var asesor = {
         var id = $(attr).data('id');
         $.ajax({
             url:app.url_ajax,
-            dataType: 'text',
+            dataType: 'json',
              data: {
                  action: "get_single_asesor",
                  user_email: user.email,
@@ -1380,16 +1378,42 @@ var asesor = {
                 cortina.show();
             },
             success: function(a){
+
                 console.log(JSON.stringify(a));
-                propiedad.clean();
-                if(a.msj_error){
-                    myModal.open('Oops',a.msj_error);
-                }else{
-                    $("#id_cuentaA").val(id);
+
+                $("#tipo_cuentaA").val("Asesor");
+                $("#id_cuentaA").val(id);
+
+
+                $("#nombre_asesor").val(a.nombre);
+                $("#correo_asesor").val(a.correo);
+                $("#telefono_asesor").val(a.telefono);
+
+                var fechaNac = a.fecNac.split("/");
+                $("#diaNac_asesor").val(fechaNac[0]);
+                $("#mesNac_asesor").val(fechaNac[1]);
+                $("#anosNac_asesor").val(fechaNac[2]);
+
+
+                $("#oficinasA").val(a.oficina);
+                $("#empresaA").val(a.nom_empresa);
+                $("#telOfiA").val(a.tel_empresa);
+                $("#direccionOfiA").val(a.dir_empresa);
+                $("#urlOfiA").val(a.url_empresa);
+
+                var fechaExp = a.experiencia.split("/");
+                $("#diaExp_asesor").val(fechaExp[0]);
+                $("#mesExp_asesor").val(fechaExp[1]);
+                $("#anosExp_asesor").val(fechaExp[2]);
+
+
+                $("#regionA").val(a.region);
+                $("#infoAdiA").val(a.informacion);
+
                     //$("#body_asesores").html(a);
-                    asesor.aprobarScreen.toggle("show");
-                }
-                
+                  asesor.clean();
+                  asesor.aprobarScreen.toggle("show");
+
             },
             complete: function(){
                 cortina.hide();
@@ -1407,7 +1431,7 @@ var asesor = {
         }
     },
     clean: function(){
-      $(':input','#propiedadForm')
+      $(':input','#asesorForm')
         .not(':button, :submit, :reset, :hidden')
         .val('')
         .removeAttr('checked')
@@ -1456,9 +1480,11 @@ var app = {
         //Tabs Home
 
 /*
+
           var tabs = document.querySelector(".tab-content");
           var mc = new Hammer(tabs);
 
+        
           mc.on("panleft", function(ev) {
             console.log('swipe left');
             var $tab = $('#tablist li.active').next();
@@ -1473,9 +1499,10 @@ var app = {
             if ($tab.length > 0)
             $tab.find('a').tab('show');
             
-        });
+        });*/
         
-       /* $(".tab-content").on("swiperight",function() {
+ /*       
+        $(".tab-content").on("swiperight",function() {
             console.log('swiperight');
             var $tab = $('#tablist li.active').prev();
             if ($tab.length > 0)
@@ -1486,9 +1513,9 @@ var app = {
             var $tab = $('#tablist li.active').next();
             if ($tab.length > 0)
                 $tab.find('a').tab('show');
-        });*/ 
+        }); 
       
-
+*/
 
         //General forms
         $(document).on('focus','.inputpz',function(){
