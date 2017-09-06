@@ -33,10 +33,21 @@ var myModal = {
         modalHeader : $('#myModalHeader'),
         modalBody : $('#myModalBody'),
         open : function(header, body){
-            myModal.modalHeader.html(header);
-            myModal.modalBody.html(body);
+            if(header){
+              myModal.modalHeader.html(header);  
+            }else{
+              myModal.modalHeader.html('');  
+            }
+
+            if(body){
+              myModal.modalBody.html(body);  
+            }else{
+              myModal.modalBody.html('');  
+            }
+            
             myModal.modal.modal();
         }
+
 };
 var user = {
     pass: null,
@@ -69,6 +80,7 @@ var login = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'json',
+            //async: false,
             data: formData,
             type: 'post',
             timeout: 15000,
@@ -104,9 +116,9 @@ var login = {
                     propiedad.getPropiedades(user.email, user.pass);
                     requerimiento.getRequerimientos(user.email, user.pass);
                     propiedad.getDepartamentos("departamento-1", "carretera-1");
-                    propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
+                    //propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
                     //api_map.set_marker(14.598497, -90.507067);
-                    api_mapa.init();
+                   
 
                     login.screen.hide('slide',{direction:'left'},'fast');
                 }
@@ -115,6 +127,7 @@ var login = {
             complete: function(){ 
                 setTimeout(function(){
                   cortina.hide();
+                  
                 },3000)
 
                 api_mapa.set_marker(14.598497, -90.507067);
@@ -144,6 +157,7 @@ var register = {
             $.ajax({
                 url:app.url_ajax,
                 dataType: 'json',
+                async: false,
                 data: formData,
                 type: 'post',
                 timeout: 15000,
@@ -411,7 +425,8 @@ var requerimiento = {
       
         $.ajax({
             url:app.url_ajax,
-            dataType: 'text',
+            dataType: 'json',
+            async: false,
             data: formData,
             type: 'post',
             timeout: 15000,
@@ -439,6 +454,7 @@ var requerimiento = {
             },
             complete: function(){
                 cortina.hide();
+                
             }
         });
     },  
@@ -447,6 +463,7 @@ var requerimiento = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'html',
+            async: false,
             data: {
               action: "get_requerimientos",
               user_email : user_email,
@@ -487,19 +504,27 @@ var requerimiento = {
                     var mc = new Hammer(this);
                     var autor = $(this).attr("data-mail");
                     var dis = $(this);
+                    var aux_1 = "";
+                    var aux_2 = "";
                      mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
                             var id = dis.attr("data-id");
                             var estado = dis.attr("data-estado");
                             var tipo = dis.attr("data-tipo");
+                            var estado_ = dis.attr("data-value-estado");
+                            if(estado_ == "disponible"){
+                              aux_1 = "selected";
+                            }else{
+                              aux_2 = "selected";
+                            }
                             var html = '<div class="divTaphold tapholdOptions" style="position:absolute; top:'+top.top+'px !important " >'
                                         +'<p style="padding-top: 5px;" data-id="'+id+'" class="editar_prop">Editar</p>'
                                         +'<p class="eliminar_x" data-id="'+id+'">Eliminar</p>'
                                         +'Estado   '
                                             +'<select id="select_estadoInmueble" data-id="'+id+'" style=" margin-top: 0px !important; margin-left: 5px !important;">'
-                                               +' <option value="disponible">Disponible</option>'
-                                               +' <option value="'+estado+'">'+estado+'</option>'
+                                               +' <option value="disponible" '+aux_1+'>Disponible</option>'
+                                               +' <option value="'+estado+'" '+aux_2+'>'+estado+'</option>'
                                           +'  </select>'
                                     +'</div>';
                             dis.parent().parent().prepend(html);
@@ -511,17 +536,12 @@ var requerimiento = {
 
                     });
 
-                    $('#requerimientos').on('click', '.eliminar_x', function(e){
-                        e.stopPropagation();
-                        var id= $(this).attr("data-id");
-                        propiedad.borrarPost(id);
-                    });
-        
                 });        
                 
             },
             complete: function(){
               cortina.hide();
+              
             }
         });
     },
@@ -530,6 +550,7 @@ var requerimiento = {
        $.ajax({
              url:app.url_ajax,
              dataType: 'text',
+             //async: false,
              data: {
                  action: "get_misrequerimientos",
                  user_email: user.email,
@@ -547,6 +568,11 @@ var requerimiento = {
              },
              success: function(a){
                  console.log(a);
+
+                 if(!a){
+                  requerimiento.getMisRequerimientos();
+                 }
+
                  if(a.msj_error){
                      myModal.open('Oops',a.msj_error);
                  }else{                
@@ -565,19 +591,27 @@ var requerimiento = {
                     var mc = new Hammer(this);
                     var autor = $(this).attr("data-mail");
                     var dis = $(this);
-                     mc.on("press", function(e) {
+                    var aux_1 = "";
+                    var aux_2 = "";
+                      mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
                             var id = dis.attr("data-id");
                             var estado = dis.attr("data-estado");
                             var tipo = dis.attr("data-tipo");
+                            var estado_ = dis.attr("data-value-estado");
+                            if(estado_ == "disponible"){
+                              aux_1 = "selected";
+                            }else{
+                              aux_2 = "selected";
+                            }
                             var html = '<div class="divTaphold tapholdOptions" style="position:absolute; top:'+top.top+'px !important " >'
                                         +'<p style="padding-top: 5px;" data-id="'+id+'" class="editar_prop">Editar</p>'
                                         +'<p class="eliminar_x" data-id="'+id+'">Eliminar</p>'
                                         +'Estado   '
                                             +'<select id="select_estadoInmueble" data-id="'+id+'" style=" margin-top: 0px !important; margin-left: 5px !important;">'
-                                               +' <option value="disponible">Disponible</option>'
-                                               +' <option value="'+estado+'">'+estado+'</option>'
+                                               +' <option value="disponible" '+aux_1+'>Disponible</option>'
+                                               +' <option value="'+estado+'" '+aux_2+'>'+estado+'</option>'
                                           +'  </select>'
                                     +'</div>';
                             dis.parent().parent().prepend(html);
@@ -589,18 +623,12 @@ var requerimiento = {
 
                     });
 
-                $('#requerimientos').on('click', '.eliminar_x', function(e){
-                      e.stopPropagation();
-                        var id= $(this).attr("data-id");
-                        propiedad.borrarPost(id);
-                });
-
-
                 });          
                  
              },
              complete: function(){
                  cortina.hide();
+                 
              }
          });
       
@@ -614,6 +642,7 @@ var requerimiento = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'text',
+            async: false,
             data: {
               action: "get_single_requerimiento",
               id : id,
@@ -656,6 +685,7 @@ var requerimiento = {
             complete: function(){
               requerimiento.verScreen.toggle('show');
               cortina.hide();
+              
             }
         });
 
@@ -674,6 +704,7 @@ var requerimiento = {
        $.ajax({
             url:app.url_ajax,
             dataType: 'text',
+            async: false,
             data: {
                 action: "calcular_presupuesto",
                 tasa: tasa,
@@ -709,6 +740,7 @@ var requerimiento = {
                 $.ajax({
                     url:app.url_ajax,
                     dataType: 'text',
+                    async: false,
                     data: {
                       action: "calcular_montomaximo",
                       tasa: tasa,
@@ -731,6 +763,7 @@ var requerimiento = {
                     },
                     complete: function(){
                         cortina.hide();
+                        
 
                     }           
                 });
@@ -745,6 +778,7 @@ var requerimiento = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'text',
+            async: false,
             data: {
                 action: "calcular_cuotamaxima",
                 ingresos: ingresos,
@@ -766,6 +800,7 @@ var requerimiento = {
             },
             complete: function(){
               cortina.hide();
+              
             }
         });
       
@@ -802,6 +837,7 @@ var propiedad = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'json',
+            async: false,
             data: formData,
             type: 'post',
             timeout: 15000,
@@ -816,10 +852,16 @@ var propiedad = {
             success: function(a){
                 console.log(JSON.stringify(a));
                 propiedad.clean();
+                console.log($("#propiedadBtn").text());
                 if(a.msj_error){
                     myModal.open('Oops',a.msj_error);
                 }else{
-                    myModal.open('Se ha creado la propiedad con exito.');
+                    if($("#propiedadBtn").text() == "Crear"){
+                      myModal.open('Se ha creado la propiedad con exito.');  
+                    }else{
+                      myModal.open('Se ha actualizado la propiedad con exito.');  
+                    }
+                    
                     propiedad.getPropiedades(user.email, user.pass);
                     propiedad.toggle('hide');
                 }
@@ -827,6 +869,9 @@ var propiedad = {
             },
             complete: function(){
                 cortina.hide();
+                $("#titulo_propiedad").html("NUEVA PROPIEDAD");
+                $("#propiedadBtn").html("Crear");
+                $("#id_propiedad").val(0);
             }
         });
     },      
@@ -834,6 +879,7 @@ var propiedad = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'html',
+            async: false,
             data: {
               action: 'get_propiedades',
               user_email : user_email,
@@ -876,19 +922,27 @@ var propiedad = {
                     var mc = new Hammer(this);
                     var autor = $(this).attr("data-mail");
                     var dis = $(this);
-                     mc.on("press", function(e) {
+                    var aux_1 = "";
+                    var aux_2 = "";
+                      mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
                             var id = dis.attr("data-id");
                             var estado = dis.attr("data-estado");
                             var tipo = dis.attr("data-tipo");
+                            var estado_ = dis.attr("data-value-estado");
+                            if(estado_ == "disponible"){
+                              aux_1 = "selected";
+                            }else{
+                              aux_2 = "selected";
+                            }
                             var html = '<div class="divTaphold tapholdOptions" style="position:absolute; top:'+top.top+'px !important " >'
                                         +'<p style="padding-top: 5px;" data-id="'+id+'" class="editar_prop">Editar</p>'
                                         +'<p class="eliminar_x" data-id="'+id+'">Eliminar</p>'
                                         +'Estado   '
                                             +'<select id="select_estadoInmueble" data-id="'+id+'" style=" margin-top: 0px !important; margin-left: 5px !important;">'
-                                               +' <option value="disponible">Disponible</option>'
-                                               +' <option value="'+estado+'">'+estado+'</option>'
+                                               +' <option value="disponible" '+aux_1+'>Disponible</option>'
+                                               +' <option value="'+estado+'" '+aux_2+'>'+estado+'</option>'
                                           +'  </select>'
                                     +'</div>';
                             dis.parent().parent().prepend(html);
@@ -901,18 +955,13 @@ var propiedad = {
                     });
 
 
-                  $('#propiedades').on('click', '.eliminar_x', function(e){
-                        e.stopPropagation();
-                        var id= $(this).attr("data-id");
-                        propiedad.borrarPost(id);
-                  });
-
                 });  
 
                 
             },
             complete: function(){
                 cortina.hide();
+                
             }
         });
     },
@@ -925,6 +974,7 @@ var propiedad = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'html',
+            async: false,
             data: {
               action: "get_single_propiedad",
               id : id,
@@ -994,6 +1044,7 @@ var propiedad = {
             complete: function(){
               propiedad.verScreen.toggle('show');
               cortina.hide();
+              
             }
         });
     },
@@ -1002,6 +1053,7 @@ var propiedad = {
        $.ajax({
              url:app.url_ajax,
              dataType: 'text',
+             //async: false,
              data: {
                  action: "get_mispropiedades",
                  user_email: user.email,
@@ -1019,6 +1071,11 @@ var propiedad = {
              },
              success: function(a){
                  console.log(a);
+
+                if(!a){
+                  propiedad.getMisPropiedades();  
+                }
+
                  if(a.msj_error){
                      myModal.open('Oops',a.msj_error);
                  }else{                
@@ -1037,19 +1094,27 @@ var propiedad = {
                     var mc = new Hammer(this);
                     var autor = $(this).attr("data-mail");
                     var dis = $(this);
+                    var aux_1 = "";
+                    var aux_2 = "";
                      mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
                             var id = dis.attr("data-id");
                             var estado = dis.attr("data-estado");
                             var tipo = dis.attr("data-tipo");
+                            var estado_ = dis.attr("data-value-estado");
+                            if(estado_ == "disponible"){
+                              aux_1 = "selected";
+                            }else{
+                              aux_2 = "selected";
+                            }
                             var html = '<div class="divTaphold tapholdOptions" style="position:absolute; top:'+top.top+'px !important " >'
                                         +'<p style="padding-top: 5px;" data-id="'+id+'" class="editar_prop">Editar</p>'
                                         +'<p class="eliminar_x" data-id="'+id+'">Eliminar</p>'
                                         +'Estado   '
                                             +'<select id="select_estadoInmueble" data-id="'+id+'" style=" margin-top: 0px !important; margin-left: 5px !important;">'
-                                               +' <option value="disponible">Disponible</option>'
-                                               +' <option value="'+estado+'">'+estado+'</option>'
+                                               +' <option value="disponible" '+aux_1+'>Disponible</option>'
+                                               +' <option value="'+estado+'" '+aux_2+'>'+estado+'</option>'
                                           +'  </select>'
                                     +'</div>';
                             dis.parent().parent().prepend(html);
@@ -1061,17 +1126,16 @@ var propiedad = {
 
                     });
 
-                   $('#propiedades').on('click', '.eliminar_x', function(e){
-                        e.stopPropagation();
-                        var id= $(this).attr("data-id");
-                        propiedad.borrarPost(id);
-                    }); 
+
+                    
+
 
                 });              
                  
              },
              complete: function(){
                  cortina.hide();
+                 
              }
          });
       
@@ -1081,6 +1145,7 @@ var propiedad = {
        $.ajax({
              url:app.url_ajax,
              dataType: 'text',
+             async: false,
              data: {
                  action: "calcular_IUSI",
                  precio:precio,
@@ -1108,6 +1173,7 @@ var propiedad = {
              },
              complete: function(){
                  cortina.hide();
+                 
              }
          });
       
@@ -1117,6 +1183,7 @@ var propiedad = {
     	 $.ajax({
              url:app.url_ajax,
              dataType: 'text',
+             async: false,
              data: {
                  action: "get_departamentos"
              },
@@ -1135,15 +1202,18 @@ var propiedad = {
                  if(a.msj_error){
                      myModal.open('Oops',a.msj_error);
                  }else{
-                     jQuery("#"+departamento).html(a);                    
+                     //jQuery("input[]").html(a);                    
+                     $( "select[name='departamento']" ).html(a);
                  }
                  
              },
              complete: function(){
                 cortina.hide();
+                
 
                 $.ajax({
                    url:app.url_ajax,
+                   async: false,
                    dataType: 'text',
                    data: {
                        action: "get_carreteras",
@@ -1155,13 +1225,16 @@ var propiedad = {
                        myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
                    },
                    beforeSend: function(){
-                       console.log("Jalando municipiops!!");
+                       console.log("Jalando carreteras!!");
                    },
                    success: function(a){
-                       $("#"+carretera).html(a);
+                        console.log(a);
+                        $( "select[name='carretera']" ).html(a);
+                       //$("#"+carretera).html(a);
                    },
                    complete: function(){
                        cortina.hide();
+                       
                    }
                });
 
@@ -1177,6 +1250,7 @@ var propiedad = {
     	 $.ajax({
              url:app.url_ajax,
              dataType: 'text',
+             async: false,
              data: {
                  action: "get_municipios",
                  departamento: depa,
@@ -1202,13 +1276,14 @@ var propiedad = {
                  
              },
              complete: function(){
-                 if(depa == 'GUA'){
+                 //if(depa == 'GUA'){
                      $.ajax({
                          url:app.url_ajax,
                          dataType: 'text',
+                         async: false,
                          data: {
                              action: "get_zonas",
-                             departamento: depa,
+                             //departamento: depa,
 
                          },
                          type: 'post',
@@ -1227,10 +1302,11 @@ var propiedad = {
                              cortina.hide();
                          }
                      });
-                 }else{
+                 //}else{
                      cortina.hide();
-                     $("#zona").attr("disabled", "disabled");
-                 }
+                     
+                   //  $("#zona").attr("disabled", "disabled");
+                 //}
                  
              }
          });
@@ -1254,6 +1330,7 @@ var propiedad = {
       $.ajax({
          url:app.url_ajax,
          dataType: 'text',
+         async: false,
          data: {
              action: "borrar_post",
              post_id: post_id,
@@ -1274,22 +1351,214 @@ var propiedad = {
               if(a == "propiedades" && $("#filtrocasa").attr("src") == "../www/img/iconos/housewhite.png"){
                   propiedad.getMisPropiedades();
               }else if(a == "propiedades" && $("#filtrocasa").attr("src") != "../www/img/iconos/housewhite.png"){
-                  propiedad.getPropiedades();
+                  propiedad.getPropiedades(user.email, user.pass);
 
               }if(a == "requerimientos" && $("#filtrocasa").attr("src") == "../www/img/iconos/housewhite.png"){
                   requerimiento.getMisRequerimientos();
               }else if(a == "requerimientos" && $("#filtrocasa").attr("src") != "../www/img/iconos/housewhite.png"){
-                  requerimiento.getRequerimientos();
+                  requerimiento.getRequerimientos(user.email, user.pass);
 
               }
-             myModal.open('Se ha borrado con exito.');
+             myModal.open('', 'Se ha borrado con exito.');
 
          },
          complete: function(){
              cortina.hide();
+             
+             $(".divTaphold").remove();
          }
      });
+    },
+
+
+    cambiarEstado: function(post_id, estado){
+      $.ajax({
+         url:app.url_ajax,
+         dataType: 'text',
+         async: false,
+         data: {
+             action: "cambiar_estado",
+             post_id: post_id,
+             estado : estado
+
+         },
+         type: 'post',
+         timeout: 15000,
+         error: function(a,b,c){
+             console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+             myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+         },
+         beforeSend: function(){
+              cortina.show();
+             console.log("Cambiando estado");
+         },
+         success: function(a){
+              console.log(a);
+              if(a == "propiedades" && $("#filtrocasa").attr("src") == "../www/img/iconos/housewhite.png"){
+                  propiedad.getMisPropiedades();
+              }else if(a == "propiedades" && $("#filtrocasa").attr("src") != "../www/img/iconos/housewhite.png"){
+                  propiedad.getPropiedades(user.email, user.pass);
+
+              }if(a == "requerimientos" && $("#filtrocasa").attr("src") == "../www/img/iconos/housewhite.png"){
+                  requerimiento.getMisRequerimientos();
+              }else if(a == "requerimientos" && $("#filtrocasa").attr("src") != "../www/img/iconos/housewhite.png"){
+                  requerimiento.getRequerimientos(user.email, user.pass);
+
+              }
+             myModal.open('', 'El estado se ha cambiado con exito.');
+
+         },
+         complete: function(){
+             cortina.hide();
+             
+             $(".divTaphold").remove();
+         }
+     });
+    },
+
+
+    editarPropiedad: function(post_id){
+
+      cortina.show();
+      $.ajax({
+         url:app.url_ajax,
+         dataType: 'json',
+         async: false,
+         data: {
+             action: "editar_propiedad",
+             post_id: post_id,
+             user_email : user.email,
+             user_pass : user.pass,
+         },
+         type: 'post',
+         timeout: 15000,
+         error: function(a,b,c){
+             console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+             myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+         },
+         beforeSend: function(){
+             console.log("trayendo info de la propiedad");
+         },
+         success: function(json_data){
+              console.log(json_data);
+              //var arreglo = JSON.parse(a);
+              //console.log(arreglo);
+
+              $("#titulo_propiedad").html("EDITAR PROPIEDAD #"+post_id);
+              $("#id_propiedad").val(post_id);
+              $.each(json_data, function(key, value){
+                  console.log(key, value);
+                  if(key == "tipo_operacion" || key == "tipo_inmueble"){
+                      $.each($("#propiedadForm input[name='"+key+"']"), function(key1, value1){
+                          //console.log($(this).val() +"=="+value);
+                          if($(this).val() == value){
+                            $(this).attr("checked", "checked");
+                          }
+                      });
+                      return;
+                  }else if(key == "cuarto_servicio" || key=="estudio" || key=="cisterna" || key == "negociable" || key=="gastos_escritura"){
+                    return;
+                  }
+                  $( "#propiedadForm input[name='"+key+"']" ).val(value);
+                   $("#propiedadForm select[name='"+key+"']" ).val(value);
+
+              });
+
+              var depa = "";
+              if(json_data.departamento == 'Alta Verapaz'){
+                depa = "AV";
+              }else if(json_data.departamento == 'Baja Verapaz'){
+                  depa = "BV";
+              }else if(json_data.departamento == 'Chimaltenango'){
+                  depa = "CHI";
+              }else if(json_data.departamento == 'Chiquimula'){
+                  depa = "CHQ";
+              }else if(json_data.departamento == 'Petén'){
+                  depa = "PE";
+              }else if(json_data.departamento == 'El Progreso'){
+                  depa = "EP";
+              }else if(json_data.departamento == 'Quiché'){
+                  depa = "QCH";
+              }else if(json_data.departamento == 'Escuintla'){
+                  depa = "ESC";
+              }else if(json_data.departamento == 'Guatemala'){
+                  depa = "GUA";
+              }else if(json_data.departamento == 'Huehuetenango'){
+                  depa = "HUE";
+              }else if(json_data.departamento == 'Izabal'){
+                  depa = "IZA";
+              }else if(json_data.departamento == 'Jalapa'){
+                  depa = "JAL";
+              }else if(json_data.departamento == 'Jutiapa'){
+                  depa = "JUT";
+              }else if(json_data.departamento == 'Retalhuleu'){
+                  depa = "REU";
+              }else if(json_data.departamento == 'Sacatepéquez'){
+                  depa = "SAC";
+              }else if(json_data.departamento == 'San Marcos'){
+                  depa = "SM";
+              }else if(json_data.departamento == 'Santa Rosa'){
+                  depa = "SR";
+              }else if(json_data.departamento == 'Sololá'){
+                  depa = "SL";
+              }else if(json_data.departamento == 'Suchitepéquez'){
+                  depa = "SUC";
+              }else if(json_data.departamento == 'Totonicapán'){
+                  depa = "TOT";
+              }else if(json_data.departamento == 'Zacapa'){
+                  depa = "ZAC";
+              }
+
+
+              propiedad.getDepartamentos();
+              $("#departamento-propiedades").val(depa);
+              propiedad.getMunicipios(depa, "municipio-propiedades", "carretera-propiedades");
+              $("#municipio-propiedades").val(json_data.municipio);
+              $("#zona-propiedades").val(json_data.zona);
+              $("#carretera-propiedades").val(json_data.carretera);
+
+              $("#propiedadBtn").html("ACTUALIZAR");
+
+              $.each($(".rating"), function(key2, value2){
+                  var rat = $(this).next().val();
+                  $(this).starRating('setRating', rat);     
+              }); 
+
+              $(".ratingResult").starRating('setRating', json_data.comunidad); 
+              //$(".ratingResult").next().val((Math.round(prome * 2) / 2).toFixed(1));
+
+              if(json_data.cisterna){
+                  $("#cisternaP").click();
+              }
+              if(json_data.estudio){
+                  $("#estudioP").click();
+              }
+              if(json_data.cuarto_servicio){
+                  $("#dormServP").click();
+              }
+              if(json_data.negociable){
+                  $("#negociableP").click();
+              }
+              if(json_data.gastos_escritura){
+                  $("#gastosEscritura").click();
+              }
+
+
+
+
+              propiedad.crearScreen.toggle("show");
+              return;
+         },
+         complete: function(){
+             cortina.hide();
+             
+             
+         }
+     });
+
+
     }
+
 };
 
 
@@ -1410,6 +1679,7 @@ var asesor = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'text',
+            async: false,
             data: formData,
             type: 'post',
             timeout: 15000,
@@ -1434,6 +1704,7 @@ var asesor = {
             },
             complete: function(){
                 cortina.hide();
+                
             }
         });
     },
@@ -1443,6 +1714,7 @@ var asesor = {
       $.ajax({
             url:app.url_ajax,
             dataType: 'text',
+            async: false,
              data: {
                  action: "get_asesores",
                  user_email: user.email,
@@ -1471,6 +1743,7 @@ var asesor = {
             },
             complete: function(){
                 cortina.hide();
+                
             }
         });
 
@@ -1480,6 +1753,7 @@ var asesor = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'json',
+            async: false,
              data: {
                  action: "get_single_asesor",
                  user_email: user.email,
@@ -1536,6 +1810,7 @@ var asesor = {
             },
             complete: function(){
                 cortina.hide();
+                
             }
         });
 
@@ -1591,6 +1866,9 @@ var app = {
         {
             $(".selectDia").append(new Option(i,i));
         }
+
+         api_mapa.init();
+
         //Tabs Home
 
 /*
@@ -1699,7 +1977,7 @@ var app = {
         propiedad.form.parsley().on('form:error',function(){
             
         });
-        console.log('load events');
+        //console.log('load events');
         //login.screen.hide();
 
 
@@ -1714,7 +1992,7 @@ var app = {
         asesor.form.parsley().on('form:error',function(){
             
         });
-        console.log('load events');
+        //console.log('load events');
         
         setTimeout(function(){
             user.initialize();
@@ -2210,6 +2488,48 @@ var app = {
         window.localStorage.removeItem('correo');
         window.localStorage.removeItem('password');
         login.screen.show();
+    });
+
+
+      $('#requerimientos').on('click', '.eliminar_x', function(e){
+          cortina.show();
+          e.stopPropagation();
+          var id= $(this).attr("data-id");
+          propiedad.borrarPost(id);
+      });
+
+      $('#requerimientos').on('change', '#select_estadoInmueble', function(e){
+          cortina.show();
+          var id = $(this).attr("data-id");
+          var estado = $(this).val();
+          propiedad.cambiarEstado(id, estado);
+      });
+
+       $('#propiedades').on('click', '.eliminar_x', function(e){
+            cortina.show();
+              e.stopPropagation();
+              var id= $(this).attr("data-id");
+              propiedad.borrarPost(id);
+        });
+
+
+        $('#propiedades').on('change', '#select_estadoInmueble', function(e){
+            cortina.show();
+            var id = $(this).attr("data-id");
+            var estado = $(this).val();
+            propiedad.cambiarEstado(id, estado);
+        });
+
+        
+
+
+
+    $('#propiedades').on('click', '.editar_prop', function(e){
+        cortina.show();
+        e.stopPropagation();
+        var id = $(this).attr("data-id");
+        propiedad.editarPropiedad(id);
+        
     });
 
 

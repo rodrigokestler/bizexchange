@@ -38,7 +38,7 @@
         <title>Bizexchange</title>
     </head>
     <body>
-        <div id="cortina" style="display:none;z-index:1000;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0, 0, 0, 0.28);">
+        <div id="cortina" style="display:none;z-index:4000;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0, 0, 0, 0.28);">
         
             <div id="cortina_container" style="width:40px;height:40px;margin:75% auto;color:white;">
             </div>
@@ -221,11 +221,12 @@
             <div class="container" style="margin:0!important;padding:0!important;">
                 <div class="container-flex" style="margin:0!important;">
                     <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
-                        <span class="text-header2">NUEVA PROPIEDAD</span>
+                        <span class="text-header2" id="titulo_propiedad">NUEVA PROPIEDAD</span>
                         <button onclick="propiedad.crearScreen.toggle('hide');" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
                     </div>
                     <div class="body-screen bg-gris">
                         <form id="propiedadForm">
+                            <input type="hidden" name="id_propiedad" value="0" class="inputpz">
                             <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
@@ -272,7 +273,7 @@
                                             <input class="inputpz tipo_oficina tipo_inmueble" type="radio" name="tipo_inmueble" value="oficina">
                                         </td>
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_local tipo_inmueble" type="radio" name="tipo_inmueble" value="terreno">
+                                            <input class="inputpz tipo_local tipo_inmueble" type="radio" name="tipo_inmueble" value="local">
                                         </td>
                                         <td class="icon_ti">
                                             <input class="inputpz tipo_edificio tipo_inmueble" type="radio" name="tipo_inmueble" value="edificio">
@@ -499,7 +500,7 @@
                                                     <td>
                                                         <label  class="switch">
                                                           <input type="checkbox" name="cuarto_servicio" class="inputpz">
-                                                          <span class="slider round"></span>
+                                                          <span class="slider round" id="dormServP"></span>
                                                         </label>
                                                     </td>
                                                 </tr>
@@ -521,7 +522,7 @@
                                                     <td>
                                                         <label  class="switch">
                                                           <input type="checkbox" name="estudio" class="inputpz">
-                                                          <span class="slider round"></span>
+                                                          <span class="slider round" id="estudioP"></span>
                                                         </label>
                                                     </td>
                                                 </tr>
@@ -543,7 +544,7 @@
                                                     <td>
                                                         <label class="switch">
                                                           <input type="checkbox" name="cisterna" class="inputpz">
-                                                          <span class="slider round"></span>
+                                                          <span class="slider round" id="cisternaP"></span>
                                                         </label>
                                                     </td>
                                                 </tr>
@@ -676,7 +677,7 @@
                                         <td colspan="2" style="padding-bottom: 15px;">
                                             <label style="float:right;margin-right:20px!important;" class="switch">
                                                 <input name="negociable" type="checkbox" class="inputpz">
-                                                <span class="slider round" ></span>
+                                                <span class="slider round" id="negociableP" ></span>
                                                 <span class="texto-nuevo-requerimiento" style="font-size: 10px !important;
                                                     margin-top: 25px;
                                                     position: absolute;
@@ -718,7 +719,7 @@
                                                 <td style="padding-bottom: 10px; padding-top:10px;" colspan="2">
                                                     <label style="float:right;margin-right:20px!important;" class="switch">
                                                       <input name="gastos_escritura" type="checkbox" class="inputpz">
-                                                      <span class="slider round"></span>
+                                                      <span class="slider round" id="gastosEscritura"></span>
                                                     </label>
                                                 </td>
                                             </tr>
@@ -1136,14 +1137,13 @@
                                             </div>
                                 </div>
                                 <div class="container-form">
-                                    <button type="submit" id="requerimientoBtn" class="btn btn-default btn-block requerimiento-btn">Crear</button>
+                                    <button type="submit" id="propiedadBtn" class="btn btn-default btn-block requerimiento-btn">Crear</button>
                                 </div>
                             </form>
                     </div>
                 </div>
             </div>
         </div>
-
 
 
 
@@ -1223,7 +1223,7 @@
                                             <input class="inputpz tipo_oficina tipo_inmueble" type="radio" name="tipo_inmueble" value="oficina">
                                         </td>
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_local tipo_inmueble" type="radio" name="tipo_inmueble" value="terreno">
+                                            <input class="inputpz tipo_local tipo_inmueble" type="radio" name="tipo_inmueble" value="local">
                                         </td>
                                         <td class="icon_ti">
                                             <input class="inputpz tipo_edificio tipo_inmueble" type="radio" name="tipo_inmueble" value="edificio">
