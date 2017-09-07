@@ -115,8 +115,10 @@ var login = {
 
                     propiedad.getPropiedades(user.email, user.pass);
                     requerimiento.getRequerimientos(user.email, user.pass);
-                    propiedad.getDepartamentos("departamento-1", "carretera-1");
-                    //propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
+                    
+                    propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
+
+
                     //api_map.set_marker(14.598497, -90.507067);
                    
 
@@ -248,7 +250,7 @@ var requerimiento = {
                                             +' <tr>' 
                                                +'  <td colspan="2" class="texto-nuevo-requerimiento">Departamento</td>' 
                                                 +' <td colspan="3">' 
-                                                +'     <select name="departamento-'+id+'" class="color-gris-oscuro select_formR departamento inputpz" id="departamento-'+(parseInt(cant_ubicaciones) + 1)+'" data-id="municipio-'+(parseInt(cant_ubicaciones) + 1)+'" data-carre="carretera-'+id+'" style="border:none;">' 
+                                                +'     <select name="departamento-'+id+'" class="color-gris-oscuro select_formR departamento inputpz" id="departamento-'+(parseInt(cant_ubicaciones) + 1)+'" data-id="municipio-'+(parseInt(cant_ubicaciones) + 1)+'" data-carre="carretera-'+id+'" data-zona="zona-'+id+'" style="border:none;">' 
                                                         
                                                  +'    </select>' 
                                                +'  </td>' 
@@ -288,7 +290,7 @@ var requerimiento = {
 
                                            +'  <tr>' 
                                                +'  <td colspan="1" class="texto-nuevo-requerimiento">Km</td>' 
-                                                +' <td colspan="1"><input name="km-'+id+'"  class="color-gris-oscuro inputpz inputText inputOE" style="text-align:center;border:none;width:30px;" type="number" value="0">' 
+                                                +' <td colspan="1"><input name="km-'+id+'" id="km-'+id+'" class="color-gris-oscuro inputpz inputText inputOE" style="text-align:center;border:none;width:30px;" type="number" value="0">' 
                                                +'  </td>'
                                                +'<td colspan="3">'
                                                  +' <select name="carretera-'+id+'" id="carretera-'+id+'" class="color-gris-oscuro select_formR carretera inputpz" style="border:none;">'
@@ -323,7 +325,8 @@ var requerimiento = {
                 var depa = $(this).val();
                 var municipio = $(this).attr("data-id"); 
                 var carretera = $(this).attr("data-carre");
-                propiedad.getMunicipios(depa, municipio, carretera);
+                var zona = $(this).attr("data-zona");
+                propiedad.getMunicipios(depa, municipio, carretera, zona);
                
         
             });
@@ -359,7 +362,7 @@ var requerimiento = {
                 if(depar == ""){
                   depar = false;
                 }
-                if(zona == "--Seleccione--"){
+                if(zona == "--Seleccione--" || zona == undefined){
                   zona = false;
                 }else{
                   zona = "Zona "+zona;
@@ -443,10 +446,12 @@ var requerimiento = {
                 requerimiento.clean();
 
 
-                if(a.msj_error){
-                    myModal.open('Oops',a.msj_error);
-                }else{
-                    myModal.open('Se ha creado el requerimiento con exito.');
+                if($("#requerimientoBtn").text() == "Crear"){
+                      myModal.open('Se ha creado el requerimiento con exito.');  
+                    }else{
+                      myModal.open('Se ha actualizado el requerimiento con exito.');  
+                    }
+                    
                     requerimiento.getRequerimientos(user.email, user.pass);
                     requerimiento.toggle('hide');
                 }
@@ -454,6 +459,9 @@ var requerimiento = {
             },
             complete: function(){
                 cortina.hide();
+                $("#titulo_requerimiento").html("NUEVO REQUERIMIENTO");
+                $("#requerimientoBtn").html("Crear");
+                $("#id_requerimiento").val(0);
                 
             }
         });
@@ -500,7 +508,7 @@ var requerimiento = {
                 });    
                 
                 $('.requerimiento').each(function(){   //tagname based selector
-                     var top = $(this).position();
+                    var top = $(this).position();
                     var mc = new Hammer(this);
                     var autor = $(this).attr("data-mail");
                     var dis = $(this);
@@ -541,6 +549,7 @@ var requerimiento = {
             },
             complete: function(){
               cortina.hide();
+              $(".divTaphold").remove();
               
             }
         });
@@ -628,6 +637,7 @@ var requerimiento = {
              },
              complete: function(){
                  cortina.hide();
+                 $(".divTaphold").remove();
                  
              }
          });
@@ -805,6 +815,179 @@ var requerimiento = {
         });
       
     }, 
+
+
+
+     editarRequerimiento: function(post_id){
+
+      $.ajax({
+         url:app.url_ajax,
+         dataType: 'json',
+         //async: false,
+         data: {
+             action: "editar_requerimiento",
+             post_id: post_id,
+             user_email : user.email,
+             user_pass : user.pass,
+         },
+         type: 'post',
+         timeout: 15000,
+         error: function(a,b,c){
+             console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+             myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+         },
+         beforeSend: function(){
+            cortina.show();
+             console.log("trayendo info del requerimiento");
+         },
+         success: function(json_data){
+              console.log(json_data);
+              //var arreglo = JSON.parse(a);
+              //console.log(arreglo);
+
+              $("#titulo_requerimiento").html("EDITAR REQUERIMIENTO #"+post_id);
+              $("#id_requerimiento").val(post_id);
+              $.each(json_data, function(key, value){
+                  //console.log(key, value);
+                  if(key == "tipo_operacion" || key == "tipo_inmueble"){
+                      $.each($("#requerimientoForm input[name='"+key+"']"), function(key1, value1){
+                          //console.log($(this).val() +"=="+value);
+                          if($(this).val() == value){
+                            $(this).attr("checked", "checked");
+                          }
+                      });
+                      return;
+                  }else if(key == "cuarto_servicio" || key=="estudio" || key=="cisterna" || key == "precalificacion" || key == "ubicaciones"){
+                    return;
+                  }
+                  $( "#requerimientoForm input[name='"+key+"']" ).val(value);
+                   $("#requerimientoForm select[name='"+key+"']" ).val(value);
+
+              });
+
+              $("#plazoM").val(json_data.plazo * 12);
+
+              var cont = 1;
+              //console.log(json_data.ubicaciones);
+              $.each(json_data.ubicaciones, function(key2, value2){
+                    var cont1 = 1;
+                  $.each(this, function(k, v) {
+                      console.log(cont1 +" "+k +" "+v );
+                      var depa = "";
+
+                      if(k == "departamento-"+cont &&  v == 'Alta Verapaz'){
+                        depa = "AV";
+                      }else if(k == "departamento-"+cont && v == 'Baja Verapaz'){
+                          depa = "BV";
+                      }else if(k == "departamento-"+cont && v == 'Chimaltenango'){
+                          depa = "CHI";
+                      }else if(k == "departamento-"+cont && v == 'Chiquimula'){
+                          depa = "CHQ";
+                      }else if(k == "departamento-"+cont && v == 'Petén'){
+                          depa = "PE";
+                      }else if(k == "departamento-"+cont && v == 'El Progreso'){
+                          depa = "EP";
+                      }else if(k == "departamento-"+cont && v == 'Quiché'){
+                          depa = "QCH";
+                      }else if(k == "departamento-"+cont && v == 'Escuintla'){
+                          depa = "ESC";
+                      }else if(k == "departamento-"+cont && v == 'Guatemala'){
+                          depa = "GUA";
+                      }else if(k == "departamento-"+cont && v == 'Huehuetenango'){
+                          depa = "HUE";
+                      }else if(k == "departamento-"+cont && v == 'Izabal'){
+                          depa = "IZA";
+                      }else if(k == "departamento-"+cont && v == 'Jalapa'){
+                          depa = "JAL";
+                      }else if(k == "departamento-"+cont && v == 'Jutiapa'){
+                          depa = "JUT";
+                      }else if(k == "departamento-"+cont && v == 'Retalhuleu'){
+                          depa = "REU";
+                      }else if(k == "departamento-"+cont && v == 'Sacatepéquez'){
+                          depa = "SAC";
+                      }else if(k == "departamento-"+cont && v == 'San Marcos'){
+                          depa = "SM";
+                      }else if(k == "departamento-"+cont && v == 'Santa Rosa'){
+                          depa = "SR";
+                      }else if(k == "departamento-"+cont && v == 'Sololá'){
+                          depa = "SL";
+                      }else if(k == "departamento-"+cont && v == 'Suchitepéquez'){
+                          depa = "SUC";
+                      }else if(k == "departamento-"+cont && v == 'Totonicapán'){
+                          depa = "TOT";
+                      }else if(k == "departamento-"+cont && v == 'Zacapa'){
+                          depa = "ZAC";
+                      }
+
+                      console.log(depa);
+
+                      console.log("#"+k + " - "+v);
+
+                      if(cont1 == 1 ){
+                        $("#"+k).val(v);
+                        $("#"+k).change();
+                      }else if (cont1 == 2){
+                        $("#"+k).val(v);
+                        $("#"+k).change();
+                      }else{
+                        $("#"+k).val(v);
+                      }
+                      
+                      //propiedad.getMunicipios(depa, "municipio-1", "carretera-1", "zona-1");
+                      //if(k == "departamento-1") return;
+                      //$("#"+k).val(v);
+
+                      
+
+
+                      cont1=cont1+1;
+
+                  });
+                  if(cont==1){
+
+                  }else{
+                    $("#ubicacion_extra").click();
+                  }
+                  cont = cont + 1;
+              });
+              
+
+
+              $("#requerimientoBtn").html("ACTUALIZAR");
+
+
+              if(json_data.cisterna){
+                  $("#cisternaR").click();
+              }
+              if(json_data.estudio){
+                  $("#estudioR").click();
+              }
+              if(json_data.cuarto_servicio){
+                  $("#dormServR").click();
+              }
+              if(json_data.negociable){
+                  $("#negociableP").click();
+              }
+              if(json_data.gastos_escritura){
+                  $("#spanPre").click();
+              }
+
+
+
+
+              requerimiento.crearScreen.toggle("show");
+
+              return;
+         },
+         complete: function(){
+             cortina.hide();
+             
+             
+         }
+     });
+
+
+    },
 
     toggle:function(tipo){
         if(tipo=='hide'){
@@ -1125,11 +1308,6 @@ var propiedad = {
                           }
 
                     });
-
-
-                    
-
-
                 });              
                  
              },
@@ -1177,13 +1355,14 @@ var propiedad = {
              }
          });
       
-    },    
+    },  
+
     getDepartamentos:function(departamento, carretera){
 
     	 $.ajax({
              url:app.url_ajax,
              dataType: 'text',
-             async: false,
+             //async: false,
              data: {
                  action: "get_departamentos"
              },
@@ -1194,26 +1373,30 @@ var propiedad = {
                  myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
              },
              beforeSend: function(){
-                cortina.show();
+                  cortina.show();
                  console.log("Jalando get_departamentos!!");
              },
              success: function(a){
                  console.log(a);
+
+                 if(!a){
+                    propiedad.getDepartamentos(departamento, carretera);
+                 }
+
                  if(a.msj_error){
                      myModal.open('Oops',a.msj_error);
                  }else{
                      //jQuery("input[]").html(a);                    
-                     $( "select[name='departamento']" ).html(a);
+                     $( "#"+departamento).html(a);
+                     //$( "select[name='departamento-1']" ).html(a);
                  }
                  
              },
              complete: function(){
-                cortina.hide();
-                
-
+                //cortina.hide();
                 $.ajax({
                    url:app.url_ajax,
-                   async: false,
+                  //async: false,
                    dataType: 'text',
                    data: {
                        action: "get_carreteras",
@@ -1229,8 +1412,9 @@ var propiedad = {
                    },
                    success: function(a){
                         console.log(a);
-                        $( "select[name='carretera']" ).html(a);
-                       //$("#"+carretera).html(a);
+                       // $( "select[name='carretera']" ).html(a);
+                       // $( "select[name='carretera-1']" ).html(a);
+                       $("#"+carretera).html(a);
                    },
                    complete: function(){
                        cortina.hide();
@@ -1246,11 +1430,11 @@ var propiedad = {
     	
     },
 
-    getMunicipios:function(depa, municipio, carretera){
+    getMunicipios:function(depa, municipio, carretera,zona){
     	 $.ajax({
              url:app.url_ajax,
              dataType: 'text',
-             async: false,
+             //async: false,
              data: {
                  action: "get_municipios",
                  departamento: depa,
@@ -1280,7 +1464,7 @@ var propiedad = {
                      $.ajax({
                          url:app.url_ajax,
                          dataType: 'text',
-                         async: false,
+                         //async: false,
                          data: {
                              action: "get_zonas",
                              //departamento: depa,
@@ -1296,14 +1480,14 @@ var propiedad = {
                              console.log("Jalando municipiops!!");
                          },
                          success: function(a){
-                             $(".zona").html(a);
+                             $("#"+zona).html(a);
                          },
                          complete: function(){
                              cortina.hide();
                          }
                      });
                  //}else{
-                     cortina.hide();
+                     //cortina.hide();
                      
                    //  $("#zona").attr("disabled", "disabled");
                  //}
@@ -1330,7 +1514,7 @@ var propiedad = {
       $.ajax({
          url:app.url_ajax,
          dataType: 'text',
-         async: false,
+         //async: false,
          data: {
              action: "borrar_post",
              post_id: post_id,
@@ -1375,7 +1559,7 @@ var propiedad = {
       $.ajax({
          url:app.url_ajax,
          dataType: 'text',
-         async: false,
+         //async: false,
          data: {
              action: "cambiar_estado",
              post_id: post_id,
@@ -1419,11 +1603,10 @@ var propiedad = {
 
     editarPropiedad: function(post_id){
 
-      cortina.show();
       $.ajax({
          url:app.url_ajax,
          dataType: 'json',
-         async: false,
+         //async: false,
          data: {
              action: "editar_propiedad",
              post_id: post_id,
@@ -1437,6 +1620,7 @@ var propiedad = {
              myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
          },
          beforeSend: function(){
+              cortina.show();
              console.log("trayendo info de la propiedad");
          },
          success: function(json_data){
@@ -1510,9 +1694,9 @@ var propiedad = {
               }
 
 
-              propiedad.getDepartamentos();
+              propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
               $("#departamento-propiedades").val(depa);
-              propiedad.getMunicipios(depa, "municipio-propiedades", "carretera-propiedades");
+              propiedad.getMunicipios(depa, "municipio-propiedades", "carretera-propiedades", "zona-propiedades");
               $("#municipio-propiedades").val(json_data.municipio);
               $("#zona-propiedades").val(json_data.zona);
               $("#carretera-propiedades").val(json_data.carretera);
@@ -1547,7 +1731,6 @@ var propiedad = {
 
 
               propiedad.crearScreen.toggle("show");
-              return;
          },
          complete: function(){
              cortina.hide();
@@ -2002,7 +2185,8 @@ var app = {
       $(".departamento").on("change",function(){
         var depa = $(this).val();
           var municipio = $(this).attr("data-id"); 
-        propiedad.getMunicipios(depa, municipio);
+          var zona = $(this).attr("data-zona");
+        propiedad.getMunicipios(depa, municipio, "", zona);
        
   
       });
@@ -2492,21 +2676,18 @@ var app = {
 
 
       $('#requerimientos').on('click', '.eliminar_x', function(e){
-          cortina.show();
           e.stopPropagation();
           var id= $(this).attr("data-id");
           propiedad.borrarPost(id);
       });
 
       $('#requerimientos').on('change', '#select_estadoInmueble', function(e){
-          cortina.show();
           var id = $(this).attr("data-id");
           var estado = $(this).val();
           propiedad.cambiarEstado(id, estado);
       });
 
        $('#propiedades').on('click', '.eliminar_x', function(e){
-            cortina.show();
               e.stopPropagation();
               var id= $(this).attr("data-id");
               propiedad.borrarPost(id);
@@ -2514,7 +2695,6 @@ var app = {
 
 
         $('#propiedades').on('change', '#select_estadoInmueble', function(e){
-            cortina.show();
             var id = $(this).attr("data-id");
             var estado = $(this).val();
             propiedad.cambiarEstado(id, estado);
@@ -2525,11 +2705,21 @@ var app = {
 
 
     $('#propiedades').on('click', '.editar_prop', function(e){
-        cortina.show();
         e.stopPropagation();
         var id = $(this).attr("data-id");
         propiedad.editarPropiedad(id);
         
+    });
+
+    $('#requerimientos').on('click', '.editar_prop', function(e){
+        e.stopPropagation();
+        var id = $(this).attr("data-id");
+        requerimiento.editarRequerimiento(id);
+        
+    });
+
+    $("#li_requerimientos").click(function(){
+        propiedad.getDepartamentos("departamento-1", "carretera-1");
     });
 
 

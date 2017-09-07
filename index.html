@@ -38,7 +38,7 @@
         <title>Bizexchange</title>
     </head>
     <body>
-        <div id="cortina" style="display:none;z-index:4000;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0, 0, 0, 0.28);">
+        <div id="cortina" style="display:none;z-index:1000;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0, 0, 0, 0.28);">
         
             <div id="cortina_container" style="width:40px;height:40px;margin:75% auto;color:white;">
             </div>
@@ -54,7 +54,7 @@
                         <div style="font-size:15px;">Una aplicacion revolucionaria, dise&ntilde;ada espec&iacute;ficamente
                           para el cierre de negocios inmobiliarios</div>
                       </div>
-                      <div class="tutorial-seccion">
+                      <div class="tutorial-seccionf">
                         <div class="tutorial-texto">Publica tus propiedades o requerimientos</div>
                         <div style="background-image:url('../www/img/iconos/Inicio1.png');" class="tutorial-img">
                         </div>
@@ -185,7 +185,7 @@
                                 <a data-toggle="tab" style="padding-left: 25px !important;" href="#propiedades">Propiedades</a>
                             </li>
 
-                            <li style="width:30%"  class="col-xs-4"><a data-toggle="tab" href="#requerimientos">Requerimientos</a></li>
+                            <li style="width:30%"  class="col-xs-4"><a data-toggle="tab" href="#requerimientos" id="li_requerimientos">Requerimientos</a></li>
 
                           <li style="width:30%" class="col-xs-4"><a data-toggle="tab" href="#compatibilidades">Negocios</a></li>
                         </ul>
@@ -915,7 +915,7 @@
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Departamento</td>
                                         <td colspan="3" style="text-align: right;">
-                                            <select name="departamento"  class="color-gris-oscuro select_formR departamento inputpz" id="departamento-propiedades" data-id="municipio-propiedades" style="border:none;">
+                                            <select name="departamento"  class="color-gris-oscuro select_formR departamento inputpz" id="departamento-propiedades" data-id="municipio-propiedades"         data-zona="zona-propiedades" style="border:none;">
                                                 
                                             </select>
                                         </td>
@@ -1172,11 +1172,12 @@
             <div class="container" style="margin:0!important;padding:0!important;">
                 <div class="container-flex" style="margin:0!important;">
                     <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
-                        <span class="text-header2">NUEVO REQUERIMIENTO</span>
+                        <span class="text-header2" id="titulo_requerimiento">NUEVO REQUERIMIENTO</span>
                         <button onclick="requerimiento.crearScreen.toggle('hide');" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
                     </div>
                     <div class="body-screen bg-gris">
                         <form id="requerimientoForm">
+                            <input type="hidden" class="inputpz" name="id_requerimiento" id="id_requerimiento">
                             <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
@@ -1450,7 +1451,7 @@
                                                     <td>
                                                         <label  class="switch">
                                                           <input type="checkbox" name="cuarto_servicio" class="inputpz">
-                                                          <span class="slider round"></span>
+                                                          <span class="slider round" id="dormServR"></span>
                                                         </label>
                                                     </td>
                                                 </tr>
@@ -1472,7 +1473,7 @@
                                                     <td>
                                                         <label  class="switch">
                                                           <input type="checkbox" name="estudio" class="inputpz">
-                                                          <span class="slider round"></span>
+                                                          <span class="slider round" id="estudioR"></span>
                                                         </label>
                                                     </td>
                                                 </tr>
@@ -1494,7 +1495,7 @@
                                                     <td>
                                                         <label class="switch">
                                                           <input type="checkbox" name="cisterna" class="inputpz">
-                                                          <span class="slider round"></span>
+                                                          <span class="slider round" id="cisternaR"></span>
                                                         </label>
                                                     </td>
                                                 </tr>
@@ -1678,7 +1679,7 @@
                                                 
                                             </td>
                                             <td colspan="2" style="text-align:right;">
-                                                <input name="ingresos" id="ingresos_reque"  class="color-gris-oscuro inputpz inputIF " style="text-align:center;border:none;width:100% !important;" type='number' placeholder="000" pattern="(\d{3})([\,])(\d{2})">
+                                                <input name="ingresos" id="ingresos_reque"  class="color-gris-oscuro inputpz inputIF " style="text-align:center;border:none;width:100% !important;" type='number' placeholder="000" >
                                             </td>
                                         </tr>
                                         <tr style="margin:2px 0;">
@@ -1728,7 +1729,7 @@
 
                                             </td>
                                             <td colspan="2" style="text-align:right;">
-                                                <input type="number" name="tasa_interes" id="tasa_reque"class="color-gris-oscuro inputpz inputIF" style="text-align:center;border:none;width:90% !important" placeholder="0.00">%
+                                                <input type="number" name="tasa_interes" id="tasa_reque" class="color-gris-oscuro inputpz inputIF" step="any" style="text-align:center;border:none;width:90% !important" placeholder="0.00">%
                                             </td>
                                         </tr>
 
@@ -1760,7 +1761,7 @@
 
                                             <td colspan="2" style="text-align: right;">
                                                 <span class="moneda_IF">Q</span>
-                                                <input name="monto_a_financiar_max" id="monto_maximo" class="color-gris-oscuro inputpz inputCalc" style="text-align:center;border:none;width:100% !important;" type='number' value="000" readonly="readonly">
+                                                <input name="monto_a_financiar_max" step="any" id="monto_maximo" class="color-gris-oscuro inputpz inputCalc" style="text-align:center;border:none;width:100% !important;" type='number' value="000" readonly="readonly">
                                             </td>
                                         </tr>
                                         <tr style="margin:2px 0;">
@@ -1773,7 +1774,7 @@
                                         <td colspan="3" class="texto-nuevo-requerimiento">Cuota total mensual maxima</td>
                                         <td colspan="2" style="text-align: right;">
                                             <span class="moneda_IF">Q</span>
-                                            <input name="cuota_mensual_max" id="cuota_max" class="color-gris-oscuro inputpz inputCalc" style="text-align:center;border:none;width:100% !important;" type='number' value="000" readonly="readonly">
+                                            <input name="cuota_mensual_max" id="cuota_max" step="any" class="color-gris-oscuro inputpz inputCalc" style="text-align:center;border:none;width:100% !important;" type='number' value="000" readonly="readonly">
                                         </td>
                                     </tr>
                                     <tr style="margin:2px 0;">
@@ -1800,7 +1801,7 @@
                                         a
                                     </td>
                                     <td style="position:relative;">
-                                        <input class="color-gris-oscuro inputpz inputIF" name="presupuesto_max" step="any" id="presupuesto_max" type='number' style="text-align:center;border:none;width:100px;" placeholder="20000">
+                                        <input class="color-gris-oscuro inputpz inputIF" step="any" name="presupuesto_max" step="any" id="presupuesto_max" type='number' style="text-align:center;border:none;width:100px;" placeholder="20000">
                                         <span class="slider_text" style="top: 45px;
                                         left: 22px;
                                         color: #CCCCCC; font-size:10px" id="textPMax">max</span>
@@ -1896,7 +1897,7 @@
                                             <tr>
                                                 <td colspan="2" class="texto-nuevo-requerimiento">Departamento</td>
                                                 <td colspan="3">
-                                                    <select name="departamento-1" class="color-gris-oscuro select_formR departamento inputpz" id="departamento-1" data-id="municipio-1" style="border:none;">
+                                                    <select name="departamento-1" class="color-gris-oscuro select_formR departamento inputpz" id="departamento-1" data-id="municipio-1" data-zona="zona-1" style="border:none;">
                                                         
                                                     </select>
                                                 </td>
