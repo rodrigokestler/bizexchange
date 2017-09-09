@@ -1310,3 +1310,27 @@ td select.moneda_IFP{
     border: none !important;
     color: rgb(75,104,146) !important;
 }
+
+
+.screen-busqueda{
+    height: 60px;
+    width: 100%;
+    /* background-color: #2f5da8; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    font-size: 20px;
+    color: white;
+}
+
+
+.busqueda_input{
+    position: absolute !important; 
+    border: none;
+    border-bottom: 1px solid white;
+    margin-left: 38px !important;
+    width: 80%;
+    top: 5px;
+    font-size: 17px;
+}
