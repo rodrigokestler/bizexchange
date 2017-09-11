@@ -1324,7 +1324,6 @@ td select.moneda_IFP{
     color: rgb(75,104,146) !important;
 }
 
-
 .screen-busqueda{
     height: 60px;
     width: 100%;
@@ -1347,4 +1346,5 @@ td select.moneda_IFP{
     top: 5px;
     font-size: 17px;
     color: black;
+
 }

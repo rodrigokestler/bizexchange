@@ -98,7 +98,7 @@
                 </div>
             </div>
         </div>
-        <div class="screen grad nivel2" id="registerScreen" style="display:none;">
+        <div class="screen grad nivel2 history_subscreen" data-cerrar="register" id="registerScreen" style="display:none;">
             <div class="container-fluid">
                 <div class="row">
                     <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
@@ -556,11 +556,21 @@
                 </div>
             </div>
         </div>
-
-        <>
-
+		<div class="screen nivel2 history_subscreen" data-cerrar="imagenes_adjuntas" id="listado_imagenes_adjuntas" style="padding:0!important;display:none;">
+            <div class="container" style="margin:0!important;padding:0!important;">
+                <div class="container-flex" style="margin:0!important;">
+                    <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
+                        <span class="text-header2">NUEVA PROPIEDAD</span>
+                        <button onclick="imagenes.screen.toggle('hide');" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="body-screen bg-gris">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="screen nivel2" id="crear_propiedad" style="padding:0!important;display:none;">
+
             <div class="container" style="margin:0!important;padding:0!important;">
                 <div class="container-flex" style="margin:0!important;">
                     <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
@@ -1480,7 +1490,16 @@
                                             </div>
                                 </div>
                                 <div class="container-form">
-                                    <button type="submit" id="propiedadBtn" class="btn btn-default btn-block requerimiento-btn">Crear</button>
+                                	<table>
+                                		<tr>
+                                			<td><button type="button" id="adjuntar_imagen" onclick="pic.useFile();"></button></td>
+                                			<td><button type="button" id="capturar_imagen" onclick="pic.useCamera();"></button></td>
+                                		</tr>
+                                	</table>
+                                </div>
+                                <div class="container-form">
+                                    <button type="submit" id="requerimientoBtn" class="btn btn-default btn-block requerimiento-btn">Crear</button>
+
                                 </div>
                             </form>
                     </div>
@@ -1488,10 +1507,8 @@
             </div>
         </div>
 
+        <div class="screen nivel2 history_susbcreen" data-cerrar="single_propiedad" id="single_propiedad" style="padding:0!important;display:none;">
 
-
-
-        <div class="screen nivel2" id="single_propiedad" style="padding:0!important;display:none;">
             <div class="container" style="margin:0!important;padding:0!important;">
                 <div class="container-flex" style="margin:0!important;">
                     <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
@@ -1511,7 +1528,7 @@
 
 
 
-        <div class="screen nivel2" id="crear_requerimiento" style="padding:0!important;display:none;">
+        <div class="screen nivel2 history_subscreen" data-cerrar="crear_requerimiento" id="crear_requerimiento" style="padding:0!important;display:none;">
             <div class="container" style="margin:0!important;padding:0!important;">
                 <div class="container-flex" style="margin:0!important;">
                     <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
@@ -2313,8 +2330,6 @@
                                 </div>
                             </div>
 
-
-
                             <div class="container-form">
                                 <button type="submit" id="requerimientoBtn" class="btn btn-default btn-block requerimiento-btn">Crear</button>
                             </div>
@@ -2324,9 +2339,7 @@
             </div>
         </div>
 
-
-
-        <div class="screen nivel2" id="single_requerimiento" style="padding:0!important;display:none;">
+        <div class="screen nivel2 history_subscreen" data-cerrar="single_requerimiento" id="single_requerimiento" style="padding:0!important;display:none;">
             <div class="container" style="margin:0!important;padding:0!important;">
                 <div class="container-flex" style="margin:0!important;">
                     <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
@@ -2340,13 +2353,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-        
 
         <div id="myModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -2661,26 +2667,23 @@
 
 
         <script>
-        var movil=false;
+        var movil=true;
         </script>
-           
-       <script type="text/javascript" src="cordova.js"></script>
 
-
+   
+        <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/jQuery.js"></script>
         <script type="text/javascript" src="js/hammer-time.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 
         <script type="text/javascript" src="js/jquery.star-rating-svg.js"></script>
-        
+
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/parsley.js"></script>
         <script type="text/javascript" src="js/i18n/es.js"></script>
         <script type="text/javascript" src="js/list.js"></script>
         <script type="text/javascript" src="js/slick.min.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        
-        
-       
+        <script type="text/javascript" src="js/index.js"></script>   
+        <script type="text/javascript" src="js/addPic.js"></script>     
     </body>
 </html>

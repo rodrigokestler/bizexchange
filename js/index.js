@@ -1472,7 +1472,6 @@ var propiedad = {
       
       
     },
-
     getMunicipios:function(depa, municipio,zona,v=null){
        $.ajax({
              url:app.url_ajax,
@@ -1892,12 +1891,10 @@ var api_mapa = {
 
 };
 
-
-
-
-
 //ASESORES
-
+var imagenes = {
+	screen: $('#listado_imagenes_adjuntas')
+};
 var asesor = {
     aprobarScreen: $('#aprobar_asesor'),
     verScreen: $('#listado_asesores'),
@@ -2071,25 +2068,55 @@ var asesor = {
 
 
 var app = {
-    
+
     url : 'http://megethosinmobiliaria.com/',
     url_ajax : 'http://megethosinmobiliaria.com/wp-admin/admin-ajax.php',
     loader_block: '<div style="display:block;margin:0 auto;width:40px;"><i class="fa fa-cog fa-spin" style="font-size:30px;font-color:black;"></i></div>',
     loader2 : '<div style="display:inline-block;margin:0 auto;width:40px;"><i class="fa fa-cog fa-spin" style="font-size:30px;font-color:black;"></i></div>',
     loader: '<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>',
-    initialize: function() {
-        
+    initialize: function() {      
         //if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         //ifmovil
         if(movil){  
             console.log('es movil');
             document.addEventListener("deviceready", this.onDeviceReady, false);
+            document.addEventListener("backbutton", backbutton.backButton, false);
         } else {
             console.log('no es movil');
             app.onDeviceReady();
         }
     },
-    loadEvents: function(){
+
+    onDeviceReady: function(){
+    	console.log('start on device ready');
+        propiedad.getDepartamentos("departamento-1", "carretera-1");
+        propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
+        //api_map.set_marker(14.598497, -90.507067);
+        api_mapa.init();
+        $('.history_subscreen').on('show',function(e){
+    		e.stopPropagation();
+    		var close = $(e.target).data('cerrar');
+    		if(close==undefined || app.history[app.history.length-1]==close){
+    			return false;
+    		}
+    		app.history.push(close);
+    		console.log('show. length '+app.history.length+' data '+close);
+    	    
+    	});
+    	$('.history_subscreen').on('hide',function(e){
+    		e.stopPropagation();
+    		console.log('subscreen hide and pop');
+    		console.log('target');
+    		console.log(e.target);
+    		console.log('current target');
+    		console.log(e.currentTarget);
+    		var id = $(e.target).attr('id');
+    		if(app.history_allowed.indexOf(id)==-1){
+    			return false;
+    		}
+    		app.history.pop();
+    		console.log('history.pop');
+    	});
 
         for(var i=1960;i<2051;i++)
         {
@@ -2100,8 +2127,27 @@ var app = {
         {
             $(".selectDia").append(new Option(i,i));
         }
+        //Tabs Home
+        /*
+          var tabs = document.querySelector(".tab-content");
+          var mc = new Hammer(tabs);
 
-         api_mapa.init();
+          mc.on("panleft", function(ev) {
+            console.log('swipe left');
+            var $tab = $('#tablist li.active').next();
+            if ($tab.length > 0)
+            $tab.find('a').tab('show');
+            
+        });
+
+        mc.on("panright", function(ev) {
+            console.log('swipe right');
+            var $tab = $('#tablist li.active').prev();
+            if ($tab.length > 0)
+            $tab.find('a').tab('show');
+            
+        });
+        */
 
         //General forms
         $(document).on('focus','.inputpz',function(){
@@ -2117,7 +2163,6 @@ var app = {
         });
         
         //Login Screen
-        
         login.form.parsley().on('form:success',function(){
             var formData = login.form.getFormData();
             console.log(formData);
@@ -2146,10 +2191,6 @@ var app = {
         register.form.parsley().on('form:error',function(){
             
         });
-
-
-
-
         //Requerimiento
         requerimiento.form.parsley().on('form:success',function(){
             var formData = requerimiento.form.getFormData();
@@ -2159,9 +2200,6 @@ var app = {
         requerimiento.form.parsley().on('form:error',function(){
 
         });
-
-
-
         //Propiedad
         propiedad.form.parsley().on('form:success',function(){
             var formData = propiedad.form.getFormData();
@@ -2201,20 +2239,17 @@ var app = {
             user.initialize();
         },1000);
 
-
       $(".departamento").on("change",function(){
         var depa = $(this).val();
           var municipio = $(this).attr("data-id"); 
+
           var zona = $(this).attr("data-zona");
         propiedad.getMunicipios(depa, municipio, zona);
-       
-  
-      });
 
+      });
 
     $("#filtrocasa").click(function(){
         console.log($(this).attr('src'));
-
         if($(this).attr('src') == '../www/img/iconos/header-ver-propiedades.png'){
             $(this).attr('src', '../www/img/iconos/housewhite.png');
             $(this).css({
@@ -2224,8 +2259,6 @@ var app = {
             });
             propiedad.getMisPropiedades();
             requerimiento.getMisRequerimientos();
-
-
         }else{
             $(this).attr('src','../www/img/iconos/header-ver-propiedades.png')
             $(this).css({
@@ -2237,9 +2270,6 @@ var app = {
             requerimiento.getRequerimientos(user.email, user.pass);
         }
       });
-
-
-
 
     $(".mas").click(function(){
         var tr = $(this).closest('tr').prev();
@@ -2318,9 +2348,6 @@ var app = {
         $("#"+arrow).css("display", "block");
     });
 
-
-
-
      $(".expandirInfoContacto").click(function(){
         var arrow = $(this).attr("data-id");
         console.log(arrow);
@@ -2345,10 +2372,6 @@ var app = {
         masInfo.toggle('slow');
         $("#"+arrow).css("display", "block");
     });
-
-
-
-
 
      $(".expandirInfoPrecio").click(function(){
         var arrow = $(this).attr("data-id");
@@ -2417,6 +2440,7 @@ var app = {
           muni = "";
         }
 
+
         var resu = $.grep([km, carretera, zona, otras_espec, muni, departamento], Boolean).join(", ");
         $("#resumen-"+arrow).html(resu);  
 
@@ -2426,6 +2450,7 @@ var app = {
         $("#"+masInfo).toggle("slow");
         $("#arrowD-"+arrow).toggle();
     });
+
 
 
 
@@ -2492,7 +2517,6 @@ var app = {
     $("#precioP").on("change", function(){
       propiedad.calcularIUSI();
     });
-
 
     $("#plazoA").change(function(){
         var anos = $(this).val();
@@ -2576,17 +2600,13 @@ var app = {
     $("#moneda_Prop").change(function(){
       var moneda = $(this).val();
       $("span.moneda_IFP").html(moneda.toUpperCase());
-      
+
     });
-
-
 
     $("#egresos_reque").on("change",function(){
         console.log("Llamando funcion cuota maxima");
         requerimiento.calcularCuoutaMaxima();
     });
-
-
 
 
     $(".ratingResult").starRating({
@@ -2687,6 +2707,7 @@ var app = {
         asesor.verAsesor();
     });
 
+
     $(".cerrar_sesion").click(function(){
         window.localStorage.removeItem('correo');
         window.localStorage.removeItem('password');
@@ -2768,9 +2789,6 @@ var app = {
 };
 
 app.initialize();
-
-
-
 
 $.fn.loader = function(tipo, texto){
     if(tipo==='disable'){
@@ -2854,4 +2872,4 @@ $.fn.getFormData = function(){
     
     return data;
 };
-
+app.initialize();

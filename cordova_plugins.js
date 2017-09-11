@@ -421,7 +421,8 @@ module.exports.metadata =
     "cordova-plugin-media-capture": "1.4.2",
     "cordova-plugin-splashscreen": "4.0.2",
     "cordova-plugin-whitelist": "1.3.2",
-    "mobi.moica.whatsapp": "0.0.1"
+    "mobi.moica.whatsapp": "0.0.1",
+    "cordova-plugin-console": "1.0.7"
 };
 // BOTTOM OF METADATA
 });
