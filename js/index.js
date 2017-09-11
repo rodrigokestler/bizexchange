@@ -16,6 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+var depar_html = "";
+var carretera_html = "";
+var zonas_html = "";
+
 var cortina = {
         cortina: $('#cortina'),
         container: $('#cortina_container'),
@@ -33,10 +38,21 @@ var myModal = {
         modalHeader : $('#myModalHeader'),
         modalBody : $('#myModalBody'),
         open : function(header, body){
-            myModal.modalHeader.html(header);
-            myModal.modalBody.html(body);
+            if(header){
+              myModal.modalHeader.html(header);  
+            }else{
+              myModal.modalHeader.html('');  
+            }
+
+            if(body){
+              myModal.modalBody.html(body);  
+            }else{
+              myModal.modalBody.html('');  
+            }
+            
             myModal.modal.modal();
         }
+
 };
 var user = {
     pass: null,
@@ -69,6 +85,7 @@ var login = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'json',
+            //async: false,
             data: formData,
             type: 'post',
             timeout: 15000,
@@ -103,6 +120,13 @@ var login = {
 
                     propiedad.getPropiedades(user.email, user.pass);
                     requerimiento.getRequerimientos(user.email, user.pass);
+                    
+                    propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
+
+
+                    //api_map.set_marker(14.598497, -90.507067);
+                   
+
                     login.screen.hide('slide',{direction:'left'},'fast');
                 }
                 
@@ -110,6 +134,7 @@ var login = {
             complete: function(){ 
                 setTimeout(function(){
                   cortina.hide();
+                  
                 },3000)
 
                 api_mapa.set_marker(14.598497, -90.507067);
@@ -118,6 +143,9 @@ var login = {
     },
     hide: function(){
         login.screen.hide('slide',{direction:'left'},'fast');
+    },
+    show: function(){
+        login.screen.show('slide',{direction:'right'},'fast');
     }
 };
 
@@ -136,6 +164,7 @@ var register = {
             $.ajax({
                 url:app.url_ajax,
                 dataType: 'json',
+                async: false,
                 data: formData,
                 type: 'post',
                 timeout: 15000,
@@ -191,6 +220,50 @@ var register = {
         }
 };
 
+var busqueda = {
+        screen: $('#screen_busqueda'),
+        form: $('#busquedaForm'),
+        btnForm: $('#busquedaBtn'),
+        busqueda: function(formData){
+            formData.action = 'buscar_requerimiento';
+            console.log(JSON.stringify(formData));
+
+            $.ajax({
+                url:app.url_ajax,
+                dataType: 'json',
+                async: false,
+                data: formData,
+                type: 'post',
+                timeout: 15000,
+                beforeSend: function(){
+                    cortina.show();
+                    //register.btnForm.loader('disable');
+                },
+                error: function(a,b,c){
+                    console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                    myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+                },
+                success: function(a){
+                    console.log(JSON.stringify(a));
+                    
+                },
+                complete: function(){
+                    cortina.hide();
+                }
+           });
+        },
+        toggle: function(tipo){
+            if(tipo=='hide'){
+                register.screen.hide('slide',{direction:'right'},'fast');
+            }else if(tipo=='show'){
+                register.screen.show('slide',{direction:'right'},'fast');
+            }
+        }
+};
+
+
+
+
 var requerimiento = {
     crearScreen: $('#crear_requerimiento'),
     verScreen :$('#single_requerimiento'),
@@ -203,7 +276,7 @@ var requerimiento = {
         var cant_ubicaciones = $('.ubicacion-requerimiento').length;
         console.log(cant_ubicaciones);
         var id = cant_ubicaciones + 1;
-        requerimiento.containerUbicaciones.append('<table style="width:100%;" class="tableUbicacion-'+id+'">'
+        requerimiento.containerUbicaciones.append('<table style="width:100%;" class="tableUbicacion-'+id+' ubicacionNueva">'
                                     +'<tr>'
                                        +' <td colspan="5" class="titulo-container-form">'
                                       +'  UBICACION '+(parseInt(cant_ubicaciones) + 1)+' <span class="resumen_ubi" id="resumen-'+id+'"></span>'
@@ -214,7 +287,7 @@ var requerimiento = {
                                       +'  <td style="padding-bottom: 5px;" colspan="1"><button style="margin-left:-15px;" class="btn_mas_menos quitarUbi" data-id="tableUbicacion-'+id+'"  type="button">-</button></td>'
                                    +' </tr>'
                                +' </table>'
-                               +' <div id="contenedor_ubicaciones" class="tableUbicacion-'+id+'">'
+                               +' <div id="contenedor_ubicaciones " class="tableUbicacion-'+id+' ubicacionNueva">'
                                         +'<div class="ubicacion-requerimiento" id="ubicacion-'+(parseInt(cant_ubicaciones) + 1)+'">'
                                        +' <table style="width:100%;">'
                                            +' <tr style="margin:2px 0;">'
@@ -226,7 +299,7 @@ var requerimiento = {
                                             +' <tr>' 
                                                +'  <td colspan="2" class="texto-nuevo-requerimiento">Departamento</td>' 
                                                 +' <td colspan="3">' 
-                                                +'     <select name="departamento-'+id+'" class="color-gris-oscuro select_formR departamento inputpz" id="departamento-'+(parseInt(cant_ubicaciones) + 1)+'" data-id="municipio-'+(parseInt(cant_ubicaciones) + 1)+'" data-carre="carretera-'+id+'" style="border:none;">' 
+                                                +'     <select name="departamento-'+id+'" class="color-gris-oscuro select_formR departamento inputpz" id="departamento-'+(parseInt(cant_ubicaciones) + 1)+'" data-id="municipio-'+(parseInt(cant_ubicaciones) + 1)+'" data-carre="carretera-'+id+'" data-zona="zona-'+id+'" style="border:none;">' 
                                                         
                                                  +'    </select>' 
                                                +'  </td>' 
@@ -266,7 +339,7 @@ var requerimiento = {
 
                                            +'  <tr>' 
                                                +'  <td colspan="1" class="texto-nuevo-requerimiento">Km</td>' 
-                                                +' <td colspan="1"><input name="km-'+id+'"  class="color-gris-oscuro inputpz inputText inputOE" style="text-align:center;border:none;width:30px;" type="number" value="0">' 
+                                                +' <td colspan="1"><input name="km-'+id+'" id="km-'+id+'" class="color-gris-oscuro inputpz inputText inputOE" style="text-align:center;border:none;width:30px;" type="number" value="0">' 
                                                +'  </td>'
                                                +'<td colspan="3">'
                                                  +' <select name="carretera-'+id+'" id="carretera-'+id+'" class="color-gris-oscuro select_formR carretera inputpz" style="border:none;">'
@@ -295,13 +368,15 @@ var requerimiento = {
                                           +'</tbody>'
                                        +'  </table>'
                                    +'  </div><br>');
+          
             propiedad.getDepartamentos("departamento-"+id, "carretera-"+id);
 
             $(".departamento").on("change",function(){
                 var depa = $(this).val();
                 var municipio = $(this).attr("data-id"); 
                 var carretera = $(this).attr("data-carre");
-                propiedad.getMunicipios(depa, municipio, carretera);
+                var zona = $(this).attr("data-zona");
+                propiedad.getMunicipios(depa, municipio, zona);
                
         
             });
@@ -319,7 +394,6 @@ var requerimiento = {
                 var arrow = $(this).attr("data-arrow");
                 $("#resumen-"+arrow).html("");
                 $("#departamento-"+arrow).closest("tr").toggle();
-                //$("#departamento-"+arrow).closest("tr").prev().toggle();
                 $("#"+masInfo).toggle("slow");
                 $("#arrowD-"+arrow).toggle();
             });
@@ -337,7 +411,7 @@ var requerimiento = {
                 if(depar == ""){
                   depar = false;
                 }
-                if(zona == "--Seleccione--"){
+                if(zona == "--Seleccione--" || zona == undefined){
                   zona = false;
                 }else{
                   zona = "Zona "+zona;
@@ -370,7 +444,6 @@ var requerimiento = {
 
 
                 $("#departamento-"+arrow).closest("tr").toggle();
-                //$("#departamento-"+arrow).closest("tr").prev().toggle();
                 var masInfo = $(this).attr("data-id");
                 $("#"+masInfo).toggle("slow");
                 $("#arrowD-"+arrow).toggle();
@@ -403,7 +476,8 @@ var requerimiento = {
       
         $.ajax({
             url:app.url_ajax,
-            dataType: 'text',
+            dataType: 'json',
+            async: false,
             data: formData,
             type: 'post',
             timeout: 15000,
@@ -420,17 +494,23 @@ var requerimiento = {
                 requerimiento.clean();
 
 
-                if(a.msj_error){
-                    myModal.open('Oops',a.msj_error);
-                }else{
-                    myModal.open('Se ha creado el requerimiento con exito.');
+                if($("#requerimientoBtn").text() == "Crear"){
+                      myModal.open('Se ha creado el requerimiento con exito.');  
+                    }else{
+                      myModal.open('Se ha actualizado el requerimiento con exito.');  
+                    }
+                    
                     requerimiento.getRequerimientos(user.email, user.pass);
                     requerimiento.toggle('hide');
-                }
-                
+
             },
             complete: function(){
                 cortina.hide();
+                $("#titulo_requerimiento").html("NUEVO REQUERIMIENTO");
+                $("#requerimientoBtn").html("Crear");
+                $("#id_requerimiento").val(0);
+                $(".ubicacionNueva").remove();
+                
             }
         });
     },  
@@ -439,6 +519,7 @@ var requerimiento = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'html',
+            async: false,
             data: {
               action: "get_requerimientos",
               user_email : user_email,
@@ -475,27 +556,49 @@ var requerimiento = {
                 });    
                 
                 $('.requerimiento').each(function(){   //tagname based selector
+                    var top = $(this).position();
                     var mc = new Hammer(this);
                     var autor = $(this).attr("data-mail");
                     var dis = $(this);
-                    mc.on("press", function(e) {
+                    var aux_1 = "";
+                    var aux_2 = "";
+                     mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
                             var id = dis.attr("data-id");
+                            var estado = dis.attr("data-estado");
                             var tipo = dis.attr("data-tipo");
-                            dis.addClass("prevent_click");    
-                            dis.find("div.divTaphold").addClass("tapholdOptions");
-                            dis.find("div.divTaphold").toggle("slow");  
+                            var estado_ = dis.attr("data-value-estado");
+                            if(estado_ == "disponible"){
+                              aux_1 = "selected";
+                            }else{
+                              aux_2 = "selected";
+                            }
+                            var html = '<div class="divTaphold tapholdOptions" style="position:absolute; top:'+top.top+'px !important " >'
+                                        +'<p style="padding-top: 5px;" data-id="'+id+'" class="editar_prop">Editar</p>'
+                                        +'<p class="eliminar_x" data-id="'+id+'">Eliminar</p>'
+                                        +'Estado   '
+                                            +'<select id="select_estadoInmueble" data-id="'+id+'" style=" margin-top: 0px !important; margin-left: 5px !important;">'
+                                               +' <option value="disponible" '+aux_1+'>Disponible</option>'
+                                               +' <option value="'+estado+'" '+aux_2+'>'+estado+'</option>'
+                                          +'  </select>'
+                                    +'</div>';
+                            dis.parent().parent().prepend(html);
+                            dis.addClass("prevent_click"); 
+
                           }else{
                             return;
                           }
 
                     });
+
                 });        
                 
             },
             complete: function(){
               cortina.hide();
+              $(".divTaphold").remove();
+              
             }
         });
     },
@@ -504,6 +607,7 @@ var requerimiento = {
        $.ajax({
              url:app.url_ajax,
              dataType: 'text',
+             //async: false,
              data: {
                  action: "get_misrequerimientos",
                  user_email: user.email,
@@ -521,6 +625,11 @@ var requerimiento = {
              },
              success: function(a){
                  console.log(a);
+
+                 if(!a){
+                  requerimiento.getMisRequerimientos();
+                 }
+
                  if(a.msj_error){
                      myModal.open('Oops',a.msj_error);
                  }else{                
@@ -534,29 +643,50 @@ var requerimiento = {
                       requerimiento.getSingleRequerimiento(id,tipo);        
                 });    
                 
-                $('.requerimiento').each(function(){   //tagname based selector
+                $('.requerimiento').each(function(){ 
+                     var top = $(this).position();
                     var mc = new Hammer(this);
                     var autor = $(this).attr("data-mail");
                     var dis = $(this);
-                    mc.on("press", function(e) {
+                    var aux_1 = "";
+                    var aux_2 = "";
+                      mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
                             var id = dis.attr("data-id");
+                            var estado = dis.attr("data-estado");
                             var tipo = dis.attr("data-tipo");
-                            dis.addClass("prevent_click");    
-                            dis.find("div.divTaphold").addClass("tapholdOptions");
-                            dis.find("div.divTaphold").toggle("slow");  
+                            var estado_ = dis.attr("data-value-estado");
+                            if(estado_ == "disponible"){
+                              aux_1 = "selected";
+                            }else{
+                              aux_2 = "selected";
+                            }
+                            var html = '<div class="divTaphold tapholdOptions" style="position:absolute; top:'+top.top+'px !important " >'
+                                        +'<p style="padding-top: 5px;" data-id="'+id+'" class="editar_prop">Editar</p>'
+                                        +'<p class="eliminar_x" data-id="'+id+'">Eliminar</p>'
+                                        +'Estado   '
+                                            +'<select id="select_estadoInmueble" data-id="'+id+'" style=" margin-top: 0px !important; margin-left: 5px !important;">'
+                                               +' <option value="disponible" '+aux_1+'>Disponible</option>'
+                                               +' <option value="'+estado+'" '+aux_2+'>'+estado+'</option>'
+                                          +'  </select>'
+                                    +'</div>';
+                            dis.parent().parent().prepend(html);
+                            dis.addClass("prevent_click"); 
 
                           }else{
                             return false;
                           }
 
                     });
+
                 });          
                  
              },
              complete: function(){
                  cortina.hide();
+                 $(".divTaphold").remove();
+                 
              }
          });
       
@@ -570,6 +700,7 @@ var requerimiento = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'text',
+            async: false,
             data: {
               action: "get_single_requerimiento",
               id : id,
@@ -612,6 +743,7 @@ var requerimiento = {
             complete: function(){
               requerimiento.verScreen.toggle('show');
               cortina.hide();
+              
             }
         });
 
@@ -619,7 +751,7 @@ var requerimiento = {
     },
     calcularPresupuesto:function(){
 
-    	   var tasa = $("#tasa_reque").val();
+         var tasa = $("#tasa_reque").val();
         var ingresos = $("#ingresos_reque").val();
         var egresos = $("#egresos_reque").val();
         var enganche = $("#enganche_reque").val();
@@ -630,6 +762,7 @@ var requerimiento = {
        $.ajax({
             url:app.url_ajax,
             dataType: 'text',
+            async: false,
             data: {
                 action: "calcular_presupuesto",
                 tasa: tasa,
@@ -665,6 +798,7 @@ var requerimiento = {
                 $.ajax({
                     url:app.url_ajax,
                     dataType: 'text',
+                    async: false,
                     data: {
                       action: "calcular_montomaximo",
                       tasa: tasa,
@@ -687,10 +821,11 @@ var requerimiento = {
                     },
                     complete: function(){
                         cortina.hide();
+                        
 
                     }           
                 });
-    	
+      
             }
         });
     },
@@ -701,6 +836,7 @@ var requerimiento = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'text',
+            async: false,
             data: {
                 action: "calcular_cuotamaxima",
                 ingresos: ingresos,
@@ -722,10 +858,174 @@ var requerimiento = {
             },
             complete: function(){
               cortina.hide();
+              
             }
         });
       
     }, 
+
+
+
+     editarRequerimiento: function(post_id){
+
+      $.ajax({
+         url:app.url_ajax,
+         dataType: 'json',
+         //async: false,
+         data: {
+             action: "editar_requerimiento",
+             post_id: post_id,
+             user_email : user.email,
+             user_pass : user.pass,
+         },
+         type: 'post',
+         timeout: 15000,
+         error: function(a,b,c){
+             console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+             myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+         },
+         beforeSend: function(){
+            cortina.show();
+             console.log("trayendo info del requerimiento");
+         },
+         success: function(json_data){
+              console.log(json_data);
+
+              $("#titulo_requerimiento").html("EDITAR REQUERIMIENTO #"+post_id);
+              $("#id_requerimiento").val(post_id);
+              
+              $.each(json_data, function(key, value){
+                  if(key == "tipo_operacion" || key == "tipo_inmueble"){
+                      $.each($("#requerimientoForm input[name='"+key+"']"), function(key1, value1){
+                          if($(this).val() == value){
+                            $(this).attr("checked", "checked");
+                          }
+                      });
+                      return;
+                  }else if(key == "cuarto_servicio" || key=="estudio" || key=="cisterna" || key == "precalificacion" || key == "ubicaciones"){
+                    return;
+                  }
+                  $( "#requerimientoForm input[name='"+key+"']" ).val(value);
+                   $("#requerimientoForm select[name='"+key+"']" ).val(value);
+
+              });
+
+              $("#plazoM").val(json_data.plazo * 12);
+
+              var cont = 1;
+              $.each(json_data.ubicaciones, function(key2, value2){
+                    var cont1 = 1;
+                  $.each(this, function(k, v) {
+                      //console.log(cont1 +" "+k +" "+v );
+                      var depa = "";
+
+                      if(k == "departamento-"+cont &&  v == 'Alta Verapaz'){
+                        depa = "AV";
+                      }else if(k == "departamento-"+cont && v == 'Baja Verapaz'){
+                          depa = "BV";
+                      }else if(k == "departamento-"+cont && v == 'Chimaltenango'){
+                          depa = "CHI";
+                      }else if(k == "departamento-"+cont && v == 'Chiquimula'){
+                          depa = "CHQ";
+                      }else if(k == "departamento-"+cont && v == 'Petén'){
+                          depa = "PE";
+                      }else if(k == "departamento-"+cont && v == 'El Progreso'){
+                          depa = "EP";
+                      }else if(k == "departamento-"+cont && v == 'Quiché'){
+                          depa = "QCH";
+                      }else if(k == "departamento-"+cont && v == 'Escuintla'){
+                          depa = "ESC";
+                      }else if(k == "departamento-"+cont && v == 'Guatemala'){
+                          depa = "GUA";
+                      }else if(k == "departamento-"+cont && v == 'Huehuetenango'){
+                          depa = "HUE";
+                      }else if(k == "departamento-"+cont && v == 'Izabal'){
+                          depa = "IZA";
+                      }else if(k == "departamento-"+cont && v == 'Jalapa'){
+                          depa = "JAL";
+                      }else if(k == "departamento-"+cont && v == 'Jutiapa'){
+                          depa = "JUT";
+                      }else if(k == "departamento-"+cont && v == 'Retalhuleu'){
+                          depa = "REU";
+                      }else if(k == "departamento-"+cont && v == 'Sacatepéquez'){
+                          depa = "SAC";
+                      }else if(k == "departamento-"+cont && v == 'San Marcos'){
+                          depa = "SM";
+                      }else if(k == "departamento-"+cont && v == 'Santa Rosa'){
+                          depa = "SR";
+                      }else if(k == "departamento-"+cont && v == 'Sololá'){
+                          depa = "SL";
+                      }else if(k == "departamento-"+cont && v == 'Suchitepéquez'){
+                          depa = "SUC";
+                      }else if(k == "departamento-"+cont && v == 'Totonicapán'){
+                          depa = "TOT";
+                      }else if(k == "departamento-"+cont && v == 'Zacapa'){
+                          depa = "ZAC";
+                      }
+
+                      if(cont1 == 1 ){
+                        console.log(k + " " +depa);
+                        $("#"+k).val(depa);
+                        propiedad.getMunicipios(depa, "municipio-"+cont,"zona-"+cont,v);
+
+                      }else if(cont1 == 3 || cont1 == 5 ){
+                        if(v){
+                          $('#'+k+' option[value='+v+']').prop('selected',true);  
+                        }
+                        
+                      }else{
+                        $("#"+k).val(v);
+                      }
+
+                      cont1=cont1+1;
+
+                  });
+                  cont = cont + 1;
+                  if(cont <= json_data.ubicaciones.length){
+
+                    $("#ubicacion_extra").click();
+
+                  }
+                  
+              });
+              
+
+
+              $("#requerimientoBtn").html("ACTUALIZAR");
+
+
+              if(json_data.cisterna){
+                  $("#cisternaR").click();
+              }
+              if(json_data.estudio){
+                  $("#estudioR").click();
+              }
+              if(json_data.cuarto_servicio){
+                  $("#dormServR").click();
+              }
+              if(json_data.negociable){
+                  $("#negociableP").click();
+              }
+              if(json_data.gastos_escritura){
+                  $("#spanPre").click();
+              }
+
+
+
+
+              requerimiento.crearScreen.toggle("show");
+
+              return;
+         },
+         complete: function(){
+             cortina.hide();
+             
+             
+         }
+     });
+
+
+    },
 
     toggle:function(tipo){
         if(tipo=='hide'){
@@ -758,6 +1058,7 @@ var propiedad = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'json',
+            async: false,
             data: formData,
             type: 'post',
             timeout: 15000,
@@ -772,10 +1073,16 @@ var propiedad = {
             success: function(a){
                 console.log(JSON.stringify(a));
                 propiedad.clean();
+                console.log($("#propiedadBtn").text());
                 if(a.msj_error){
                     myModal.open('Oops',a.msj_error);
                 }else{
-                    myModal.open('Se ha creado la propiedad con exito.');
+                    if($("#propiedadBtn").text() == "Crear"){
+                      myModal.open('Se ha creado la propiedad con exito.');  
+                    }else{
+                      myModal.open('Se ha actualizado la propiedad con exito.');  
+                    }
+                    
                     propiedad.getPropiedades(user.email, user.pass);
                     propiedad.toggle('hide');
                 }
@@ -783,6 +1090,9 @@ var propiedad = {
             },
             complete: function(){
                 cortina.hide();
+                $("#titulo_propiedad").html("NUEVA PROPIEDAD");
+                $("#propiedadBtn").html("Crear");
+                $("#id_propiedad").val(0);
             }
         });
     },      
@@ -790,6 +1100,7 @@ var propiedad = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'html',
+            async: false,
             data: {
               action: 'get_propiedades',
               user_email : user_email,
@@ -827,30 +1138,51 @@ var propiedad = {
                     
                 });    
                 
-                $('.propiedad').each(function(){   //tagname based selector
+                $('.propiedad').each(function(){
+                     var top = $(this).position();
                     var mc = new Hammer(this);
                     var autor = $(this).attr("data-mail");
                     var dis = $(this);
-                    mc.on("press", function(e) {
+                    var aux_1 = "";
+                    var aux_2 = "";
+                      mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
-                            dis.addClass("prevent_click");    
                             var id = dis.attr("data-id");
+                            var estado = dis.attr("data-estado");
                             var tipo = dis.attr("data-tipo");
-                            dis.find("div.divTaphold").addClass("tapholdOptions");
-                            dis.find("div.divTaphold").toggle("slow");  
+                            var estado_ = dis.attr("data-value-estado");
+                            if(estado_ == "disponible"){
+                              aux_1 = "selected";
+                            }else{
+                              aux_2 = "selected";
+                            }
+                            var html = '<div class="divTaphold tapholdOptions" style="position:absolute; top:'+top.top+'px !important " >'
+                                        +'<p style="padding-top: 5px;" data-id="'+id+'" class="editar_prop">Editar</p>'
+                                        +'<p class="eliminar_x" data-id="'+id+'">Eliminar</p>'
+                                        +'Estado   '
+                                            +'<select id="select_estadoInmueble" data-id="'+id+'" style=" margin-top: 0px !important; margin-left: 5px !important;">'
+                                               +' <option value="disponible" '+aux_1+'>Disponible</option>'
+                                               +' <option value="'+estado+'" '+aux_2+'>'+estado+'</option>'
+                                          +'  </select>'
+                                    +'</div>';
+                            dis.parent().parent().prepend(html);
+                            dis.addClass("prevent_click"); 
 
                           }else{
                             return false;
                           }
 
                     });
+
+
                 });  
 
                 
             },
             complete: function(){
                 cortina.hide();
+                
             }
         });
     },
@@ -863,6 +1195,7 @@ var propiedad = {
         $.ajax({
             url:app.url_ajax,
             dataType: 'html',
+            async: false,
             data: {
               action: "get_single_propiedad",
               id : id,
@@ -912,7 +1245,7 @@ var propiedad = {
               $(".ratingSingle").starRating({
                 totalStars: 5,
                 starShape: 'rounded',
-                starSize: 25,
+                starSize: 20,
                 emptyColor: 'lightgray',
                 hoverColor: 'rgb(0,110,202)',
                 activeColor: 'rgb(0,110,202)',
@@ -932,6 +1265,7 @@ var propiedad = {
             complete: function(){
               propiedad.verScreen.toggle('show');
               cortina.hide();
+              
             }
         });
     },
@@ -940,6 +1274,7 @@ var propiedad = {
        $.ajax({
              url:app.url_ajax,
              dataType: 'text',
+             //async: false,
              data: {
                  action: "get_mispropiedades",
                  user_email: user.email,
@@ -957,6 +1292,11 @@ var propiedad = {
              },
              success: function(a){
                  console.log(a);
+
+                if(!a){
+                  propiedad.getMisPropiedades();  
+                }
+
                  if(a.msj_error){
                      myModal.open('Oops',a.msj_error);
                  }else{                
@@ -971,17 +1311,35 @@ var propiedad = {
                 });    
                 
                 $('.propiedad').each(function(){   //tagname based selector
+                     var top = $(this).position();
                     var mc = new Hammer(this);
                     var autor = $(this).attr("data-mail");
                     var dis = $(this);
-                    mc.on("press", function(e) {
+                    var aux_1 = "";
+                    var aux_2 = "";
+                     mc.on("press", function(e) {
                           console.log(e.type);
                           if(autor == user.email){
-                            dis.addClass("prevent_click");    
                             var id = dis.attr("data-id");
+                            var estado = dis.attr("data-estado");
                             var tipo = dis.attr("data-tipo");
-                            dis.find("div.divTaphold").addClass("tapholdOptions");
-                            dis.find("div.divTaphold").toggle("slow");  
+                            var estado_ = dis.attr("data-value-estado");
+                            if(estado_ == "disponible"){
+                              aux_1 = "selected";
+                            }else{
+                              aux_2 = "selected";
+                            }
+                            var html = '<div class="divTaphold tapholdOptions" style="position:absolute; top:'+top.top+'px !important " >'
+                                        +'<p style="padding-top: 5px;" data-id="'+id+'" class="editar_prop">Editar</p>'
+                                        +'<p class="eliminar_x" data-id="'+id+'">Eliminar</p>'
+                                        +'Estado   '
+                                            +'<select id="select_estadoInmueble" data-id="'+id+'" style=" margin-top: 0px !important; margin-left: 5px !important;">'
+                                               +' <option value="disponible" '+aux_1+'>Disponible</option>'
+                                               +' <option value="'+estado+'" '+aux_2+'>'+estado+'</option>'
+                                          +'  </select>'
+                                    +'</div>';
+                            dis.parent().parent().prepend(html);
+                            dis.addClass("prevent_click"); 
 
                           }else{
                             return false;
@@ -993,6 +1351,7 @@ var propiedad = {
              },
              complete: function(){
                  cortina.hide();
+                 
              }
          });
       
@@ -1002,6 +1361,7 @@ var propiedad = {
        $.ajax({
              url:app.url_ajax,
              dataType: 'text',
+             async: false,
              data: {
                  action: "calcular_IUSI",
                  precio:precio,
@@ -1029,15 +1389,23 @@ var propiedad = {
              },
              complete: function(){
                  cortina.hide();
+                 
              }
          });
       
-    },    
+    },  
+
     getDepartamentos:function(departamento, carretera){
 
-    	 $.ajax({
+      if(depar_html){
+          $("#"+departamento).html(depar_html);
+          $("#"+carretera).html(carretera_html);
+      }else{
+
+       $.ajax({
              url:app.url_ajax,
              dataType: 'text',
+             //async: false,
              data: {
                  action: "get_departamentos"
              },
@@ -1048,55 +1416,67 @@ var propiedad = {
                  myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
              },
              beforeSend: function(){
-                cortina.show();
+                  cortina.show();
                  console.log("Jalando get_departamentos!!");
              },
              success: function(a){
                  console.log(a);
+
+                 if(!a){
+                    propiedad.getDepartamentos(departamento, carretera);
+                 }
+
                  if(a.msj_error){
                      myModal.open('Oops',a.msj_error);
                  }else{
-                     jQuery("#"+departamento).html(a);                    
+                     depar_html = a;                   
+                     $( "#"+departamento).html(a);
                  }
                  
              },
              complete: function(){
-                cortina.hide();
-
-                $.ajax({
-                   url:app.url_ajax,
-                   dataType: 'text',
-                   data: {
-                       action: "get_carreteras",
-                   },
-                   type: 'post',
-                   timeout: 15000,
-                   error: function(a,b,c){
-                       console.log('error '+JSON.stringify(a)+JSON.stringify(b));
-                       myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
-                   },
-                   beforeSend: function(){
-                       console.log("Jalando municipiops!!");
-                   },
-                   success: function(a){
-                       $("#"+carretera).html(a);
-                   },
-                   complete: function(){
-                       cortina.hide();
-                   }
-               });
-
-
-
+                if(carretera_html){
+                    $("#"+carretera).html(carretera_html);
+                }else{
+                    $.ajax({
+                       url:app.url_ajax,
+                      //async: false,
+                       dataType: 'text',
+                       data: {
+                           action: "get_carreteras",
+                       },
+                       type: 'post',
+                       timeout: 15000,
+                       error: function(a,b,c){
+                           console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                           myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+                       },
+                       beforeSend: function(){
+                           console.log("Jalando carreteras!!");
+                       },
+                       success: function(a){
+                            console.log(a);
+                           carretera_html = a;
+                           $("#"+carretera).html(a);
+                       },
+                       complete: function(){
+                           cortina.hide();
+                           
+                      }
+                  });
+              }
              }
          });
-    	
-    	
+
+      }
+      
+      
     },
-    getMunicipios:function(depa, municipio, carretera){
-    	 $.ajax({
+    getMunicipios:function(depa, municipio,zona,v=null){
+       $.ajax({
              url:app.url_ajax,
              dataType: 'text',
+             async: false,
              data: {
                  action: "get_municipios",
                  departamento: depa,
@@ -1109,52 +1489,62 @@ var propiedad = {
                  myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
              },
              beforeSend: function(){
-                 console.log("Jalando get_departamentos!!");
+                 console.log("Jalando municipios de "+depa);
                  cortina.show();
              },
              success: function(a){
                  console.log(a);
+                 if(!a){
+                    getMunicipios(depa, municipio, zona, v);
+                 }
                  if(a.msj_error){
                      myModal.open('Oops',a.msj_error);
                  }else{
-                     jQuery("#"+municipio).html(a);                   
+                     jQuery("#"+municipio).html(a);   
+                     if(v!=null){
+                      console.log(municipio);
+                      console.log("v no es null "+v);
+                      $('#'+municipio+' option:contains("' + v + '")').prop('selected',true); 
+                    }
+
+
                  }
                  
              },
-             complete: function(){
-                 if(depa == 'GUA'){
-                     $.ajax({
-                         url:app.url_ajax,
-                         dataType: 'text',
-                         data: {
-                             action: "get_zonas",
-                             departamento: depa,
+             complete: function(){    
+              if(zonas_html){
+                  $("#"+zona).html(zonas_html);
+                  //$('#'+municipio+' option:contains("' + v + '")').prop('selected',true); 
+              } else{
 
-                         },
-                         type: 'post',
-                         timeout: 15000,
-                         error: function(a,b,c){
-                             console.log('error '+JSON.stringify(a)+JSON.stringify(b));
-                             myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
-                         },
-                         beforeSend: function(){
-                             console.log("Jalando municipiops!!");
-                         },
-                         success: function(a){
-                             $(".zona").html(a);
-                         },
-                         complete: function(){
-                             cortina.hide();
-                         }
-                     });
-                 }else{
-                     cortina.hide();
-                     $("#zona").attr("disabled", "disabled");
-                 }
-                 
-             }
-         });
-    	
+               $.ajax({
+                   url:app.url_ajax,
+                   dataType: 'text',
+                   data: {
+                       action: "get_zonas",
+                   },
+                   async: false,
+                   type: 'post',
+                   timeout: 15000,
+                   error: function(a,b,c){
+                       console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+                       myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+                   },
+                   beforeSend: function(){
+                       console.log("Jalando zonas...");
+                   },
+                   success: function(a){
+                        zonas_html = a;
+                        $("#"+zona).html(a);
+                   },
+                   complete: function(){
+                       cortina.hide();
+                   }
+                });
+            }
+          }
+          });
+      
     },
     toggle:function(tipo){
         if(tipo=='hide'){
@@ -1169,7 +1559,239 @@ var propiedad = {
         .val('')
         .removeAttr('checked')
         .removeAttr('selected');
+    },
+    borrarPost: function(post_id){
+      $.ajax({
+         url:app.url_ajax,
+         dataType: 'text',
+         //async: false,
+         data: {
+             action: "borrar_post",
+             post_id: post_id,
+
+         },
+         type: 'post',
+         timeout: 15000,
+         error: function(a,b,c){
+             console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+             myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+         },
+         beforeSend: function(){
+              cortina.show();
+             console.log("borrando post");
+         },
+         success: function(a){
+              console.log(a);
+              if(a == "propiedades" && $("#filtrocasa").attr("src") == "../www/img/iconos/housewhite.png"){
+                  propiedad.getMisPropiedades();
+              }else if(a == "propiedades" && $("#filtrocasa").attr("src") != "../www/img/iconos/housewhite.png"){
+                  propiedad.getPropiedades(user.email, user.pass);
+
+              }if(a == "requerimientos" && $("#filtrocasa").attr("src") == "../www/img/iconos/housewhite.png"){
+                  requerimiento.getMisRequerimientos();
+              }else if(a == "requerimientos" && $("#filtrocasa").attr("src") != "../www/img/iconos/housewhite.png"){
+                  requerimiento.getRequerimientos(user.email, user.pass);
+
+              }
+             myModal.open('', 'Se ha borrado con exito.');
+
+         },
+         complete: function(){
+             cortina.hide();
+             
+             $(".divTaphold").remove();
+         }
+     });
+    },
+
+
+    cambiarEstado: function(post_id, estado){
+      $.ajax({
+         url:app.url_ajax,
+         dataType: 'text',
+         //async: false,
+         data: {
+             action: "cambiar_estado",
+             post_id: post_id,
+             estado : estado
+
+         },
+         type: 'post',
+         timeout: 15000,
+         error: function(a,b,c){
+             console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+             myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+         },
+         beforeSend: function(){
+              cortina.show();
+             console.log("Cambiando estado");
+         },
+         success: function(a){
+              console.log(a);
+              if(a == "propiedades" && $("#filtrocasa").attr("src") == "../www/img/iconos/housewhite.png"){
+                  propiedad.getMisPropiedades();
+              }else if(a == "propiedades" && $("#filtrocasa").attr("src") != "../www/img/iconos/housewhite.png"){
+                  propiedad.getPropiedades(user.email, user.pass);
+
+              }if(a == "requerimientos" && $("#filtrocasa").attr("src") == "../www/img/iconos/housewhite.png"){
+                  requerimiento.getMisRequerimientos();
+              }else if(a == "requerimientos" && $("#filtrocasa").attr("src") != "../www/img/iconos/housewhite.png"){
+                  requerimiento.getRequerimientos(user.email, user.pass);
+
+              }
+             myModal.open('', 'El estado se ha cambiado con exito.');
+
+         },
+         complete: function(){
+             cortina.hide();
+             
+             $(".divTaphold").remove();
+         }
+     });
+    },
+
+
+    editarPropiedad: function(post_id){
+
+      $.ajax({
+         url:app.url_ajax,
+         dataType: 'json',
+         //async: false,
+         data: {
+             action: "editar_propiedad",
+             post_id: post_id,
+             user_email : user.email,
+             user_pass : user.pass,
+         },
+         type: 'post',
+         timeout: 15000,
+         error: function(a,b,c){
+             console.log('error '+JSON.stringify(a)+JSON.stringify(b));
+             myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
+         },
+         beforeSend: function(){
+              cortina.show();
+             console.log("trayendo info de la propiedad");
+         },
+         success: function(json_data){
+              console.log(json_data);
+              //var arreglo = JSON.parse(a);
+              //console.log(arreglo);
+
+              $("#titulo_propiedad").html("EDITAR PROPIEDAD #"+post_id);
+              $("#id_propiedad").val(post_id);
+              $.each(json_data, function(key, value){
+                  console.log(key, value);
+                  if(key == "tipo_operacion" || key == "tipo_inmueble"){
+                      $.each($("#propiedadForm input[name='"+key+"']"), function(key1, value1){
+                          //console.log($(this).val() +"=="+value);
+                          if($(this).val() == value){
+                            $(this).attr("checked", "checked");
+                          }
+                      });
+                      return;
+                  }else if(key == "cuarto_servicio" || key=="estudio" || key=="cisterna" || key == "negociable" || key=="gastos_escritura"){
+                    return;
+                  }
+                  $( "#propiedadForm input[name='"+key+"']" ).val(value);
+                   $("#propiedadForm select[name='"+key+"']" ).val(value);
+
+              });
+
+              var depa = "";
+              if(json_data.departamento == 'Alta Verapaz'){
+                depa = "AV";
+              }else if(json_data.departamento == 'Baja Verapaz'){
+                  depa = "BV";
+              }else if(json_data.departamento == 'Chimaltenango'){
+                  depa = "CHI";
+              }else if(json_data.departamento == 'Chiquimula'){
+                  depa = "CHQ";
+              }else if(json_data.departamento == 'Petén'){
+                  depa = "PE";
+              }else if(json_data.departamento == 'El Progreso'){
+                  depa = "EP";
+              }else if(json_data.departamento == 'Quiché'){
+                  depa = "QCH";
+              }else if(json_data.departamento == 'Escuintla'){
+                  depa = "ESC";
+              }else if(json_data.departamento == 'Guatemala'){
+                  depa = "GUA";
+              }else if(json_data.departamento == 'Huehuetenango'){
+                  depa = "HUE";
+              }else if(json_data.departamento == 'Izabal'){
+                  depa = "IZA";
+              }else if(json_data.departamento == 'Jalapa'){
+                  depa = "JAL";
+              }else if(json_data.departamento == 'Jutiapa'){
+                  depa = "JUT";
+              }else if(json_data.departamento == 'Retalhuleu'){
+                  depa = "REU";
+              }else if(json_data.departamento == 'Sacatepéquez'){
+                  depa = "SAC";
+              }else if(json_data.departamento == 'San Marcos'){
+                  depa = "SM";
+              }else if(json_data.departamento == 'Santa Rosa'){
+                  depa = "SR";
+              }else if(json_data.departamento == 'Sololá'){
+                  depa = "SL";
+              }else if(json_data.departamento == 'Suchitepéquez'){
+                  depa = "SUC";
+              }else if(json_data.departamento == 'Totonicapán'){
+                  depa = "TOT";
+              }else if(json_data.departamento == 'Zacapa'){
+                  depa = "ZAC";
+              }
+
+
+              propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
+              $("#departamento-propiedades").val(depa);
+              propiedad.getMunicipios(depa, "municipio-propiedades", "zona-propiedades");
+              $("#municipio-propiedades").val(json_data.municipio);
+              $("#zona-propiedades").val(json_data.zona);
+              $("#carretera-propiedades").val(json_data.carretera);
+
+              $("#propiedadBtn").html("ACTUALIZAR");
+
+              $.each($(".rating"), function(key2, value2){
+                  var rat = $(this).next().val();
+                  $(this).starRating('setRating', rat);     
+              }); 
+
+              $(".ratingResult").starRating('setRating', json_data.comunidad); 
+              //$(".ratingResult").next().val((Math.round(prome * 2) / 2).toFixed(1));
+
+              if(json_data.cisterna){
+                  $("#cisternaP").click();
+              }
+              if(json_data.estudio){
+                  $("#estudioP").click();
+              }
+              if(json_data.cuarto_servicio){
+                  $("#dormServP").click();
+              }
+              if(json_data.negociable){
+                  $("#negociableP").click();
+              }
+              if(json_data.gastos_escritura){
+                  $("#gastosEscritura").click();
+              }
+
+
+
+
+              propiedad.crearScreen.toggle("show");
+         },
+         complete: function(){
+             cortina.hide();
+             
+             
+         }
+     });
+
+
     }
+
 };
 
 
@@ -1287,7 +1909,8 @@ var asesor = {
 
         $.ajax({
             url:app.url_ajax,
-            dataType: 'json',
+            dataType: 'text',
+            async: false,
             data: formData,
             type: 'post',
             timeout: 15000,
@@ -1300,20 +1923,19 @@ var asesor = {
                 cortina.show();
             },
             success: function(a){
-                console.log(JSON.stringify(a));
-                propiedad.clean();
-                if(a.msj_error){
-                    myModal.open('Oops',a.msj_error);
-                }else{
-                    myModal.open('Se ha aprobado al asesor con exito.');
-                   asesor.verScreen.html(a);
+                asesor.clean();
+                myModal.open('Se ha aprobado al asesor con exito.');
+                asesor.aprobarScreen.toggle('hide');
+                $("#listado_asesores").css("display", "block");
+
+                //asesor.verScreen.html(a);
                     
-                }
+              
                 
             },
             complete: function(){
                 cortina.hide();
-                asesor.verScreen.toggle('show');
+                
             }
         });
     },
@@ -1323,6 +1945,7 @@ var asesor = {
       $.ajax({
             url:app.url_ajax,
             dataType: 'text',
+            async: false,
              data: {
                  action: "get_asesores",
                  user_email: user.email,
@@ -1351,6 +1974,7 @@ var asesor = {
             },
             complete: function(){
                 cortina.hide();
+                
             }
         });
 
@@ -1359,7 +1983,8 @@ var asesor = {
         var id = $(attr).data('id');
         $.ajax({
             url:app.url_ajax,
-            dataType: 'text',
+            dataType: 'json',
+            async: false,
              data: {
                  action: "get_single_asesor",
                  user_email: user.email,
@@ -1377,19 +2002,46 @@ var asesor = {
                 cortina.show();
             },
             success: function(a){
+
                 console.log(JSON.stringify(a));
-                propiedad.clean();
-                if(a.msj_error){
-                    myModal.open('Oops',a.msj_error);
-                }else{
-                    $("#id_cuentaA").val(id);
+
+                $("#tipo_cuentaA").val("Asesor");
+                $("#id_cuentaA").val(id);
+
+
+                $("#nombre_asesor").val(a.nombre);
+                $("#correo_asesor").val(a.correo);
+                $("#telefono_asesor").val(a.telefono);
+
+                var fechaNac = a.fecNac.split("/");
+                $("#diaNac_asesor").val(fechaNac[0]);
+                $("#mesNac_asesor").val(fechaNac[1]);
+                $("#anosNac_asesor").val(fechaNac[2]);
+
+
+                $("#oficinasA").val(a.oficina);
+                $("#empresaA").val(a.nom_empresa);
+                $("#telOfiA").val(a.tel_empresa);
+                $("#direccionOfiA").val(a.dir_empresa);
+                $("#urlOfiA").val(a.url_empresa);
+
+                var fechaExp = a.experiencia.split("/");
+                $("#diaExp_asesor").val(fechaExp[0]);
+                $("#mesExp_asesor").val(fechaExp[1]);
+                $("#anosExp_asesor").val(fechaExp[2]);
+
+
+                $("#regionA").val(a.region);
+                $("#infoAdiA").val(a.informacion);
+
                     //$("#body_asesores").html(a);
-                    asesor.aprobarScreen.toggle("show");
-                }
-                
+                  asesor.clean();
+                  asesor.aprobarScreen.toggle("show");
+
             },
             complete: function(){
                 cortina.hide();
+                
             }
         });
 
@@ -1404,7 +2056,7 @@ var asesor = {
         }
     },
     clean: function(){
-      $(':input','#propiedadForm')
+      $(':input','#asesorForm')
         .not(':button, :submit, :reset, :hidden')
         .val('')
         .removeAttr('checked')
@@ -1434,6 +2086,7 @@ var app = {
             app.onDeviceReady();
         }
     },
+
     onDeviceReady: function(){
     	console.log('start on device ready');
         propiedad.getDepartamentos("departamento-1", "carretera-1");
@@ -1495,6 +2148,7 @@ var app = {
             
         });
         */
+
         //General forms
         $(document).on('focus','.inputpz',function(){
             console.log('focus inputpz');
@@ -1555,8 +2209,7 @@ var app = {
         propiedad.form.parsley().on('form:error',function(){
             
         });
-        console.log('load events');
-        //login.screen.hide();
+
 
         //Asesor
         asesor.form.parsley().on('form:success',function(){
@@ -1567,7 +2220,20 @@ var app = {
         asesor.form.parsley().on('form:error',function(){
             
         });
-        console.log('load events');
+
+
+
+        //BUSQUEDA
+        busqueda.form.parsley().on('form:success',function(){
+            var formData = busqueda.form.getFormData();
+            busqueda.busqueda(formData);
+        });
+        busqueda.form.parsley().on('form:submit',function(){return false;});
+        busqueda.form.parsley().on('form:error',function(){
+            
+        });
+
+        //console.log('load events');
         
         setTimeout(function(){
             user.initialize();
@@ -1576,7 +2242,10 @@ var app = {
       $(".departamento").on("change",function(){
         var depa = $(this).val();
           var municipio = $(this).attr("data-id"); 
-        propiedad.getMunicipios(depa, municipio);
+
+          var zona = $(this).attr("data-zona");
+        propiedad.getMunicipios(depa, municipio, zona);
+
       });
 
     $("#filtrocasa").click(function(){
@@ -2023,24 +2692,100 @@ var app = {
 
     $('.screen').on("click", function(e) {
       console.log(e.target);
-      if($(e.target).is('#dot_menu') || $(e.target).is(".dot_submenu") || $(e.target).is(".dot_submenu p") || $(e.target).is("#propiedades-ul ") || $(e.target).is(".tapholdOptions p")){
+      if($(e.target).is('#dot_menu') || $(e.target).is(".dot_submenu") || $(e.target).is(".dot_submenu p") || $(e.target).is("#tapholdOptions") || $(e.target).is(".tapholdOptions p") | $(e.target).is(".tapholdOptions select")){
            return;
         }else{
           $(".dot_submenu").css("display", "none");  
           $(".divTaphold").css("display", "none"); 
           $(".requerimiento").removeClass("prevent_click");   
-          $(".propiedad").removeClass("prevent_click");   
-          //console.log("click aqui......");
+          $(".propiedad").removeClass("prevent_click"); 
+          $('.tapholdOptions').remove();  
         }
     });
 
     $(".aprobar_asesor").click(function(){
         asesor.verAsesor();
     });
-    //api_mapa.init();
- 
+
+
+    $(".cerrar_sesion").click(function(){
+        window.localStorage.removeItem('correo');
+        window.localStorage.removeItem('password');
+        login.screen.show();
+    });
+
+
+      $('#requerimientos').on('click', '.eliminar_x', function(e){
+          e.stopPropagation();
+          var id= $(this).attr("data-id");
+          propiedad.borrarPost(id);
+      });
+
+      $('#requerimientos').on('change', '#select_estadoInmueble', function(e){
+          var id = $(this).attr("data-id");
+          var estado = $(this).val();
+          propiedad.cambiarEstado(id, estado);
+      });
+
+       $('#propiedades').on('click', '.eliminar_x', function(e){
+              e.stopPropagation();
+              var id= $(this).attr("data-id");
+              propiedad.borrarPost(id);
+        });
+
+
+        $('#propiedades').on('change', '#select_estadoInmueble', function(e){
+            var id = $(this).attr("data-id");
+            var estado = $(this).val();
+            propiedad.cambiarEstado(id, estado);
+        });
+
+        
+
+
+
+    $('#propiedades').on('click', '.editar_prop', function(e){
+        e.stopPropagation();
+        var id = $(this).attr("data-id");
+        propiedad.editarPropiedad(id);
+        
+    });
+
+    $('#requerimientos').on('click', '.editar_prop', function(e){
+        e.stopPropagation();
+        var id = $(this).attr("data-id");
+        requerimiento.editarRequerimiento(id);
+        
+    });
+
+    $("#li_requerimientos").click(function(){
+        propiedad.getDepartamentos("departamento-1", "carretera-1");
+    });
+
+    $("input[name='tipo_busqueda']").click(function(){
+        if($(this).val() == "propiedades"){
+            $("#busqueda_propiedades").css("display", "table-row-group");
+            $("#busqueda_requerimientos").css("display", "none");
+        }else{  
+            $("#busqueda_propiedades").css("display", "none");
+            $("#busqueda_requerimientos").css("display", "table-row-group");
+        }
+    });
+
+
+    $("#lupa_buscar").click(function(){
+        propiedad.getDepartamentos("departamento-b", "carretera-b");
+    });
+
+    
+
     },  
-     
+    onDeviceReady: function() {
+        
+        console.log('device ready');
+        app.loadEvents();
+    }
+      
 };
 
 app.initialize();

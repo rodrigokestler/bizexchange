@@ -297,6 +297,8 @@ select.select_formRIF{
     border-radius: 8px;
 }
 
+
+
 .propiedad-btn{
     background-color: #2174c4!important;
     margin: 20px auto;
@@ -306,6 +308,17 @@ select.select_formRIF{
     height: 50px;
     border-radius: 8px;
 }
+
+.buscar-btn{
+    background-color: #2174c4!important;
+    margin: 20px auto;
+    width: 270px;
+    border: 1px solid white;
+    color: white!important;
+    height: 50px;
+    border-radius: 8px;
+}
+
 
 .tutorial-img{
 
@@ -1310,23 +1323,28 @@ td select.moneda_IFP{
     border: none !important;
     color: rgb(75,104,146) !important;
 }
-#capturar_imagen{
-	background-color:transparent;
-	border:none;
-	background-position:center;
-	background-repeat:no-repeat;
-	width:40px;
-	height:40px;
-	background-size:contain;
-	background-image: url(../img/iconos/agregar-propiedad-foto.png);
+
+.screen-busqueda{
+    height: 60px;
+    width: 100%;
+    background-color: white; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    font-size: 20px;
+    color: white;
 }
-#adjuntar_imagen{
-	background-color:transparent;
-	border:none;
-	background-position:center;
-	background-repeat:no-repeat;
-	width:40px;
-	height:40px;
-	background-size:contain;
-	background-image: url(../img/iconos/agregar-propiedad-adjuntar.png);
+
+
+.busqueda_input{
+    position: absolute !important; 
+    border: none;
+    border-bottom: 1px solid white;
+    margin-left: 38px !important;
+    width: 80%;
+    top: 5px;
+    font-size: 17px;
+    color: black;
+
 }
