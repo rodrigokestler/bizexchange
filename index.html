@@ -157,12 +157,12 @@
             <div class="container" style="margin:0!important;padding:0!important;">
                 <div class="container-flex" style="margin:0!important;">
                     <div class="screen-busqueda" style="box-shadow: 0 3px 2px rgba(36, 70, 125, 0.16)">
-                        <input type="search" class="busqueda_input" placeholder="Buscar..."/>
+                        <input type="search" class="busqueda_input" placeholder="Buscar..." />
                         <button onclick="busqueda.screen.toggle('hide');" class="return"><i class="fa fa-angle-left" style="color:grey;"aria-hidden="true"></i></button>
                     </div>
 
                     <div class="body-screen bg-gris">
-                        <form id="propiedadForm">
+                        <form id="busquedaForm">
                             <input type="hidden" name="id_propiedad" value="0" class="inputpz">
 
                             <div class="container-form">
@@ -199,12 +199,13 @@
                                             </td>
                                         </tr>
                                     </tbody>
+
                                     <tbody id="busqueda_requerimientos" style="display: none;">
                                         <tr>
-                                            <td><input class="inputpz tipo_operacion tipo_comprar" type="radio" id="tipoOp_venderP" name="tipo_operacionR" value="vender" checked>
-                                                <label for="tipoOp_venderP">VENDER</label>
+                                            <td><input class="inputpz tipo_operacion tipo_comprar" type="radio" id="tipoBu_venderR" name="tipo_operacionR" value="comprar" checked>
+                                                <label for="tipoOp_venderP">COMPRAR</label>
                                             </td>
-                                            <td><input class="inputpz tipo_operacion tipo_rentar" id="tipoOp_rentarP" type="radio" name="tipo_operacionR" value="rentar">
+                                            <td><input class="inputpz tipo_operacion tipo_rentar" id="tipoBu_rentarR" type="radio" name="tipo_operacionR" value="rentar">
                                                 <label for="tipoOp_rentarP">RENTAR</label>
                                             </td>
                                         </tr>
@@ -224,28 +225,267 @@
                                  <table>   
                                     <tr style="width: 100%; height: 100px; display: block;">
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_casa tipo_inmueble" type="radio" name="tipo_inmueble" value="casa" checked>
+                                            <input class="inputpz tipo_casa tipo_inmueble" type="radio" name="tipo_inmuebleB" value="casa" checked>
                                         </td>
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_apartamento tipo_inmueble" type="radio" name="tipo_inmueble" value="apartamento">
+                                            <input class="inputpz tipo_apartamento tipo_inmueble" type="radio" name="tipo_inmuebleB" value="apartamento">
                                         </td>
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_terreno tipo_inmueble" type="radio" name="tipo_inmueble" value="terreno">
+                                            <input class="inputpz tipo_terreno tipo_inmueble" type="radio" name="tipo_inmuebleB" value="terreno">
                                         </td>
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_oficina tipo_inmueble" type="radio" name="tipo_inmueble" value="oficina">
+                                            <input class="inputpz tipo_oficina tipo_inmueble" type="radio" name="tipo_inmuebleB" value="oficina">
                                         </td>
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_local tipo_inmueble" type="radio" name="tipo_inmueble" value="local">
+                                            <input class="inputpz tipo_local tipo_inmueble" type="radio" name="tipo_inmuebleB" value="local">
                                         </td>
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_edificio tipo_inmueble" type="radio" name="tipo_inmueble" value="edificio">
+                                            <input class="inputpz tipo_edificio tipo_inmueble" type="radio" name="tipo_inmuebleB" value="edificio">
                                         </td>
                                     </tr>
                                 </table>
                                 </div>
                             </div>
+
+
+                             <div class="container-form">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td colspan="2" class="titulo-container-form">
+                                        CARACTERÍSTICAS DEL INMUEBLE
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br>
+                                 <table>   
+                                    <tr style="width: 100%; height: 100px; display: block;">
+                                        <td class="icon_ti" style="padding-left:10px; padding-right:10px">
+                                        <table style="text-align:center; width:85px !important; float:left;">
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="icono_caract_min_inmueble" style="background-image:url(../www/img/iconos/habitaciones.png); width:35%;">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr style="text-align:center;">
+                                                <td class="titulo_caract_min_inmueble" colspan="2">Habitaciones</td>
+                                                </tr>
+                                            <tr> 
+                                                <td colspan="2"><input  class="input_caract_min_inmueble width100 inputpz inputCMI" type="number" data-init="0" value="0" name="habitacionesB" ></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;">
+                                                    <button style="margin-right:5px;" class="btn_mas_menos menos" type="button">-</button></td>
+                                                <td style="text-align:left;">
+                                                    <button style="margin-left:5px;" class="btn_mas_menos mas" type="button">+</button></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="icon_ti" style="padding-left:10px; padding-right:10px">
+                                        <table style="text-align:center; width:85px !important; float:left;">
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="icono_caract_min_inmueble" style="background-image:url(../www/img/iconos/banos.png)">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr style="text-align:center;">
+                                                <td colspan="2" class="titulo_caract_min_inmueble">Baños</td>
+                                                </tr>
+                                            <tr>
+                                                <td colspan="2"><input  class="input_caract_min_inmueble inputpz width100 inputCMI" type="number" data-init="0" value='0' name="banosB"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;"><button style="margin-right:5px;"class="btn_mas_menos menos" type="button">-</button></td>
+                                                <td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos mas"  type="button">+</button></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="icon_ti" style="padding-left:10px; padding-right:10px">
+                                         <table style="text-align:center; width:85px !important; float:left;">
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div style="background-image:url(../www/img/iconos/parqueos.png); width:35%;" class="icono_caract_min_inmueble" >
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="titulo_caract_min_inmueble" colspan="2">Parqueos</td>
+                                                </tr>
+                                            <tr>
+                                                <td colspan="2"><input  class="input_caract_min_inmueble inputpz width100 inputCMI" type="number" data-init="0" value='0' name="parqueosB"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;"><button style="margin-right:5px;"class="btn_mas_menos menos" type="button">-</button></td>
+                                                <td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos mas" type="button">+</button></td>
+                                            </tr>
+
+
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="font-size:12px; padding-top:25px;" colspan="2">Estado del inmueble
+                                    </td>
+                                    <td colspan="2" style="padding-top:25px; text-align: right;">
+                                         <select name="estado_inmuebleB" class="color-gris-oscuro select_formR inputpz" style="border:none; padding-left: 60px;">
+                                            <option value="nuevo">Nuevo</option>
+                                            <option value="usado">Usado</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                </table>
+                            </div>
+
+
+
+                            <div class="container-form">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td colspan="5" class="titulo-container-form">
+                                        INFORMACION FINANCIERA
+                                        </td>
+                                    </tr>
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="5">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td colspan="2" class="texto-nuevo-requerimiento">Forma de pago</td>
+                                        <td colspan="3" style="text-align:right;">
+                                            <select name="forma_de_pagoB" id="formaPagoB" class="color-gris-oscuro select_formR inputpz" style="border:none; padding-left: 25px;" required>
+                                                <option value="contado">Al contado</option>
+                                                <option value="financiado">Financiado</option>
+                                            </select>
+                                            
+                                        </td>
+                                    </tr>
+
+                                    <tr style="margin:2px 0;">
+                                        <td colspan="5">
+                                            <hr style="margin:0!important;">
+                                        </td>
+                                    </tr>
+
+                                <tr>
+                                    <td class="texto-nuevo-requerimiento">Presupuesto</td>
+                                    <td style="text-align: right;">
+                                        <select name="moneda_ingresosB" id="spanPresupuestoB" class="color-gris-oscuro inputpz select_formRIF moneda_IF arrowD2" style="border:none; width:35px !important;" >
+                                            <option value="q" selected>Q</option>
+                                            <option value="$">$</option>
+                                        </select>
+
+                                    </td>
+                                    <td style="position: relative"><input class="color-gris-oscuro inputpz inputIF" name="presupuesto_minB" style="text-align:center;border:none;width:100px;" type='number' placeholder="2000">
+                                        
+                                    </td>
+                                    <td style="width: 40px !important; padding-left:10px" class="color-gris-oscuro">
+                                        a
+                                    </td>
+                                    <td style="position:relative;">
+                                        <input class="color-gris-oscuro inputpz inputIF" step="any" name="presupuesto_maxB" step="any" id="presupuesto_maxB" type='number' style="text-align:center;border:none;width:100px;" placeholder="20000">
+                                       
+                                    </td>
+                                </tr>
+                                <tr style="margin:2px 0;">
+                                    <td colspan="5">
+                                        <hr style="margin:1!important;">
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
+
+
+                                <div class="container-form">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td colspan="3" class="titulo-container-form">
+                                        UBICACION <span class="resumen_ubi" id="resumen-1"></span>
+                                        </td>
+                                         <td class="expandirInfoUbicacionRe" data-id="masInfoUbicacion-1" data-arrow="1">
+                                            <div class="arrowD" id="arrowD-1" style="background-image:url(../www/img/iconos/arrowD.png); display: none; margin-right:45px;" ></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div id="contenedor_ubicaciones">
+                                    <div class="ubicacion-requerimiento" id="ubicacion-1">
+                                        <table style="width:100%;">
+                                            <tr style="margin:2px 0;">
+                                                <td colspan="5">
+                                                    <hr style="margin:0!important;">
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td colspan="2" class="texto-nuevo-requerimiento">Departamento</td>
+                                                <td colspan="3">
+                                                    <select name="departamento-b" class="color-gris-oscuro select_formR departamento inputpz" id="departamento-b" data-id="municipio-b" data-zona="zona-b" style="border:none;">
+                                                        
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr style="margin:2px 0;">
+                                                <td colspan="5">
+                                                    <hr style="margin:0!important;">
+                                                </td>
+                                            </tr>
+                                           <tbody class="masInfoUbicacion" id="masInfoUbicacion-1">
+                                                <tr>
+                                                    <td colspan="2" class="texto-nuevo-requerimiento">Municipio</td>
+                                                    <td colspan="3">
+                                                        <select name="municipio-b"  id="municipio-b" class="color-gris-oscuro select_formR municipio inputpz" style="border:none;">
+                                                        <option>--Seleccione--</option>   
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr style="margin:2px 0;">
+                                                    <td colspan="5">
+                                                        <hr style="margin:0!important;">
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="2" class="texto-nuevo-requerimiento">Zona</td>
+                                                    <td colspan="3">
+                                                        <select name="zona-b" class="color-gris-oscuro select_formR zona inputpz" id="zona-b"  style="border:none;">
+                                                            <option>--Seleccione--</option>   
+                                                        </select>
+                                                </tr>
+                                                <tr style="margin:2px 0;">
+                                                    <td colspan="5">
+                                                        <hr style="margin:0!important;">
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                     <td colspan="1" class="texto-nuevo-requerimiento">Km</td>
+                                                    <td colspan="1"><input name="km-b" id="km-b" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;" type='number' value="0">
+                                                    </td>
+                                                    <td colspan="3">
+                                                        <select name="carretera-b" id="carretera-b" class="color-gris-oscuro select_formR carretera inputpz" style="border:none;">
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr style="margin:2px 0;">
+                                                    <td colspan="5">
+                                                        <hr style="margin:0!important;">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br><br>
+                                </div>
+                            </div>
+
+                            <div class="container-form">
+                                <button type="submit" id="busquedaBtn" class="btn btn-default btn-block buscar-btn">BUSCAR</button>
+                            </div>
+                        </form>
+                    </div>
 
                 </div>
             </div>
@@ -260,7 +500,7 @@
                             <tr style="width:100%;">
                                 <td style="width: 45%; font-size: 1em;">Biz Exchange</td>
                                 <td style="width: 40%; position: relative;">
-                                    <i style="position: absolute; top: 0; right: 0;" class="fa fa-search fa-flip-horizontal" aria-hidden="true" onclick="busqueda.screen.toggle('show');"></i>
+                                    <i style="position: absolute; top: 0; right: 0;" class="fa fa-search fa-flip-horizontal" aria-hidden="true" onclick="busqueda.screen.toggle('show');" id="lupa_buscar"></i>
                                 </td>
                                 
                                 <td style="width: 15%; position: relative;" >
@@ -2424,7 +2664,7 @@
         var movil=false;
         </script>
            
-       <!-- <script type="text/javascript" src="cordova.js"></script>-->
+       <script type="text/javascript" src="cordova.js"></script>
 
 
         <script type="text/javascript" src="js/jQuery.js"></script>

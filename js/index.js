@@ -224,7 +224,7 @@ var busqueda = {
         screen: $('#screen_busqueda'),
         form: $('#busquedaForm'),
         btnForm: $('#busquedaBtn'),
-        register: function(formData){
+        busqueda: function(formData){
             formData.action = 'buscar_requerimiento';
             console.log(JSON.stringify(formData));
 
@@ -751,7 +751,7 @@ var requerimiento = {
     },
     calcularPresupuesto:function(){
 
-    	   var tasa = $("#tasa_reque").val();
+         var tasa = $("#tasa_reque").val();
         var ingresos = $("#ingresos_reque").val();
         var egresos = $("#egresos_reque").val();
         var enganche = $("#enganche_reque").val();
@@ -825,7 +825,7 @@ var requerimiento = {
 
                     }           
                 });
-    	
+      
             }
         });
     },
@@ -1402,7 +1402,7 @@ var propiedad = {
           $("#"+carretera).html(carretera_html);
       }else{
 
-    	 $.ajax({
+       $.ajax({
              url:app.url_ajax,
              dataType: 'text',
              //async: false,
@@ -1469,12 +1469,12 @@ var propiedad = {
          });
 
       }
-    	
-    	
+      
+      
     },
 
     getMunicipios:function(depa, municipio,zona,v=null){
-    	 $.ajax({
+       $.ajax({
              url:app.url_ajax,
              dataType: 'text',
              async: false,
@@ -1545,7 +1545,7 @@ var propiedad = {
             }
           }
           });
-    	
+      
     },
     toggle:function(tipo){
         if(tipo=='hide'){
@@ -2103,46 +2103,6 @@ var app = {
 
          api_mapa.init();
 
-        //Tabs Home
-
-/*
-
-          var tabs = document.querySelector(".tab-content");
-          var mc = new Hammer(tabs);
-
-        
-          mc.on("panleft", function(ev) {
-            console.log('swipe left');
-            var $tab = $('#tablist li.active').next();
-            if ($tab.length > 0)
-            $tab.find('a').tab('show');
-            
-        });
-
-        mc.on("panright", function(ev) {
-            console.log('swipe right');
-            var $tab = $('#tablist li.active').prev();
-            if ($tab.length > 0)
-            $tab.find('a').tab('show');
-            
-        });*/
-        
- /*       
-        $(".tab-content").on("swiperight",function() {
-            console.log('swiperight');
-            var $tab = $('#tablist li.active').prev();
-            if ($tab.length > 0)
-                $tab.find('a').tab('show');
-        });
-        $(".tab-content").on("swipeleft",function() {
-            console.log('swipe left');
-            var $tab = $('#tablist li.active').next();
-            if ($tab.length > 0)
-                $tab.find('a').tab('show');
-        }); 
-      
-*/
-
         //General forms
         $(document).on('focus','.inputpz',function(){
             console.log('focus inputpz');
@@ -2211,10 +2171,6 @@ var app = {
         propiedad.form.parsley().on('form:error',function(){
             
         });
-        //console.log('load events');
-        //login.screen.hide();
-
-
 
 
         //Asesor
@@ -2226,6 +2182,19 @@ var app = {
         asesor.form.parsley().on('form:error',function(){
             
         });
+
+
+
+        //BUSQUEDA
+        busqueda.form.parsley().on('form:success',function(){
+            var formData = busqueda.form.getFormData();
+            busqueda.busqueda(formData);
+        });
+        busqueda.form.parsley().on('form:submit',function(){return false;});
+        busqueda.form.parsley().on('form:error',function(){
+            
+        });
+
         //console.log('load events');
         
         setTimeout(function(){
@@ -2772,17 +2741,29 @@ var app = {
         propiedad.getDepartamentos("departamento-1", "carretera-1");
     });
 
+    $("input[name='tipo_busqueda']").click(function(){
+        if($(this).val() == "propiedades"){
+            $("#busqueda_propiedades").css("display", "table-row-group");
+            $("#busqueda_requerimientos").css("display", "none");
+        }else{  
+            $("#busqueda_propiedades").css("display", "none");
+            $("#busqueda_requerimientos").css("display", "table-row-group");
+        }
+    });
 
 
-    //api_mapa.init();
+    $("#lupa_buscar").click(function(){
+        propiedad.getDepartamentos("departamento-b", "carretera-b");
+    });
 
-        
+    
+
     },  
     onDeviceReady: function() {
         
         console.log('device ready');
         app.loadEvents();
-    },
+    }
       
 };
 
