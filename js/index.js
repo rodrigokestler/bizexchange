@@ -110,7 +110,6 @@ var login = {
                     console.log(user.role+" , "+user.estado);
 
                     if(user.estado == 'aprobado' && user.role == 'asesor'){
-                        //alert("si puede crear chivas");
                         $(".btnCrear").toggle();
                     }
 
@@ -120,7 +119,6 @@ var login = {
 
                     propiedad.getPropiedades(user.email, user.pass);
                     requerimiento.getRequerimientos(user.email, user.pass);
-                    
                     propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
 
 
@@ -750,7 +748,6 @@ var requerimiento = {
 
     },
     calcularPresupuesto:function(){
-
          var tasa = $("#tasa_reque").val();
         var ingresos = $("#ingresos_reque").val();
         var egresos = $("#egresos_reque").val();
@@ -1028,8 +1025,8 @@ var requerimiento = {
     },
 
     toggle:function(tipo){
-        if(tipo=='hide'){
-            requerimiento.crearScreen.hide('slide',{direction:'right'},'fast');
+      if(tipo == "hide"){
+          requerimiento.crearScreen.hide('slide',{direction:'right'},'fast');
         }else if(tipo=='show'){
             requerimiento.crearScreen.show('slide',{direction:'right'},'fast');
         }
@@ -1040,6 +1037,30 @@ var requerimiento = {
         .val('')
         .removeAttr('checked')
         .removeAttr('selected');
+    },
+    showConfirm: function() {
+        BootstrapDialog.show({
+            title: 'Alerta',
+            message: '¿Deseas guardar antes de salir?',
+            buttons: [{
+                label: 'Guardar',
+                action: function(dialogItself) {
+                    $("#requerimientoBtn").click();
+                    dialogItself.close();
+                }
+            }, {
+                label: 'Salir',
+                action: function(dialogItself) {
+                    requerimiento.crearScreen.hide('slide',{direction:'right'},'fast');
+                    dialogItself.close();
+                }
+            }, {
+                label: 'Cancelar',
+                action: function(dialogItself){
+                    dialogItself.close();
+                }
+            }]
+        });
     }
 };
 
@@ -1107,7 +1128,7 @@ var propiedad = {
               user_pass : user_pass
             },
             type: 'post',
-            timeout: 30000,
+            timeout: 50000,
             error: function(a,b,c){
                 console.log('error '+JSON.stringify(a)+JSON.stringify(b));
                 myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
@@ -1122,13 +1143,10 @@ var propiedad = {
                   propiedad.getPropiedades(user_email, user_pass);  
                 }
                 
-
                 if(a.msj_error){
                     myModal.open('Oops',a.msj_error);
                 }else{
                     jQuery("#propiedades-ul").html(a);  
-
-
                 }
                  
                 $(".propiedad").on("click", function(){
@@ -1790,6 +1808,30 @@ var propiedad = {
      });
 
 
+    },
+    showConfirm: function() {
+        BootstrapDialog.show({
+            title: 'Alerta',
+            message: '¿Deseas guardar antes de salir?',
+            buttons: [{
+                label: 'Guardar',
+                action: function(dialogItself) {
+                    $("#propiedadBtn").click();
+                    dialogItself.close();
+                }
+            }, {
+                label: 'Salir',
+                action: function(dialogItself) {
+                    propiedad.crearScreen.hide('slide',{direction:'right'},'fast');
+                    dialogItself.close();
+                }
+            }, {
+                label: 'Cancelar',
+                action: function(dialogItself){
+                    dialogItself.close();
+                }
+            }]
+        });
     }
 
 };
@@ -2091,7 +2133,6 @@ var app = {
     	console.log('start on device ready');
         propiedad.getDepartamentos("departamento-1", "carretera-1");
         propiedad.getDepartamentos("departamento-propiedades", "carretera-propiedades");
-        //api_map.set_marker(14.598497, -90.507067);
         api_mapa.init();
         $('.history_subscreen').on('show',function(e){
     		e.stopPropagation();
@@ -2779,16 +2820,9 @@ var app = {
 
     
 
-    },  
-    onDeviceReady: function() {
-        
-        console.log('device ready');
-        app.loadEvents();
     }
       
 };
-
-app.initialize();
 
 $.fn.loader = function(tipo, texto){
     if(tipo==='disable'){

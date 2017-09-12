@@ -38,6 +38,8 @@
         <title>Bizexchange</title>
     </head>
     <body>
+        <!--<button style="position:fixed;bottom:10px;left:10px;z-index:999;" onclick="backbutton.backButton();"><i class="fa fa-arrow-left" style="color:black;font-size:14px;" aria-hidden="true"></i></button>-->
+
         <div id="cortina" style="display:none;z-index:1000;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0, 0, 0, 0.28);">
         
             <div id="cortina_container" style="width:40px;height:40px;margin:75% auto;color:white;">
@@ -358,7 +360,7 @@
                                         <td colspan="3" style="text-align:right;">
                                             <select name="forma_de_pagoB" id="formaPagoB" class="color-gris-oscuro select_formR inputpz" style="border:none; padding-left: 25px;" required>
                                                 <option value="contado">Al contado</option>
-                                                <option value="financiado">Financiado</option>
+                                                <option value="financiado" selected>Financiado</option>
                                             </select>
                                             
                                         </td>
@@ -556,6 +558,7 @@
                 </div>
             </div>
         </div>
+
 		<div class="screen nivel2 history_subscreen" data-cerrar="imagenes_adjuntas" id="listado_imagenes_adjuntas" style="padding:0!important;display:none;">
             <div class="container" style="margin:0!important;padding:0!important;">
                 <div class="container-flex" style="margin:0!important;">
@@ -575,7 +578,7 @@
                 <div class="container-flex" style="margin:0!important;">
                     <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
                         <span class="text-header2" id="titulo_propiedad">NUEVA PROPIEDAD</span>
-                        <button onclick="propiedad.crearScreen.toggle('hide');" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                        <button onclick="propiedad.showConfirm();" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
                     </div>
                     <div class="body-screen bg-gris">
                         <form id="propiedadForm">
@@ -1055,7 +1058,7 @@
                                             <td colspan="3" style="text-align:right;">
                                                 <select name="forma_de_pago"  class="color-gris-oscuro select_formR inputpz" style="border:none; padding-left: 55px !important" required>
                                                     <option value="contado">Al contado</option>
-                                                    <option value="financiado">Financiado</option>
+                                                    <option value="financiado" selected>Financiado</option>
                                                 </select>
                                                 
                                             </td>
@@ -1498,7 +1501,7 @@
                                 	</table>
                                 </div>
                                 <div class="container-form">
-                                    <button type="submit" id="requerimientoBtn" class="btn btn-default btn-block requerimiento-btn">Crear</button>
+                                    <button type="submit" id="propiedadBtn" class="btn btn-default btn-block requerimiento-btn">Crear</button>
 
                                 </div>
                             </form>
@@ -1533,11 +1536,11 @@
                 <div class="container-flex" style="margin:0!important;">
                     <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
                         <span class="text-header2" id="titulo_requerimiento">NUEVO REQUERIMIENTO</span>
-                        <button onclick="requerimiento.crearScreen.toggle('hide');" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                        <button onclick="requerimiento.showConfirm();" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
                     </div>
                     <div class="body-screen bg-gris">
                         <form id="requerimientoForm">
-                            <input type="hidden" class="inputpz" name="id_requerimiento" id="id_requerimiento">
+                            <input type="hidden" class="inputpz" name="id_requerimiento" id="id_requerimiento" value="0">
                             <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
@@ -1936,9 +1939,9 @@
                                         </td>
                                         <td colspan="2" style="padding-top:25px; text-align: right;">
                                              <select name="estado_inmueble" class="color-gris-oscuro select_formR inputpz" style="border:none; padding-left: 60px;">
+                                                <option value="indiferente">Indiferente</option>
                                                 <option value="nuevo">Nuevo</option>
                                                 <option value="usado">Usado</option>
-                                                <option value="indiferente">Indiferente</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -1980,7 +1983,7 @@
                                         <td colspan="3" style="text-align:right;">
                                             <select name="forma_de_pago" id="formaPago" class="color-gris-oscuro select_formR inputpz" style="border:none; padding-left: 25px;" required>
                                                 <option value="contado">Al contado</option>
-                                                <option value="financiado">Financiado</option>
+                                                <option value="financiado" selected>Financiado</option>
                                             </select>
                                             
                                         </td>
@@ -1994,7 +1997,7 @@
 
                                     
 
-                                    <tbody class="masInfoFinanciera" style="display:none;">    
+                                    <tbody class="masInfoFinanciera" style="">    
                                         <tr>
                                             <td colspan="2" style="padding-bottom: 10px; padding-top:10px;" class="texto-nuevo-requerimiento">Precalificacion</td>
                                             <td style="padding-bottom: 10px; padding-top:10px;" colspan="3">
@@ -2667,11 +2670,11 @@
 
 
         <script>
-        var movil=true;
+        var movil=false;
         </script>
 
    
-        <script type="text/javascript" src="cordova.js"></script>
+       <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/jQuery.js"></script>
         <script type="text/javascript" src="js/hammer-time.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui.min.js"></script>
@@ -2679,6 +2682,7 @@
         <script type="text/javascript" src="js/jquery.star-rating-svg.js"></script>
 
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap-dialog.min.js"></script>
         <script type="text/javascript" src="js/parsley.js"></script>
         <script type="text/javascript" src="js/i18n/es.js"></script>
         <script type="text/javascript" src="js/list.js"></script>
