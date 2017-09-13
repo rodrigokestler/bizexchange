@@ -274,10 +274,12 @@ var requerimiento = {
         var cant_ubicaciones = $('.ubicacion-requerimiento').length;
         console.log(cant_ubicaciones);
         var id = cant_ubicaciones + 1;
+        console.log("Entra aquiiiii");
+
         requerimiento.containerUbicaciones.append('<table style="width:100%;" class="tableUbicacion-'+id+' ubicacionNueva">'
                                     +'<tr>'
                                        +' <td colspan="5" class="titulo-container-form">'
-                                      +'  UBICACION '+(parseInt(cant_ubicaciones) + 1)+' <span class="resumen_ubi" id="resumen-'+id+'"></span>'
+                                      +'  UBICACION '+(parseInt(cant_ubicaciones))+' <span class="resumen_ubi" id="resumen-'+id+'"></span>'
                                       +'  </td>'
                                       +'<td class="expandirInfoUbicacion" data-id="masInfoUbicacion-'+id+'" data-arrow="'+id+'">'
                                                 +'    <div class="arrowD" id="arrowD-'+id+'" style="background-image:url(../www/img/iconos/arrowD.png); display: none; margin-right:30px;" ></div>'
@@ -285,7 +287,7 @@ var requerimiento = {
                                       +'  <td style="padding-bottom: 5px;" colspan="1"><button style="margin-left:-15px;" class="btn_mas_menos quitarUbi" data-id="tableUbicacion-'+id+'"  type="button">-</button></td>'
                                    +' </tr>'
                                +' </table>'
-                               +' <div id="contenedor_ubicaciones " class="tableUbicacion-'+id+' ubicacionNueva">'
+                               +' <div id="contenedor_ubicaciones" class="tableUbicacion-'+id+' ubicacionNueva">'
                                         +'<div class="ubicacion-requerimiento" id="ubicacion-'+(parseInt(cant_ubicaciones) + 1)+'">'
                                        +' <table style="width:100%;">'
                                            +' <tr style="margin:2px 0;">'
@@ -366,6 +368,7 @@ var requerimiento = {
                                           +'</tbody>'
                                        +'  </table>'
                                    +'  </div><br>');
+            console.log("luegoo aquiiii");
           
             propiedad.getDepartamentos("departamento-"+id, "carretera-"+id);
 
@@ -605,7 +608,7 @@ var requerimiento = {
        $.ajax({
              url:app.url_ajax,
              dataType: 'text',
-             //async: false,
+             async: false,
              data: {
                  action: "get_misrequerimientos",
                  user_email: user.email,
@@ -1008,8 +1011,6 @@ var requerimiento = {
               }
 
 
-
-
               requerimiento.crearScreen.toggle("show");
 
               return;
@@ -1292,7 +1293,7 @@ var propiedad = {
        $.ajax({
              url:app.url_ajax,
              dataType: 'text',
-             //async: false,
+             async: false,
              data: {
                  action: "get_mispropiedades",
                  user_email: user.email,
@@ -1449,6 +1450,7 @@ var propiedad = {
                  }else{
                      depar_html = a;                   
                      $( "#"+departamento).html(a);
+                     $("#"+departamento).val("GUA");
                  }
                  
              },
@@ -2440,7 +2442,7 @@ var app = {
         $("#arrowD-"+arrow).toggle();
     });
 
-    $(".contraerInfoUbicacionRe").click(function(){
+    $(".contraerInfoUbicacionRe").on("click", function(){
         var arrow = $(this).attr("data-arrow");
         var depar = $("#departamento-"+arrow).val().toLowerCase();
         var muni = $("#municipio-"+arrow).val();
@@ -2489,7 +2491,7 @@ var app = {
         var masInfo = $(this).attr("data-id");
         $("#departamento-"+arrow).closest("tr").toggle();
         $("#"+masInfo).toggle("slow");
-        $("#arrowD-"+arrow).toggle();
+        $("#arrowD-"+arrow).cdd();
     });
 
 
@@ -2559,11 +2561,25 @@ var app = {
       propiedad.calcularIUSI();
     });
 
-    $("#plazoA").change(function(){
+    $("#plazoA").on("change", function(){
         var anos = $(this).val();
-        var result = parseInt(anos) * 12;
-        $("#plazoM").val(result);
-        requerimiento.calcularPresupuesto();
+        console.log(anos);
+        if($(this).val() == "0"){
+          alert("Debe ingresar un plazo mayor a 0");
+        }else{
+          var result = parseInt(anos) * 12;
+          $("#plazoM").val(result);
+          requerimiento.calcularPresupuesto();  
+        }
+        
+    });
+
+    $(".calcPresu").on("change", function(){
+        if($("#ingresos_reque").val() == "0" || $("#tasa_reque").val() == "0"|| $("#plazoA").val() == "0"){
+          console.log("algun valor esta en 0");
+        }else{ 
+         requerimiento.calcularPresupuesto();  
+        }
     });
 
     $("#micomi").change(function(){
@@ -2816,6 +2832,10 @@ var app = {
 
     $("#lupa_buscar").click(function(){
         propiedad.getDepartamentos("departamento-b", "carretera-b");
+    });
+
+    $("#ubicacion_extra").click(function(){
+        requerimiento.agregarUbicacion();
     });
 
     

@@ -165,12 +165,11 @@
 
                     <div class="body-screen bg-gris">
                         <form id="busquedaForm">
-                            <input type="hidden" name="id_propiedad" value="0" class="inputpz">
 
                             <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="2" class="titulo-container-form">
+                                        <td colspan="2" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         TIPO DE BUSQUEDA
                                         </td>
                                     </tr>
@@ -185,9 +184,9 @@
                                 </table>
                             </div>
                             <div class="container-form">
-                                <table style="width:100%;">
+                                <table style="width:100%;" style="margin-top: 0px !important;">
                                     <tr>
-                                        <td colspan="2" class="titulo-container-form">
+                                        <td colspan="2" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         TIPO DE OPERACION
                                         </td>
                                     </tr>
@@ -216,9 +215,9 @@
                             </div>
                             
                            <div class="container-form">
-                                <table style="width:100%;">
+                                <table style="width:100%; marging-top:0px !important">
                                     <tr>
-                                        <td colspan="2" class="titulo-container-form">
+                                        <td colspan="2" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         TIPO DE INMUEBLE
                                         </td>
                                     </tr>
@@ -253,8 +252,8 @@
                              <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="2" class="titulo-container-form">
-                                        CARACTERÍSTICAS DEL INMUEBLE
+                                        <td colspan="2" class="titulo-container-form" style="padding-bottom: 10px !important">
+                                        CARACTERISTICAS DEL INMUEBLE
                                         </td>
                                     </tr>
                                 </table>
@@ -345,7 +344,7 @@
                             <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="5" class="titulo-container-form">
+                                        <td colspan="5" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         INFORMACION FINANCIERA
                                         </td>
                                     </tr>
@@ -404,15 +403,12 @@
                                 <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="3" class="titulo-container-form">
-                                        UBICACION <span class="resumen_ubi" id="resumen-1"></span>
-                                        </td>
-                                         <td class="expandirInfoUbicacionRe" data-id="masInfoUbicacion-1" data-arrow="1">
-                                            <div class="arrowD" id="arrowD-1" style="background-image:url(../www/img/iconos/arrowD.png); display: none; margin-right:45px;" ></div>
+                                        <td colspan="3" class="titulo-container-form" style="padding-bottom: 10px !important">
+                                        UBICACION 
                                         </td>
                                     </tr>
                                 </table>
-                                <div id="contenedor_ubicaciones">
+                                <div>
                                     <div class="ubicacion-requerimiento" id="ubicacion-1">
                                         <table style="width:100%;">
                                             <tr style="margin:2px 0;">
@@ -434,7 +430,7 @@
                                                     <hr style="margin:0!important;">
                                                 </td>
                                             </tr>
-                                           <tbody class="masInfoUbicacion" id="masInfoUbicacion-1">
+                                           <tbody class="masInfoUbicacion">
                                                 <tr>
                                                     <td colspan="2" class="texto-nuevo-requerimiento">Municipio</td>
                                                     <td colspan="3">
@@ -479,7 +475,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <br><br>
+                                    <br>
                                 </div>
                             </div>
 
@@ -583,10 +579,11 @@
                     <div class="body-screen bg-gris">
                         <form id="propiedadForm">
                             <input type="hidden" name="id_propiedad" value="0" class="inputpz">
+
                             <div class="container-form">
-                                <table style="width:100%;">
+                                <table style="width:100%; margin-top: 0px !important;">
                                     <tr>
-                                        <td colspan="2" class="titulo-container-form">
+                                        <td colspan="2" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         TIPO DE OPERACION
                                         </td>
                                     </tr>
@@ -603,12 +600,13 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <br><br>
                             </div>
                             
                            <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="2" class="titulo-container-form">
+                                        <td colspan="2" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         TIPO DE INMUEBLE
                                         </td>
                                     </tr>
@@ -639,11 +637,11 @@
                                 </div>
                             </div>
 
-                              <div class="container-form">
+                              <div class="container-form" >
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="2" class="titulo-container-form">
-                                        CARACTERÍSTICAS DEL INMUEBLE
+                                        <td colspan="2" class="titulo-container-form" style="padding-bottom: 10px !important">
+                                        CARACTERSTICAS DEL INMUEBLE
                                         </td>
                                     </tr>
                                 </table>
@@ -752,10 +750,33 @@
                                                 <td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos mas" type="button">+</button></td>
                                             </tr>
                                         </table>
+                                    </td>
+                                    <td style="width:30%;">
+                                                <table style="text-align:center;" class="table-nuevo">
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <div style="background-size: 123%;
+    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-dimensiones.png)" class="icono_caract_min_inmueble" >
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="titulo_caract_min_inmueble"  colspan="3">Dimensiones</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="titulo_caract_min_inmueble"  colspan="3">mxm</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input class="input_caract_min_inmueble width100 inputpz inputCMI" name="dimensiones1" type="number" value="0"></td>
+                                                        <td>x</td>
+                                                        <td><input class="input_caract_min_inmueble width100 inputpz inputCMI" name="dimensiones2" type="number" value="0"></td>
+                                                    </tr>
+                                                </table>
+                                        </td>
                                     </tr>
                                 </table>
-                                </div>
-
+                            </div>
+                            <br>
                             <table> 
                                 <tr style="margin:2px 0;">
                                     <td style="width: 100%; ">
@@ -767,11 +788,10 @@
                                 </tr>
 
                             </table>
-
                                 <div class="masInfo" id="masInfoP" style="display:none;">
                                     <!-- Termina 1era tabla -->
                                     <!-- 2da tabla -->
-                                    <table>
+                                   <table>
                                         <tr>
                                             <td style="width:30%;">
                                                 <table style="text-align:center;" class="table-nuevo">
@@ -856,13 +876,13 @@
                                                     <td>
                                                         <label  class="switch">
                                                           <input type="checkbox" name="cuarto_servicio" class="inputpz">
-                                                          <span class="slider round" id="dormServP"></span>
+                                                          <span class="slider round" id="dormServR"></span>
                                                         </label>
                                                     </td>
                                                 </tr>
                                             </table>
                                         </td>
-                                        <td style="width:35%;padding-top:10px; padding-left:20px">
+                                        <td style="width:35%;padding-top:20px; padding-left:20px">
                                             <table style="text-align:center" class="table-nuevo">
                                                 <tr>
                                                     <td colspan="">
@@ -878,13 +898,13 @@
                                                     <td>
                                                         <label  class="switch">
                                                           <input type="checkbox" name="estudio" class="inputpz">
-                                                          <span class="slider round" id="estudioP"></span>
+                                                          <span class="slider round" id="estudioR"></span>
                                                         </label>
                                                     </td>
                                                 </tr>
                                             </table>
                                         </td>
-                                        <td style="width:35%;padding-top:10px; padding-left:20px">
+                                        <td style="width:35%;padding-top:20px; padding-left:20px">
                                             <table class="table-nuevo">
                                                 <tr>
                                                     <td colspan="">
@@ -900,7 +920,7 @@
                                                     <td>
                                                         <label class="switch">
                                                           <input type="checkbox" name="cisterna" class="inputpz">
-                                                          <span class="slider round" id="cisternaP"></span>
+                                                          <span class="slider round" id="cisternaR"></span>
                                                         </label>
                                                     </td>
                                                 </tr>
@@ -1004,12 +1024,13 @@
                                     </tr>
                                 </table>
                             </div>
+                            <br>
                             </div>
 
                             <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="5" class="titulo-container-form">
+                                        <td colspan="5" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         INFORMACION FINANCIERA
                                         </td>
                                     </tr>
@@ -1028,7 +1049,7 @@
                                             </select>
                                         </td>
                                         <td colspan="1">
-                                            <input class="color-gris-oscuro inputpz inputText" name="precio"  id="precioP" style="text-align:center;border:none;width:100px !important; margin-right:15px !important;" type='number' placeholder="2000">
+                                            <input class="color-gris-oscuro inputpz inputText" name="precio"  id="precioP" style="text-align:center;border:none;width:100px !important; margin-right:15px !important;" type='number' value="0">
                                         </td>
                                         <td colspan="2" style="padding-bottom: 15px;">
                                             <label style="float:right;margin-right:20px!important;" class="switch">
@@ -1085,9 +1106,9 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2" class="texto-nuevo-requerimiento">Años de construccion</td>
-                                                <td colspan="3" style="text-align: right;"> 
-                                                    <input name="anos_construccion" class="color-gris-oscuro inputpz inputIF" style="text-align:center;border:none;width:90% !important; " type='number' placeholder="000">
+                                                <td colspan="3" class="texto-nuevo-requerimiento">Años de construccion</td>
+                                                <td colspan="2" style="text-align: right;"> 
+                                                    <input name="anos_construccion" class="color-gris-oscuro inputpz inputIF" style="text-align:center;border:none;width:90% !important; " type='number' placeholder="0">
                                                 </td>
                                             </tr>
                                             <tr style="margin:2px 0;">
@@ -1097,10 +1118,10 @@
                                             </tr>
 
                                             <tr>
-                                                <td colspan="2" class="texto-nuevo-requerimiento">Mantenimiento mensual</td>
-                                                <td colspan="3" style="text-align: right;"> 
+                                                <td colspan="3" class="texto-nuevo-requerimiento">Mantenimiento mensual</td>
+                                                <td colspan="2" style="text-align: right;"> 
                                                     <span class="moneda_IFP">Q</span>
-                                                    <input name="mantenimiento" class="color-gris-oscuro inputpz inputIF" style="text-align:center;border:none;width:90% !important;" type='number' placeholder="000">
+                                                    <input name="mantenimiento" class="color-gris-oscuro inputpz inputIF" style="text-align:center;border:none;width:90% !important;" type='number' placeholder="0">
                                                 </td>
                                             </tr>
                                             <tr style="margin:2px 0;">
@@ -1110,10 +1131,10 @@
                                             </tr>
 
                                             <tr>
-                                                <td colspan="2" class="texto-nuevo-requerimiento">IUSI trimestral</td>
-                                                <td colspan="3" style="text-align: right;"> 
+                                                <td colspan="3" class="texto-nuevo-requerimiento">IUSI trimestral</td>
+                                                <td colspan="2" style="text-align: right;"> 
                                                     <span class="moneda_IFP">Q</span>
-                                                    <input name="iusi" class="color-gris-oscuro inputpz inputIF" id="iusi" style="text-align:center;border:none;width:90% !important;" type='number' placeholder="000">
+                                                    <input name="iusi" class="color-gris-oscuro inputpz inputIF" id="iusi" style="text-align:center;border:none;width:90% !important;" type='number' placeholder="0">
                                                 </td>
                                             </tr>
                                             <tr style="margin:2px 0;">
@@ -1123,10 +1144,10 @@
                                             </tr>
 
                                             <tr>
-                                                <td colspan="2" class="texto-nuevo-requerimiento">Valor avaluo</td>
-                                                <td colspan="3" style="text-align: right;"> 
+                                                <td colspan="3" class="texto-nuevo-requerimiento">Valor avaluo</td>
+                                                <td colspan="2" style="text-align: right;"> 
                                                     <span class="moneda_IFP">Q</span>
-                                                    <input name="avaluo" class="color-gris-oscuro inputpz inputIF" style="text-align:center;border:none;width:90% !important;" type='number' placeholder="000">
+                                                    <input name="avaluo" class="color-gris-oscuro inputpz inputIF" style="text-align:center;border:none;width:90% !important;" type='number' placeholder="0">
                                                 </td>
                                             </tr>
                                             <tr style="margin:2px 0;">
@@ -1139,6 +1160,7 @@
                                             </tr>
                                         </tbody>                                    
                                 </table>
+                                <br>
                         </div>
 
 
@@ -1146,7 +1168,7 @@
                          <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="5" class="titulo-container-form">
+                                        <td colspan="5" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         TÉRMINOS DE NEGOCIACIÓN
                                         </td>
                                     </tr>
@@ -1159,11 +1181,12 @@
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Mi comisión</td>
                                         <td style="text-align: right;">
-                                            <span class="moneda_IFP">Q</span>
+                                            
                                             <input name="comision_porcen" id="micomi" class="color-gris-oscuro inputpz inputIF" style="text-align:center;border:none;width:100px;" type='number' placeholder="0">
                                         </td>
                                         <td>%</td>
                                         <td style="text-align: right;">
+                                            <span class="moneda_IFP" style="margin-left: 5px !important;">Q</span>
                                             <input name="comision_total" id="micomitotal" readonly class="color-gris-oscuro inputpz inputCalc" style="text-align:center;border:none;width:100px;" type='number' value="0">
                                         </td>
                                     </tr>
@@ -1176,11 +1199,12 @@
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Comisión compartida</td>
                                         <td style="text-align: right;">
-                                            <span class="moneda_IFP">Q</span>
+                                            
                                             <input name="comision_compar_porcen" id="comicompar" class="color-gris-oscuro inputpz inputIF" style="text-align:center;border:none;width:100px;" type='number' placeholder="0">
                                         </td>
                                         <td>%</td>
                                         <td style="text-align: right;">
+                                            <span class="moneda_IFP" style="margin-left: 5px !important;">Q</span>
                                             <input name="comision_compar_total" id="comicompartotal" readonly class="color-gris-oscuro inputpz inputCalc" style="text-align:center;border:none;width:100px;" type='number' placeholder="0">
                                         </td>
                                     </tr>
@@ -1190,6 +1214,7 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <br><br>
                             </div>
 
 
@@ -1197,24 +1222,24 @@
                             <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="5" class="titulo-container-form">
+                                        <td colspan="5" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         INFORMACION DE CONTACTO
                                         </td>
                                     </tr>
                                     <tr style="margin:2px 0;">
-                                        <td colspan="6">
+                                        <td colspan="7">
                                             <hr style="margin:0!important;">
                                         </td>
                                     </tr>
                                     
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Nombre de cliente</td>
-                                        <td colspan="4" style="text-align: right;"><input name="nombre_cliente" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text'>
+                                        <td colspan="5" style="text-align: right;"><input name="nombre_cliente" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text'>
                                         </td>
                                     </tr>
 
                                     <tr style="margin:2px 0;">
-                                        <td colspan="6">
+                                        <td colspan="7">
                                             <hr style="margin:0!important;">
                                         </td>
                                         <td class="expandirInfoContacto" data-id="arrowD-contactoP">
@@ -1224,22 +1249,22 @@
                                 <tbody class="masInfoContacto" id="masInfoContactoP" style="display: none;">
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Correo de cliente</td>
-                                        <td colspan="4" style="text-align: right;"><input name="correo_cliente" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text'>
+                                        <td colspan="5" style="text-align: right;"><input name="correo_cliente" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text'>
                                         </td>
                                     </tr>
                                     <tr style="margin:2px 0;">
-                                        <td colspan="6">
+                                        <td colspan="7">
                                             <hr style="margin:0!important;">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Telefono de cliente</td>
-                                        <td colspan="4" style="text-align: right;"><input name="telefono_cliente" id="telRegisterRequerimiento " class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='number'>
+                                        <td colspan="5" style="text-align: right;"><input name="telefono_cliente" id="telRegisterRequerimiento " class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='number'>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="6">
-                                            <hr style="margin:0!important;">
+                                            <hr style="margin:0!important; width: 160% !important;">
                                         </td>
                                          <td class="contraerInfoContacto" colspan="1" data-id="arrowD-contactoP">
                                             <div class="arrowU-contacto" style="background-image:url(../www/img/iconos/arrowU.png)" ></div>
@@ -1248,6 +1273,7 @@
 
                                 </tbody>
                                 </table>
+                                <br>
                             </div>
 
 
@@ -1255,7 +1281,7 @@
                              <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="5" class="titulo-container-form">
+                                        <td colspan="5" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         UBICACION <span class="resumen_ubi" id="resumen-propiedades"></span>
                                         </td>
                                         <td class="expandirInfoUbicacionP" data-id="masInfoUbicacionP" data-arrow="propiedades">
@@ -1337,6 +1363,7 @@
                                         </td>
                                     </tr>    
                                 </table>
+                                <br>
                             </div>
 
 
@@ -1347,7 +1374,7 @@
                                 <div class="container-form">
                                     <table style="width:100%;">
                                         <tr>
-                                            <td colspan="2" class="titulo-container-form">MAPA</td>
+                                            <td colspan="2" class="titulo-container-form" style="padding-bottom: 10px !important">MAPA</td>
 
                                         </tr>  
                                         <tr>
@@ -1542,9 +1569,9 @@
                         <form id="requerimientoForm">
                             <input type="hidden" class="inputpz" name="id_requerimiento" id="id_requerimiento" value="0">
                             <div class="container-form">
-                                <table style="width:100%;">
+                                <table style="width:100%; margin-top: 0px !important;">
                                     <tr>
-                                        <td colspan="2" class="titulo-container-form">
+                                        <td colspan="2" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         TIPO DE OPERACION
                                         </td>
                                     </tr>
@@ -1561,12 +1588,13 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <br><br>
                             </div>
                             
                            <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="2" class="titulo-container-form">
+                                        <td colspan="2" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         TIPO DE INMUEBLE
                                         </td>
                                     </tr>
@@ -1600,8 +1628,8 @@
                               <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="2" class="titulo-container-form">
-                                        CARACTERÍSTICAS MINIMAS DEL INMUEBLE
+                                        <td colspan="2" class="titulo-container-form" style="padding-bottom: 10px !important">
+                                        CARACTERISTICAS MINIMAS DEL INMUEBLE
                                         </td>
                                     </tr>
                                 </table>
@@ -1610,6 +1638,7 @@
                                  <table>   
                                     <tr style="width: 100%; height: 100px; display: block;">
                                         <td class="icon_ti" style="padding-left:10px; padding-right:10px">
+
                                         <table style="text-align:center; width:85px !important; float:left;">
                                             <tr>
                                                 <td colspan="2">
@@ -1710,10 +1739,34 @@
                                                 <td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos mas" type="button">+</button></td>
                                             </tr>
                                         </table>
+                                    </td>
+                                    <td style="width:30%;">
+                                                <table style="text-align:center;" class="table-nuevo">
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <div style="background-size: 123%;
+    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-dimensiones.png)" class="icono_caract_min_inmueble" >
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="titulo_caract_min_inmueble"  colspan="3">Dimensiones</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="titulo_caract_min_inmueble"  colspan="3">mxm</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input class="input_caract_min_inmueble width100 inputpz inputCMI" name="dimensiones1" type="number" value="0"></td>
+                                                        <td>x</td>
+                                                        <td><input class="input_caract_min_inmueble width100 inputpz inputCMI" name="dimensiones2" type="number" value="0"></td>
+                                                    </tr>
+                                                </table>
+                                        </td>
                                     </tr>
                                 </table>
                                 </div>
-
+                                
+                            <br>
                             <table> 
                                 <tr style="margin:2px 0;">
                                     <td style="width: 100%; ">
@@ -1723,7 +1776,6 @@
                                         <div class="arrowD" id="arrowCR"  style="background-image:url(../www/img/iconos/arrowD.png); display: block;" ></div>
                                     </td>
                                 </tr>
-
                             </table>
 
                                 <div class="masInfo" id="masInfoR" style="display:none;">
@@ -1820,7 +1872,7 @@
                                                 </tr>
                                             </table>
                                         </td>
-                                        <td style="width:35%;padding-top:10px; padding-left:20px">
+                                        <td style="width:35%;padding-top:20px; padding-left:20px">
                                             <table style="text-align:center" class="table-nuevo">
                                                 <tr>
                                                     <td colspan="">
@@ -1842,7 +1894,7 @@
                                                 </tr>
                                             </table>
                                         </td>
-                                        <td style="width:35%;padding-top:10px; padding-left:20px">
+                                        <td style="width:35%;padding-top:20px; padding-left:20px">
                                             <table class="table-nuevo">
                                                 <tr>
                                                     <td colspan="">
@@ -1963,12 +2015,12 @@
                                     </tr>
                                 </table>
                             </div>
-                            </div>
+                        </div>
 
                             <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="5" class="titulo-container-form">
+                                        <td colspan="5" class="titulo-container-form" style="padding-bottom: 10px !important"> 
                                         INFORMACION FINANCIERA
                                         </td>
                                     </tr>
@@ -2042,7 +2094,7 @@
                                                 
                                             </td>
                                             <td colspan="2" style="text-align:right;">
-                                                <input name="ingresos" id="ingresos_reque"  class="color-gris-oscuro inputpz inputIF " style="text-align:center;border:none;width:100% !important;" type='number' placeholder="000" >
+                                                <input name="ingresos" id="ingresos_reque"  class="color-gris-oscuro inputpz inputIF calcPresu" style="text-align:center;border:none;width:100% !important;" type='number' placeholder="0" >
                                             </td>
                                         </tr>
                                         <tr style="margin:2px 0;">
@@ -2060,7 +2112,7 @@
                                                 
                                             </td>
                                             <td colspan="2" style="text-align:right;">
-                                                <input name="egresos" id="egresos_reque" class="color-gris-oscuro inputpz inputIF" style="text-align:center;border:none; width:100% !important;" type='number' placeholder="000">
+                                                <input name="egresos" id="egresos_reque" class="color-gris-oscuro inputpz inputIF calcPresu" style="text-align:center;border:none; width:100% !important;" type='number' placeholder="0">
                                             </td>
                                         </tr>
                                         <tr style="margin:2px 0;">
@@ -2078,7 +2130,7 @@
                                                 
                                             </td>
                                             <td colspan="2" style="text-align:right;">
-                                                <input name="enganche" id="enganche_reque" class="color-gris-oscuro inputpz inputIF" style="text-align:center;border:none;width:100% !important;" type='number' placeholder="000">
+                                                <input name="enganche" id="enganche_reque" class="color-gris-oscuro inputpz inputIF calcPresu" style="text-align:center;border:none;width:100% !important;" type='number' placeholder="0">
                                             </td>
                                         </tr>
                                         <tr style="margin:2px 0;">
@@ -2092,7 +2144,7 @@
 
                                             </td>
                                             <td colspan="2" style="text-align:right;">
-                                                <input type="number" name="tasa_interes" id="tasa_reque" class="color-gris-oscuro inputpz inputIF" step="any" style="text-align:center;border:none;width:90% !important" placeholder="0.00">%
+                                                <input type="number" name="tasa_interes" id="tasa_reque" class="color-gris-oscuro inputpz inputIF calcPresu" step="any" style="text-align:center;border:none;width:90% !important" placeholder="0.00">%
                                             </td>
                                         </tr>
 
@@ -2106,7 +2158,7 @@
                                             <td  class="texto-nuevo-requerimiento">Plazo en años</td>
 
                                             <td style="text-align:right;">
-                                                <input id="plazoA" type="number" name="plazo" class="color-gris-oscuro inputpz inputIF" style="text-align:center;border:none;width:50px" placeholder="0">
+                                                <input id="plazoA" type="number" name="plazo" class="color-gris-oscuro inputpz inputIF calcPresu" style="text-align:center;border:none;width:50px" placeholder="0">
                                             </td>
                                             <td  colspan="2" class="texto-nuevo-requerimiento" style="text-align:right;">Plazo en meses</td>
                                             <td >
@@ -2124,7 +2176,7 @@
 
                                             <td colspan="2" style="text-align: right;">
                                                 <span class="moneda_IF">Q</span>
-                                                <input name="monto_a_financiar_max" step="any" id="monto_maximo" class="color-gris-oscuro inputpz inputCalc" style="text-align:center;border:none;width:100% !important;" type='number' value="000" readonly="readonly">
+                                                <input name="monto_a_financiar_max" step="any" id="monto_maximo" class="color-gris-oscuro inputpz inputCalc" style="text-align:center;border:none;width:100% !important;" type='number' value="0" readonly="readonly">
                                             </td>
                                         </tr>
                                         <tr style="margin:2px 0;">
@@ -2137,7 +2189,7 @@
                                         <td colspan="3" class="texto-nuevo-requerimiento">Cuota total mensual maxima</td>
                                         <td colspan="2" style="text-align: right;">
                                             <span class="moneda_IF">Q</span>
-                                            <input name="cuota_mensual_max" id="cuota_max" step="any" class="color-gris-oscuro inputpz inputCalc" style="text-align:center;border:none;width:100% !important;" type='number' value="000" readonly="readonly">
+                                            <input name="cuota_mensual_max" id="cuota_max" step="any" class="color-gris-oscuro inputpz inputCalc" style="text-align:center;border:none;width:100% !important;" type='number' value="0" readonly="readonly">
                                         </td>
                                     </tr>
                                     <tr style="margin:2px 0;">
@@ -2176,16 +2228,18 @@
                                     </td>
                                 </tr>
                                 </table>
+                                <br>
                         </div>
 
 
                             <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="5" class="titulo-container-form">
+                                        <td colspan="5" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         INFORMACION DE CONTACTO
                                         </td>
                                     </tr>
+
                                     <tr style="margin:2px 0;">
                                         <td colspan="5">
                                             <hr style="margin:0!important;">
@@ -2194,12 +2248,12 @@
                                     
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Nombre de cliente</td>
-                                        <td colspan="3" style="text-align: right;"><input name="nombre_cliente" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text'>
+                                        <td colspan="4" style="text-align: right;"><input name="nombre_cliente" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text'>
                                         </td>
                                     </tr>
 
                                     <tr style="margin:2px 0;">
-                                        <td colspan="5">
+                                        <td colspan="6">
                                             <hr style="margin:0!important;">
                                         </td>
                                         <td class="expandirInfoContacto" data-id="arrowD-contactoR">
@@ -2209,22 +2263,22 @@
                                 <tbody class="masInfoContacto" id="masInfoContactoR" style="display: none;">
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Correo de cliente</td>
-                                        <td colspan="3" style="text-align: right;"><input name="correo_cliente" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text'>
+                                        <td colspan="4" style="text-align: right;"><input name="correo_cliente" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='text'>
                                         </td>
                                     </tr>
                                     <tr style="margin:2px 0;">
-                                        <td colspan="5">
+                                        <td colspan="6">
                                             <hr style="margin:0!important;">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Telefono de cliente</td>
-                                        <td colspan="3" style="text-align: right;"><input name="telefono_cliente" id="telRegisterRequerimiento " class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='number'>
+                                        <td colspan="4" style="text-align: right;"><input name="telefono_cliente" id="telRegisterRequerimiento " class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;width:100px;" type='number'>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="5">
-                                            <hr style="margin:0!important;">
+                                        <td colspan="4">
+                                            <hr style="margin:0!important; width:215% !important;">
                                         </td>
                                          <td class="contraerInfoContacto" colspan="1" data-id="arrowD-contactoR">
                                             <div class="arrowU-contacto" style="background-image:url(../www/img/iconos/arrowU.png)" ></div>
@@ -2232,6 +2286,7 @@
                                     </tr>    
                                 </tbody>
                                 </table>
+                                <br>
                             </div>
 
 
@@ -2239,13 +2294,13 @@
                              <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="3" class="titulo-container-form">
+                                        <td colspan="3" class="titulo-container-form" style="padding-bottom: 20px !important">
                                         UBICACION <span class="resumen_ubi" id="resumen-1"></span>
                                         </td>
                                          <td class="expandirInfoUbicacionRe" data-id="masInfoUbicacion-1" data-arrow="1">
                                             <div class="arrowD" id="arrowD-1" style="background-image:url(../www/img/iconos/arrowD.png); display: none; margin-right:45px;" ></div>
                                         </td>
-                                        <td style="padding-bottom: 5px;" colspan="1"><button onclick="requerimiento.agregarUbicacion();" style="margin-left:-20px;" class="btn_mas_menos" id="ubicacion_extra" type="button">+</button></td>
+                                        <td style="padding-bottom: 5px;" colspan="1"><button  style="margin-left:-20px;" class="btn_mas_menos" id="ubicacion_extra" type="button">+</button></td>
                                     </tr>
                                 </table>
                                 <div id="contenedor_ubicaciones">
@@ -2329,7 +2384,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <br><br>
+                                    <br>
                                 </div>
                             </div>
 
@@ -2408,7 +2463,7 @@
                             <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="5" class="titulo-container-form">
+                                        <td colspan="5" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         CUENTA
                                         </td>
                                     </tr>
@@ -2441,7 +2496,7 @@
                             <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="5" class="titulo-container-form">
+                                        <td colspan="5" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         INFORMACION PERSONAL
                                         </td>
                                     </tr>
@@ -2523,7 +2578,7 @@
                                  <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="5" class="titulo-container-form">
+                                        <td colspan="5" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         INFORMACION LABORAL
                                         </td>
                                     </tr>
@@ -2588,7 +2643,7 @@
                             <div class="container-form">
                                 <table style="width:100%;">
                                     <tr>
-                                        <td colspan="5" class="titulo-container-form">
+                                        <td colspan="5" class="titulo-container-form" style="padding-bottom: 10px !important">
                                         EXPERIENCIA EN BIENES RAICES
                                         </td>
                                     </tr>
