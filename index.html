@@ -163,10 +163,12 @@
                         <button onclick="busqueda.screen.toggle('hide');" class="return"><i class="fa fa-angle-left" style="color:grey;"aria-hidden="true"></i></button>
                     </div>
 
-                    <div class="body-screen bg-gris">
+                    <div class="body-screen bg-gris" id="busqueda_body">
                         <form id="busquedaForm">
 
-                            <div class="container-form">
+                            <input type="hidden" name="search_input" id="search_input" value="">
+
+                            <div class="container-form" style="height: 170px;">
                                 <table style="width:100%;">
                                     <tr>
                                         <td colspan="2" class="titulo-container-form" style="padding-bottom: 10px !important">
@@ -183,7 +185,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="container-form">
+                            <div class="container-form" style="height: 170px;">
                                 <table style="width:100%;" style="margin-top: 0px !important;">
                                     <tr>
                                         <td colspan="2" class="titulo-container-form" style="padding-bottom: 10px !important">
@@ -226,22 +228,22 @@
                                  <table>   
                                     <tr style="width: 100%; height: 100px; display: block;">
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_casa tipo_inmueble" type="radio" name="tipo_inmuebleB" value="casa" checked>
+                                            <input class="inputpz tipo_casa tipo_inmueble" type="radio" name="inmuebleB" value="casa" checked>
                                         </td>
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_apartamento tipo_inmueble" type="radio" name="tipo_inmuebleB" value="apartamento">
+                                            <input class="inputpz tipo_apartamento tipo_inmueble" type="radio" name="inmuebleB" value="apartamento">
                                         </td>
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_terreno tipo_inmueble" type="radio" name="tipo_inmuebleB" value="terreno">
+                                            <input class="inputpz tipo_terreno tipo_inmueble" type="radio" name="inmuebleB" value="terreno">
                                         </td>
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_oficina tipo_inmueble" type="radio" name="tipo_inmuebleB" value="oficina">
+                                            <input class="inputpz tipo_oficina tipo_inmueble" type="radio" name="inmuebleB" value="oficina">
                                         </td>
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_local tipo_inmueble" type="radio" name="tipo_inmuebleB" value="local">
+                                            <input class="inputpz tipo_local tipo_inmueble" type="radio" name="inmuebleB" value="local">
                                         </td>
                                         <td class="icon_ti">
-                                            <input class="inputpz tipo_edificio tipo_inmueble" type="radio" name="tipo_inmuebleB" value="edificio">
+                                            <input class="inputpz tipo_edificio tipo_inmueble" type="radio" name="inmuebleB" value="edificio">
                                         </td>
                                     </tr>
                                 </table>
@@ -326,16 +328,19 @@
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <td style="font-size:12px; padding-top:25px;" colspan="2">Estado del inmueble
-                                    </td>
-                                    <td colspan="2" style="padding-top:25px; text-align: right;">
-                                         <select name="estado_inmuebleB" class="color-gris-oscuro select_formR inputpz" style="border:none; padding-left: 60px;">
-                                            <option value="nuevo">Nuevo</option>
-                                            <option value="usado">Usado</option>
-                                        </select>
-                                    </td>
-                                </tr>
+                                </table>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td style="font-size:12px; padding-top:25px;" colspan="2">Estado del inmueble
+                                        </td>
+                                        <td colspan="2" style="padding-top:25px; text-align: right;">
+                                             <select name="estado_inmuebleB" class="color-gris-oscuro select_formR inputpz" style="border:none; padding-left: 60px;">
+                                                <option value="indiferente">Indiferente</option>
+                                                <option value="nuevo">Nuevo</option>
+                                                <option value="usado">Usado</option>
+                                            </select>
+                                        </td>
+                                    </tr>
                                 </table>
                             </div>
 
@@ -357,7 +362,7 @@
                                     <tr>
                                         <td colspan="2" class="texto-nuevo-requerimiento">Forma de pago</td>
                                         <td colspan="3" style="text-align:right;">
-                                            <select name="forma_de_pagoB" id="formaPagoB" class="color-gris-oscuro select_formR inputpz" style="border:none; padding-left: 25px;" required>
+                                            <select name="forma_pagoB" id="formaPagoB" class="color-gris-oscuro select_formR inputpz" style="border:none; padding-left: 25px;" required>
                                                 <option value="contado">Al contado</option>
                                                 <option value="financiado" selected>Financiado</option>
                                             </select>
@@ -420,7 +425,7 @@
                                             <tr>
                                                 <td colspan="2" class="texto-nuevo-requerimiento">Departamento</td>
                                                 <td colspan="3">
-                                                    <select name="departamento-b" class="color-gris-oscuro select_formR departamento inputpz" id="departamento-b" data-id="municipio-b" data-zona="zona-b" style="border:none;">
+                                                    <select name="departamento" class="color-gris-oscuro select_formR departamento inputpz" id="departamento-b" data-id="municipio-b" data-zona="zona-b" style="border:none;">
                                                         
                                                     </select>
                                                 </td>
@@ -434,7 +439,7 @@
                                                 <tr>
                                                     <td colspan="2" class="texto-nuevo-requerimiento">Municipio</td>
                                                     <td colspan="3">
-                                                        <select name="municipio-b"  id="municipio-b" class="color-gris-oscuro select_formR municipio inputpz" style="border:none;">
+                                                        <select name="municipio"  id="municipio-b" class="color-gris-oscuro select_formR municipio inputpz" style="border:none;">
                                                         <option>--Seleccione--</option>   
                                                         </select>
                                                     </td>
@@ -448,7 +453,7 @@
                                                 <tr>
                                                     <td colspan="2" class="texto-nuevo-requerimiento">Zona</td>
                                                     <td colspan="3">
-                                                        <select name="zona-b" class="color-gris-oscuro select_formR zona inputpz" id="zona-b"  style="border:none;">
+                                                        <select name="zona" class="color-gris-oscuro select_formR zona inputpz" id="zona-b"  style="border:none;">
                                                             <option>--Seleccione--</option>   
                                                         </select>
                                                 </tr>
@@ -460,7 +465,7 @@
 
                                                 <tr>
                                                      <td colspan="1" class="texto-nuevo-requerimiento">Km</td>
-                                                    <td colspan="1"><input name="km-b" id="km-b" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;" type='number' value="0">
+                                                    <td colspan="1"><input name="km" id="km-b" class="color-gris-oscuro inputpz inputText" style="text-align:center;border:none;" type='number' value="0">
                                                     </td>
                                                     <td colspan="3">
                                                         <select name="carretera-b" id="carretera-b" class="color-gris-oscuro select_formR carretera inputpz" style="border:none;">
@@ -485,6 +490,21 @@
                         </form>
                     </div>
 
+                </div>
+            </div>
+        </div>
+
+        <div class="screen nivel2 history_subscreen" data-cerrar="single_busqueda" id="result_busqueda" style="padding:0!important;display:none;">
+            <div class="container" style="margin:0!important;padding:0!important;">
+                <div class="container-flex" style="margin:0!important;">
+                    <div class="screen-header" style="box-shadow: 0 3px 2px #24467d; ">
+                        <span class="text-header2">Resultados busqueda</span>
+                        <button onclick="busqueda.verScreen.hide('slide',{direction:'right'},'fast');;" class="return"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+                    </div>
+
+                    <div class="div_busqueda_single" style="margin-top:45px !important;">
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -794,24 +814,23 @@
                                    <table>
                                         <tr>
                                             <td style="width:30%;">
-                                                <table style="text-align:center;" class="table-nuevo">
+                                                 <table style="text-align:center" class="table-nuevo">
                                                     <tr>
-                                                        <td colspan="3">
-                                                            <div style="background-size: 123%;
-    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-dimensiones.png)" class="icono_caract_min_inmueble" >
+                                                        <td colspan="2">
+                                                            <div style="background-size:100% 140%;;
+    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-salas.png)" class="icono_caract_min_inmueble" >
                                                             </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="titulo_caract_min_inmueble"  colspan="3">Dimensiones</td>
+                                                        <td class="titulo_caract_min_inmueble" colspan="2">Comedores</td>
+                                                        </tr>
+                                                    <tr>
+                                                        <td colspan="2"><input  type="number" data-init="0" value='0' name="comedor" class="inputpz input_caract_min_inmueble width100 inputCMI"></td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="titulo_caract_min_inmueble"  colspan="3">mxm</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><input class="input_caract_min_inmueble width100 inputpz inputCMI" name="dimensiones1" type="number" value="0"></td>
-                                                        <td>x</td>
-                                                        <td><input class="input_caract_min_inmueble width100 inputpz inputCMI" name="dimensiones2" type="number" value="0"></td>
+                                                        <td style="text-align:right;"><button style="margin-right:5px;" class="btn_mas_menos menos" type="button">-</button></td>
+                                                        <td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos mas" type="button">+</button></td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -1784,24 +1803,23 @@
                                     <table>
                                         <tr>
                                             <td style="width:30%;">
-                                                <table style="text-align:center;" class="table-nuevo">
+                                                <table style="text-align:center" class="table-nuevo">
                                                     <tr>
-                                                        <td colspan="3">
-                                                            <div style="background-size: 123%;
-    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-dimensiones.png)" class="icono_caract_min_inmueble" >
+                                                        <td colspan="2">
+                                                            <div style="background-size:100% 140%;;
+    background-position: 0px 0px;background-image:url(../www/img/iconos/agregar-propiedad-caracteristicas-salas.png)" class="icono_caract_min_inmueble" >
                                                             </div>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="titulo_caract_min_inmueble"  colspan="3">Dimensiones</td>
+                                                        <td class="titulo_caract_min_inmueble" colspan="2">Comedores</td>
+                                                        </tr>
+                                                    <tr>
+                                                        <td colspan="2"><input  type="number" data-init="0" value='0' name="comedor" class="inputpz input_caract_min_inmueble width100 inputCMI"></td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="titulo_caract_min_inmueble"  colspan="3">mxm</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><input class="input_caract_min_inmueble width100 inputpz inputCMI" name="dimensiones1" type="number" value="0"></td>
-                                                        <td>x</td>
-                                                        <td><input class="input_caract_min_inmueble width100 inputpz inputCMI" name="dimensiones2" type="number" value="0"></td>
+                                                        <td style="text-align:right;"><button style="margin-right:5px;" class="btn_mas_menos menos" type="button">-</button></td>
+                                                        <td style="text-align:left;"><button style="margin-left:5px;" class="btn_mas_menos mas" type="button">+</button></td>
                                                     </tr>
                                                 </table>
                                             </td>
@@ -2094,7 +2112,7 @@
                                                 
                                             </td>
                                             <td colspan="2" style="text-align:right;">
-                                                <input name="ingresos" id="ingresos_reque"  class="color-gris-oscuro inputpz inputIF calcPresu" style="text-align:center;border:none;width:100% !important;" type='number' placeholder="0" >
+                                                <input name="ingresos" id="ingresos_reque"  class="color-gris-oscuro inputpz inputIF calcPresu" style="text-align:center;border:none;width:100% !important;" type='number' value="1" min="1">
                                             </td>
                                         </tr>
                                         <tr style="margin:2px 0;">
@@ -2144,7 +2162,7 @@
 
                                             </td>
                                             <td colspan="2" style="text-align:right;">
-                                                <input type="number" name="tasa_interes" id="tasa_reque" class="color-gris-oscuro inputpz inputIF calcPresu" step="any" style="text-align:center;border:none;width:90% !important" placeholder="0.00">%
+                                                <input type="number" name="tasa_interes" id="tasa_reque" class="color-gris-oscuro inputpz inputIF calcPresu" step="any" style="text-align:center;border:none;width:90% !important" value="8.00">%
                                             </td>
                                         </tr>
 
@@ -2207,7 +2225,7 @@
                                         </select>
 
                                     </td>
-                                    <td style="position: relative"><input class="color-gris-oscuro inputpz inputIF" name="presupuesto_min" style="text-align:center;border:none;width:100px;" type='number' placeholder="2000">
+                                    <td style="position: relative"><input class="color-gris-oscuro inputpz inputIF" name="presupuesto_min" style="text-align:center;border:none;width:100px;" type='number' value="1000">
                                         <span class="slider_text" style="top: 45px;
                                         left: 22px;
                                         color: #CCCCCC; font-size:10px">min</span>
@@ -2218,7 +2236,7 @@
                                     <td style="position:relative;">
                                         <input class="color-gris-oscuro inputpz inputIF" step="any" name="presupuesto_max" step="any" id="presupuesto_max" type='number' style="text-align:center;border:none;width:100px;" placeholder="20000">
                                         <span class="slider_text" style="top: 45px;
-                                        left: 22px;
+                                        left: 40px;
                                         color: #CCCCCC; font-size:10px" id="textPMax">max</span>
                                     </td>
                                 </tr>
@@ -2725,11 +2743,11 @@
 
 
         <script>
-        var movil=false;
+        	var movil=false;
         </script>
 
    
-       <script type="text/javascript" src="cordova.js"></script>
+<!--        <script type="text/javascript" src="cordova.js"></script> -->
         <script type="text/javascript" src="js/jQuery.js"></script>
         <script type="text/javascript" src="js/hammer-time.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui.min.js"></script>

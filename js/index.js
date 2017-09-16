@@ -220,6 +220,7 @@ var register = {
 
 var busqueda = {
         screen: $('#screen_busqueda'),
+        verScreen: $("#result_busqueda"),
         form: $('#busquedaForm'),
         btnForm: $('#busquedaBtn'),
         busqueda: function(formData){
@@ -228,7 +229,7 @@ var busqueda = {
 
             $.ajax({
                 url:app.url_ajax,
-                dataType: 'json',
+                dataType: 'text',
                 async: false,
                 data: formData,
                 type: 'post',
@@ -242,11 +243,32 @@ var busqueda = {
                     myModal.open('Oops','Parece que ha ocurrido un error. Por favor intenta de nuevo');
                 },
                 success: function(a){
-                    console.log(JSON.stringify(a));
+                    console.log(a);
+                    if(!a){
+                        $(".div_busqueda_single").html("No hay resultados para esta busqueda");
+                    }else{
+                      $(".div_busqueda_single").html(a);  
+                    }
+
+                     $(".requerimiento").on("click", function(){
+                        var id = $(this).attr("data-id");
+                        var tipo = $(this).attr("data-tipo");
+                        requerimiento.getSingleRequerimiento(id,tipo);        
+                      });    
+
+                      $(".propiedad").on("click", function(){
+                        var id = $(this).attr("data-id");
+                        var tipo = $(this).attr("data-tipo");
+                        propiedad.getSinglePropiedad(id,tipo);        
+                      });    
+                    
+                    //console.log(JSON.stringify(a));
                     
                 },
-                complete: function(){
+                complete: function(a){
+
                     cortina.hide();
+                    busqueda.verScreen.show('slide',{direction:'right'},'fast');
                 }
            });
         },
@@ -374,10 +396,15 @@ var requerimiento = {
 
             $(".departamento").on("change",function(){
                 var depa = $(this).val();
-                var municipio = $(this).attr("data-id"); 
-                var carretera = $(this).attr("data-carre");
-                var zona = $(this).attr("data-zona");
-                propiedad.getMunicipios(depa, municipio, zona);
+                if(depa == "" || depa =="--Seleccione--"){
+
+                }else{
+                  var municipio = $(this).attr("data-id"); 
+                  var carretera = $(this).attr("data-carre");
+                  var zona = $(this).attr("data-zona");
+                  propiedad.getMunicipios(depa, municipio, zona);  
+                }
+                
                
         
             });
@@ -750,6 +777,7 @@ var requerimiento = {
 
 
     },
+
     calcularPresupuesto:function(){
          var tasa = $("#tasa_reque").val();
         var ingresos = $("#ingresos_reque").val();
@@ -1027,7 +1055,7 @@ var requerimiento = {
 
     toggle:function(tipo){
       if(tipo == "hide"){
-          requerimiento.crearScreen.hide('slide',{direction:'right'},'fast');
+            requerimiento.crearScreen.hide('slide',{direction:'right'},'fast');
         }else if(tipo=='show'){
             requerimiento.crearScreen.show('slide',{direction:'right'},'fast');
         }
@@ -1424,7 +1452,7 @@ var propiedad = {
        $.ajax({
              url:app.url_ajax,
              dataType: 'text',
-             //async: false,
+             async: false,
              data: {
                  action: "get_departamentos"
              },
@@ -1451,6 +1479,8 @@ var propiedad = {
                      depar_html = a;                   
                      $( "#"+departamento).html(a);
                      $("#"+departamento).val("GUA");
+                     propiedad.getMunicipios("GUA", "municipio-propiedades", "zona-propiedades");
+                     propiedad.getMunicipios("GUA", "municipio-1", "zona-1");
                  }
                  
              },
@@ -1460,7 +1490,7 @@ var propiedad = {
                 }else{
                     $.ajax({
                        url:app.url_ajax,
-                      //async: false,
+                      async: false,
                        dataType: 'text',
                        data: {
                            action: "get_carreteras",
@@ -1515,7 +1545,7 @@ var propiedad = {
              success: function(a){
                  console.log(a);
                  if(!a){
-                    getMunicipios(depa, municipio, zona, v);
+                    propiedad.getMunicipios(depa, municipio, zona, v);
                  }
                  if(a.msj_error){
                      myModal.open('Oops',a.msj_error);
@@ -2283,11 +2313,18 @@ var app = {
         },1000);
 
       $(".departamento").on("change",function(){
-        var depa = $(this).val();
-          var municipio = $(this).attr("data-id"); 
 
-          var zona = $(this).attr("data-zona");
-        propiedad.getMunicipios(depa, municipio, zona);
+
+          var depa = $(this).val();
+          if(depa == "" || depa=="--Seleccione--"){
+
+          }else{
+            var municipio = $(this).attr("data-id"); 
+
+            var zona = $(this).attr("data-zona");
+            propiedad.getMunicipios(depa, municipio, zona);  
+          }
+          
 
       });
 
@@ -2491,7 +2528,7 @@ var app = {
         var masInfo = $(this).attr("data-id");
         $("#departamento-"+arrow).closest("tr").toggle();
         $("#"+masInfo).toggle("slow");
-        $("#arrowD-"+arrow).cdd();
+        $("#arrowD-"+arrow).toggle();
     });
 
 
@@ -2575,7 +2612,8 @@ var app = {
     });
 
     $(".calcPresu").on("change", function(){
-        if($("#ingresos_reque").val() == "0" || $("#tasa_reque").val() == "0"|| $("#plazoA").val() == "0"){
+        if(!$("#ingresos_reque").val()||!$("#tasa_reque").val()|| !$("#plazoA").val()){
+          console.log("ingresos = "+$("#ingresos_reque").val()+", tasa = "+ $("#tasa_reque").val()+", plazoAños = "+$("#plazoA").val());
           console.log("algun valor esta en 0");
         }else{ 
          requerimiento.calcularPresupuesto();  
@@ -2660,7 +2698,7 @@ var app = {
 
     });
 
-    $("#egresos_reque").on("change",function(){
+    $("#ingresos_reque").on("change",function(){
         console.log("Llamando funcion cuota maxima");
         requerimiento.calcularCuoutaMaxima();
     });
@@ -2836,6 +2874,12 @@ var app = {
 
     $("#ubicacion_extra").click(function(){
         requerimiento.agregarUbicacion();
+    });
+
+    $(".busqueda_input").on("change", function(){
+      console.log("Agregando texto al input del form");
+      var texto_busqueda = $(this).val();
+      $("#search_input").val(texto_busqueda);
     });
 
     
