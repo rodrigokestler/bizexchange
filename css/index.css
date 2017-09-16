@@ -626,6 +626,11 @@ select.select_formRIF{
     overflow-x: hidden;
 }
 
+.container-form > table:first-of-type {
+    margin-top: 15px !important;
+    margin-bottom: -10px !important;
+}
+
 .scrolleable_div{
     overflow-x: scroll !important;
     width: 100%;
